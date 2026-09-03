@@ -2489,7 +2489,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     /* toggle row: control, label, description underneath aligned to the label */
     .trow { display:flex; align-items:flex-start; gap:var(--sh-space-2); cursor:pointer; }
     .trow .tgl { margin-top:1px; }
-    /* checkbox — the inheritance control. Square, so it never reads as a second toggle. */
+    /* checkbox – the inheritance control. Square, so it never reads as a second toggle. */
     .cbx { position:relative; width:16px; height:16px; box-sizing:border-box;
            border-radius:var(--sh-radius-sm); background:var(--sh-bg-primary);
            border:1.5px solid var(--sh-border-dark); flex-shrink:0; display:inline-block;
@@ -2498,10 +2498,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     .cbx-on::after { content:""; position:absolute; left:4px; top:1px; width:4px; height:8px;
                      border:solid #fff; border-width:0 1.5px 1.5px 0; transform:rotate(40deg); }
     .trow .cbx { margin-top:2px; }
-    /* surface label — names WHERE the rule below applies */
+    /* surface label – names WHERE the rule below applies */
     .scope { font-size:var(--sh-text-sm); line-height:var(--sh-leading-sm);
              font-weight:var(--sh-font-semibold); color:var(--sh-fg-secondary); }
-    /* the variant's own rule, when it has one — indented under the checkbox that revealed it */
+    /* the variant's own rule, when it has one – indented under the checkbox that revealed it */
     .own { margin:var(--sh-space-3) 0 0 24px; padding-left:var(--sh-space-3);
            border-left:2px solid var(--sh-border-default); }
     .tdesc { font-size:var(--sh-text-sm); line-height:var(--sh-leading-sm); color:var(--sh-fg-secondary);
@@ -2525,7 +2525,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                font-weight:var(--sh-font-medium); white-space:nowrap; }
     .btn-set:hover { color:var(--sh-fg-link); text-decoration:underline; }
     .btn-set svg path { fill:currentColor; }
-    /* the dismiss is not a third action — hold it away from the action pair */
+    /* the dismiss is not a third action – hold it away from the action pair */
     .xbtn-sep { margin-left:var(--sh-space-2); }
     .tooltip { position:absolute; z-index:1400; border-radius:var(--sh-radius-md); background:var(--sh-gray-800);
                box-shadow:var(--sh-shadow-tooltip); padding:var(--sh-space-2) var(--sh-space-3); }
@@ -2584,7 +2584,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     .dot-send { width:6px; height:6px; border-radius:50%; background:#00E29E; flex-shrink:0; }
 
     /* ══ the corner cluster ══
-       Both standing rules live in the editor's own bottom-right, inside its border — which is
+       Both standing rules live in the editor's own bottom-right, inside its border – which is
        already where the send-time indicator sits today. So there is no band to add and nothing
        new to learn: the paste rule simply joins the thing it was always going to be confused
        with, close enough that the pair reads as one "how this email is handled" statement.
@@ -2599,7 +2599,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     .chip-rule:hover { background:#DBEAFE; border-color:#93C5FD; }
     .chip-rule svg { flex-shrink:0; }
     .corner-div { width:1px; height:14px; background:var(--sh-border-default); flex-shrink:0; }
-    /* spotlight — the chip's first appearance only. Explains what the corner cluster IS
+    /* spotlight – the chip's first appearance only. Explains what the corner cluster IS
        (a standing, always-there rule readout, not a one-off receipt) before it starts
        fading in and out on every later paste. Dark, matching the settings toast's register
        for a system-level statement rather than the light per-paste toast above it. */
@@ -2618,7 +2618,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     .corner-demo { position:static; justify-content:flex-end; padding:9px var(--sh-space-3);
                    background:var(--sh-bg-secondary); border-top:1px solid var(--sh-border-light); }
     .chip-hover { background:#DBEAFE; border-color:#93C5FD; }
-    /* the chip is permanent now — this only highlights it briefly after a paste it just
+    /* the chip is permanent now – this only highlights it briefly after a paste it just
        governed, same background as its own hover state, then settles back on its own
        (no forwards, no timer). Alternating class names restart the animation on a repeat. */
     .chip-pulse-a { animation:chippulse 1.4s ease-out; }
@@ -2626,7 +2626,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     @keyframes chippulse { 0%{background:#DBEAFE} 100%{background:#EFF6FF} }
     @keyframes chippulse2 { 0%{background:#DBEAFE} 100%{background:#EFF6FF} }
     .corner-txt { font-size:11px; line-height:15px; color:#9CA3AF; white-space:nowrap; }
-    /* resting statement — lives on the band's LEFT side, which is now permanently its own:
+    /* resting statement – lives on the band's LEFT side, which is now permanently its own:
        the paste receipt moved off the band into its own toast, so nothing competes for the row.
        Same muted register as the send-time indicator on the right; no border, no button chrome.
        It IS a link to the setting, but says so only on hover: rest weight stays identical. */
@@ -2647,8 +2647,8 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
        Floats over the writing surface, bottom-anchored inside the editor box, clear of the
        band. Light, not the dark system toast: this thing carries LINKS the writer is meant
        to act on, and link colour has nowhere to go on a dark ground without inventing a
-       second palette. Anatomy is unchanged from the band message it replaces — same
-       sentence, same delta, same actions — so only the container is new. */
+       second palette. Anatomy is unchanged from the band message it replaces – same
+       sentence, same delta, same actions – so only the container is new. */
     .rtoast-wrap { position:absolute; left:var(--sh-space-3); right:var(--sh-space-3); bottom:44px;
                    display:flex; justify-content:center; z-index:40; }
     /* sized by its content and centred, not stretched edge to edge: it is a notice about one
@@ -2688,15 +2688,15 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     .st-h { display:flex; align-items:baseline; gap:var(--sh-space-2); padding:var(--sh-space-2) var(--sh-space-3);
             background:var(--sh-bg-secondary); border-bottom:1px solid var(--sh-border-light); }
     .st-n { font-size:var(--sh-text-sm); font-weight:var(--sh-font-semibold); }
-    /* modal — radius 8, the DS floating-surface value; 720px is the content max-width */
+    /* modal – radius 8, the DS floating-surface value; 720px is the content max-width */
     .backdrop { position:absolute; inset:0; background:rgba(31,41,55,.45); display:flex;
                 align-items:center; justify-content:center; z-index:1200; }
     .modal { width:720px; max-width:94%; max-height:92%; background:var(--sh-bg-primary);
              border-radius:var(--sh-radius-md);
              box-shadow:0 16px 48px -4px rgba(4,21,76,0.18),0 4px 24px 0 rgba(4,21,76,0.08);
              display:flex; flex-direction:column; overflow:hidden; }
-    /* confirm dialog — narrower, single-purpose: guards the two disabling actions on
-       the settings card. Purple 700 on Yes, not primary blue — this removes a
+    /* confirm dialog – narrower, single-purpose: guards the two disabling actions on
+       the settings card. Purple 700 on Yes, not primary blue – this removes a
        protection, so the confirm should not read as a routine save. */
     .confirm-modal { width:440px; max-width:92%; background:var(--sh-bg-primary);
              border-radius:var(--sh-radius-md);
@@ -2733,7 +2733,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     <button class="proto-tab {{n.c4}}" onClick="{{n.to4}}">4 &middot; Spintax variants</button>
   </div>
 
-  <!-- ════════ 1 · ADMIN SETTINGS — one toggle, plus the spintax toggle ════════ -->
+  <!-- ════════ 1 · ADMIN SETTINGS – one toggle, plus the spintax toggle ════════ -->
   <sc-if value="{{n.s1}}" hint-placeholder-val="{{ true }}">
     <div style="flex-grow:1;min-height:0;display:flex;overflow:hidden;background:var(--sh-bg-primary);position:relative">
       <sc-if value="{{s.toastOn}}" hint-placeholder-val="{{ false }}">
@@ -2789,7 +2789,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <button class="btn btn-primary" style="width:80px;margin-top:var(--sh-space-5);opacity:.35;cursor:not-allowed">Save</button>
           </div>
 
-          <!-- ══ Pasting content — two toggles, nothing more ══ -->
+          <!-- ══ Pasting content – two toggles, nothing more ══ -->
           <div class="card">
             <div class="row" style="gap:6px">
               <span style="font-size:var(--sh-text-base);font-weight:var(--sh-font-semibold)">Pasting content</span>
@@ -2955,7 +2955,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             </sc-if>
             </div>
 
-            <!-- both standing rules, in the editor's own corner — no band -->
+            <!-- both standing rules, in the editor's own corner – no band -->
             <div class="corner">
               <sc-if value="{{c.chipOn}}" hint-placeholder-val="{{ false }}">
                 <div style="position:relative">
@@ -3245,17 +3245,17 @@ class Component extends DCLogic {
       screen:'s1',
       plain:true,
       // the sequence's "Remove styling automatically" Safety Setting. Lives per sequence
-      // (Sequences -> Sequence settings -> Safety settings), NOT in Admin settings — so it is
+      // (Sequences -> Sequence settings -> Safety settings), NOT in Admin settings – so it is
       // state here with no control on this screen, only the ambient readout in the composer.
       sendRule:true,
       // spintax variants inherit the editor's rule until someone unticks the box,
       // at which point spinPlain is the variant surface's own rule
-      // per-variant, not shared — enrolling A then B used to overwrite one shared
+      // per-variant, not shared – enrolling A then B used to overwrite one shared
       // snapshot, corrupting whichever variant's undo you reached for second
       spinInherit:true, spinPlain:true, vaPrevSpin:null, vbPrevSpin:null,
       toast:0, tip:false, spinTip:false,
       shell:'timed', stage:'empty', view:'plain', msg:null, seen:false, prevPlain:null, key:0,
-      // the chip is STANDING now, not earned — it shows from the first render, always
+      // the chip is STANDING now, not earned – it shows from the first render, always
       // stating the rule currently in force. chipEarned still suppresses the repeat toast
       // once a default has been accepted (msg drops out, chip just pulses); chipShow only
       // drives that pulse's restart, it no longer gates whether the chip is on screen.
@@ -3275,7 +3275,7 @@ class Component extends DCLogic {
     };
   }
   // one variant field. Variants take the editor's rule unless the settings card has been
-  // given a second one — so there is no flip and no prompt here: the rule is a setting,
+  // given a second one – so there is no flip and no prompt here: the rule is a setting,
   // decided in Admin settings, and the band only reports which one is in force.
   // navigation always clears the settings toast: it confirms a toggle made here,
   // never the act of arriving here (e.g. the spintax resting-line link).
@@ -3284,7 +3284,7 @@ class Component extends DCLogic {
   go(extra){ this.setState(Object.assign({toast:0, modalOpen:false}, extra)); }
 
   // every settings toggle commits immediately and confirms with the same toast, whose
-  // lifetime lives in state — a CSS fade alone leaves it 'on' forever and replays on re-mount
+  // lifetime lives in state – a CSS fade alone leaves it 'on' forever and replays on re-mount
   flash(patch){
     const n = this.state.toast + 1;
     this.setState(Object.assign({toast:n}, patch));
@@ -3293,7 +3293,7 @@ class Component extends DCLogic {
 
   // the chip is always on screen; this just restarts its brief highlight pulse after a
   // paste the writer already has a default for (alternating class names retart the CSS
-  // animation on a repeat paste — no timer needed, the animation reverts to base style
+  // animation on a repeat paste – no timer needed, the animation reverts to base style
   // itself once it finishes).
   flashChip(patch){
     this.setState(Object.assign({chipShow:this.state.chipShow+1}, patch || {}));
@@ -3307,7 +3307,7 @@ class Component extends DCLogic {
     const msg = s[k+'Msg'], seen = s[k+'Seen'], animKey = s[k+'Key'];
     const rule = this.spinRule();            // what the next paste into a variant WILL do
     const plain = s[k+'View']==='plain';     // what this field is showing right now
-    // variants clear themselves on the same terms as the body strip — one dismissal
+    // variants clear themselves on the same terms as the body strip – one dismissal
     // model across every surface. Alternating class names restart the CSS animation.
     const timed = s.shell==='timed';
     const put = (o) => { const n = {}; for (const key in o) n[k+key] = o[key]; this.setState(n); };
@@ -3315,7 +3315,7 @@ class Component extends DCLogic {
       showPlain: plain, showRich: !plain,
       msgOn: msg==='full' || msg==='short',
       doneOn: msg==='done',
-      // standing, like the composer's corner chip — states whichever rule is actually
+      // standing, like the composer's corner chip – states whichever rule is actually
       // in force, not only the plain direction
       restOn: msg===null,
       restText: rule
@@ -3325,7 +3325,7 @@ class Component extends DCLogic {
         ? (plain?'Formatting removed from your paste':'Formatting kept on your paste')
         : (plain?'Formatting removed':'Formatting kept'),
       // a tick claims the rule ran; once flipped away from it the receipt reports rather
-      // than confirms — amber info mark, not a tick (same logic as the composer)
+      // than confirms – amber info mark, not a tick (same logic as the composer)
       tickDisp: plain ? 'inline-block' : 'none',
       infoDisp: plain ? 'none' : 'inline-block',
       delta: plain ? '6.1 KB \u2192 0.4 KB' : '0.4 KB \u2192 6.1 KB',
@@ -3334,7 +3334,7 @@ class Component extends DCLogic {
       flipLabel: plain ? 'Keep formatting' : 'Make it plain',
       flip: ()=>put({View: plain?'rich':'plain'}),
       // costs more here than in the composer: variants cannot keep formatting while still
-      // following an editor that removes it, so accepting this breaks inheritance too —
+      // following an editor that removes it, so accepting this breaks inheritance too –
       // in either direction now, not only the one that used to be hard-coded
       promptOn: rule !== plain,
       promptDisp: (rule !== plain) ? 'inline-flex' : 'none',
@@ -3349,7 +3349,7 @@ class Component extends DCLogic {
       // reverts the setting AND the content, same reasoning as the composer's undo (S2-F5)
       undo: ()=>{ const prev = s[k+'PrevSpin'];
                   const n = prev ? {spinInherit:prev.inherit, spinPlain:prev.plain} : {};
-                  // derived from the restored rule (same reasoning as the composer's undo) —
+                  // derived from the restored rule (same reasoning as the composer's undo) –
                   // remembering the view at enrol time was a no-op, since the flip already
                   // happened before enrol runs, leaving it stuck diverged from the restored rule
                   if (prev) n[k+'View'] = (prev.inherit ? s.plain : prev.plain) ? 'plain' : 'rich';
@@ -3380,12 +3380,12 @@ class Component extends DCLogic {
         return;
       }
       // symmetric with the rule off: a paste always reports what the rule just did to it,
-      // whichever direction that is. First-run/condensed tracking is shared across both —
+      // whichever direction that is. First-run/condensed tracking is shared across both –
       // it is about whether THIS WRITER has seen a receipt before, not which rule is in force.
       const first = !s.seen;
       this.setState({stage:'pasted', view: s.plain?'plain':'rich', msg:first?'full':'short', seen:true, key:s.key+1});
     };
-    // standing, from the first render — states what the rule currently does, same as the
+    // standing, from the first render – states what the rule currently does, same as the
     // send-time indicator beside it. Pulses briefly (chipPulseCls) after a paste the writer
     // already has a default for, since the toast stays out of the way in that case.
     const chipOn = true;
@@ -3401,7 +3401,7 @@ class Component extends DCLogic {
 
       s:{ plainCls:s.plain?'tgl-on':'',
           // turning ON commits instantly, same as before. Turning OFF is the disabling
-          // direction — confirm first, and only flash() on Yes.
+          // direction – confirm first, and only flash() on Yes.
           tPlain:()=>{ if (s.plain) this.setState({confirmOpen:'editorOff'}); else this.flash({plain:true}); },
           toastOn:s.toast>0, toastCls:s.toast%2===0?'toast-a':'toast-b',
           plainDesc: s.plain
@@ -3409,7 +3409,7 @@ class Component extends DCLogic {
             : 'Formatting is kept exactly as pasted, including markup you cannot see. Scripts and stylesheets are always removed.',
 
           // unticking seeds the variant rule from the editor's current one, so nothing
-          // changes at the moment of unticking — only the ability to change it does.
+          // changes at the moment of unticking – only the ability to change it does.
           // Re-ticking is not risky and commits instantly; unticking is the disabling
           // direction and is confirmed first, same reasoning as tPlain.
           inhCls: s.spinInherit?'cbx-on':'',
@@ -3430,14 +3430,14 @@ class Component extends DCLogic {
           tTip:()=>this.setState({tip:!s.tip}) },
 
       // the confirm dialog for the two disabling actions above. Copy names the actual
-      // effect, not a restated toggle label — see the PRD's own reasoning per action.
+      // effect, not a restated toggle label – see the PRD's own reasoning per action.
       cm:{ open: s.confirmOpen!==null,
            title: s.confirmOpen==='editorOff'
              ? 'Turn off Paste as plain text?'
              : 'Give spintax variants their own paste rule?',
            body: s.confirmOpen==='editorOff'
-             ? 'Every member’s pastes will carry their full formatting and hidden markup straight into emails, with no automatic clean-up — until this is turned back on.'
-             : 'Variants stop following the Email editor setting. Change that setting later and variants won’t follow — you’re setting their rule separately from here on.',
+             ? 'Every member’s pastes will carry their full formatting and hidden markup straight into emails, with no automatic clean-up – until this is turned back on.'
+             : 'Variants stop following the Email editor setting. Change that setting later and variants won’t follow – you’re setting their rule separately from here on.',
            cancel: ()=>this.setState({confirmOpen:null}),
            yes: ()=>{
              if (s.confirmOpen==='editorOff') this.flash({plain:false, confirmOpen:null});
@@ -3448,49 +3448,49 @@ class Component extends DCLogic {
           ruleChip: s.plain ? 'Plain paste' : 'Keep formatting',
           chipOn,
           chipCls: chipPulseCls,
-          // waits for NO toast to be up — msg=null, not just msg!=='full'. A writer who goes
+          // waits for NO toast to be up – msg=null, not just msg!=='full'. A writer who goes
           // straight from the first toast into flip+enrol never sees msg leave 'full' for
           // anything but another toast ('done'), so this has to wait for silence, not just change.
           spotlightOn: !s.spotlightSeen && s.stage==='pasted' && s.msg === null,
-          spotlightCopy: `This chip is your standing paste rule — ${s.plain ? '"Paste as plain text"' : '"Keep formatting"'} is on for this workspace. Click it anytime to change it in Settings.`,
+          spotlightCopy: `This chip is your standing paste rule – ${s.plain ? '"Paste as plain text"' : '"Keep formatting"'} is on for this workspace. Click it anytime to change it in Settings.`,
           dismissSpotlight: () => this.setState({spotlightSeen:true}),
           empty:s.stage==='empty', pasted:s.stage==='pasted',
           showPlain:plain, showRich:!plain,
           previewText: plain
-            ? 'I noticed Northwind just opened a second warehouse in Pune — congratulations.'
-            : 'I noticed Northwind just opened a second warehouse in Pune — congratulations. (formatting carried through)',
+            ? 'I noticed Northwind just opened a second warehouse in Pune – congratulations.'
+            : 'I noticed Northwind just opened a second warehouse in Pune – congratulations. (formatting carried through)',
           msgOn:s.msg==='full'||s.msg==='short',
           doneOn:s.msg==='done',
           msgText: s.msg==='full'
             ? (plain?'Formatting removed from your paste':'Formatting kept on your paste')
             : (plain?'Formatting removed':'Formatting kept'),
           // a tick claims the rule ran. Once the writer flips this paste to formatted the rule was
-          // overridden, so the receipt reports rather than confirms — amber info mark, not a tick.
+          // overridden, so the receipt reports rather than confirms – amber info mark, not a tick.
           tickDisp: plain ? 'inline-block' : 'none',
           infoDisp: plain ? 'none' : 'inline-block',
           delta:plain?'38.4 KB \u2192 1.1 KB':'1.1 KB \u2192 38.4 KB',
           deltaColor:plain?'var(--sh-fg-success)':'var(--sh-fg-warning)',
-          // one short link does the flip — the message text already states which version is showing,
+          // one short link does the flip – the message text already states which version is showing,
           // so a segmented control was saying the same thing twice and forcing the label to wrap
           flipLabel: plain ? 'Keep formatting' : 'Make it plain',
           flip: ()=>this.setState({view: plain?'rich':'plain'}),
           // symmetric in both directions: the flip already changed THIS paste, so the prompt is
-          // not a second way to do that — it appears only once what's showing (`plain`, the local
+          // not a second way to do that – it appears only once what's showing (`plain`, the local
           // view) no longer matches the rule in force (`s.plain`), and it means "make that the
           // default". Same condition either way; no direction is hard-coded.
           promptOn: s.plain !== plain,
           enrolLabel: plain ? 'Always paste as plain text' : 'Always keep formatting',
-          // writes whichever value the writer is currently looking at — "make the version I'm
+          // writes whichever value the writer is currently looking at – "make the version I'm
           // looking at the default" (screen 3's own framing). Never hard-coded to one direction.
           enrol: () => this.setState({prevPlain:s.plain, plain:plain, msg:'done', chipEarned:true}),
           doneText: s.plain ? 'Pastes arrive as plain text from now on' : 'Pastes keep their formatting from now on',
-          // reverts the setting AND the content to their pre-enrol state (S2-F5) — an undo that put
+          // reverts the setting AND the content to their pre-enrol state (S2-F5) – an undo that put
           // the rule back but left the editor showing the enrolled version would be a half-undo
           undo:()=>{
             const restoredPlain = s.prevPlain!==null ? s.prevPlain : s.plain;
             this.setState({
               plain: restoredPlain,
-              // derived from the restored rule, not remembered from the flip — the flip's
+              // derived from the restored rule, not remembered from the flip – the flip's
               // view and the pre-flip view are the same value at enrol time, so "remembering"
               // it was a no-op that left view stuck diverged from the restored rule
               view: restoredPlain ? 'plain' : 'rich',
@@ -3510,10 +3510,10 @@ class Component extends DCLogic {
           paste:doPaste,
           pasteShort:()=>this.setState({stage:'pasted',view:'plain',msg:null}),
           type:()=>this.setState({msg:null}),
-          note: s.msg==='full' ? 'First rich paste — the toast carries the education, the delta and the flip. It floats above the band, and the band keeps stating the standing rule underneath it.'
-              : s.msg==='short' ? 'Seen before — condensed. The Always prompt still only appears once this paste is flipped away from the current rule; nothing else changes it.'
-              : s.msg==='done' ? 'The prompt wrote the toggle. Undo sits beside it, in the same toast — and puts the content back too, not just the setting.'
-              : 'No toast up right now — just the standing chip in the corner, always there. Paste from Word to see it react, whichever way the rule is currently set.' },
+          note: s.msg==='full' ? 'First rich paste – the toast carries the education, the delta and the flip. It floats above the band, and the band keeps stating the standing rule underneath it.'
+              : s.msg==='short' ? 'Seen before – condensed. The Always prompt still only appears once this paste is flipped away from the current rule; nothing else changes it.'
+              : s.msg==='done' ? 'The prompt wrote the toggle. Undo sits beside it, in the same toast – and puts the content back too, not just the setting.'
+              : 'No toast up right now – just the standing chip in the corner, always there. Paste from Word to see it react, whichever way the rule is currently set.' },
       m:{ open:s.modalOpen,
           close:()=>this.setState({modalOpen:false}),
           pasteA:()=>va.paste(), pasteB:()=>vb.paste() },
