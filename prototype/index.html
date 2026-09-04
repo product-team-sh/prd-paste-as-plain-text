@@ -2551,6 +2551,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
                box-shadow:var(--sh-shadow-tooltip); opacity:0; pointer-events:none;
                transition:opacity var(--sh-transition-fast); z-index:5; }
     .tt:hover .tt-body { opacity:1; }
+    /* the chip sits at the bottom of an overflow:hidden editor box – a downward
+       tooltip gets clipped there, so this variant opens upward instead, same
+       side as the spotlight it shares the slot with */
+    .tt-body-up { top:auto; bottom:calc(100% + 6px); }
     .iconbtn svg path { fill:var(--sh-gray-500); }
     .xbtn { display:flex; align-items:center; justify-content:center; width:20px; height:20px;
             border-radius:var(--sh-radius-sm); flex-shrink:0; color:var(--sh-gray-500);
@@ -2819,27 +2823,26 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               </div>
             </div>
 
-            <!-- variants inherit by default; the checkbox is the only thing standing between
-                 one rule and two, so it carries the resolved state as its own description -->
-            <div class="scope" style="margin-top:var(--sh-space-5)">Spintax variants</div>
-            <div class="trow" onClick="{{s.tInherit}}" style="margin-top:var(--sh-space-2)">
-              <span class="cbx {{s.inhCls}}"></span>
-              <div>
-                <span class="lbl">Same as email editor</span>
-                <p class="tdesc">{{s.inhDesc}}</p>
+            <!-- variants inherit by default and are the same rule until unticked, so the
+                 control nests as a child of Email editor rather than a second scope label –
+                 one indented block, left border, no heading of its own. The checkbox is the
+                 only thing standing between one rule and two, so it carries the resolved
+                 state on the same line as its own label. -->
+            <div class="own" style="margin-top:var(--sh-space-4)">
+              <div class="trow" onClick="{{s.tInherit}}">
+                <span class="cbx {{s.inhCls}}"></span>
+                <span class="lbl">{{s.inhLine}}</span>
               </div>
-            </div>
-            <sc-if value="{{s.spinOwn}}" hint-placeholder-val="{{ false }}">
-              <div class="own">
-                <div class="trow" onClick="{{s.tSpin}}">
+              <sc-if value="{{s.spinOwn}}" hint-placeholder-val="{{ false }}">
+                <div class="trow" onClick="{{s.tSpin}}" style="margin-top:var(--sh-space-3)">
                   <span class="tgl {{s.spinCls}}"></span>
                   <div>
                     <span class="lbl">Paste as plain text</span>
                     <p class="tdesc">{{s.spinDesc}}</p>
                   </div>
                 </div>
-              </div>
-            </sc-if>
+              </sc-if>
+            </div>
 
             <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:var(--sh-space-5)">
               <span class="code">Cmd+Shift+V</span><span class="cap">always pastes plain text and</span>
@@ -2958,8 +2961,11 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             <!-- both standing rules, in the editor's own corner – no band -->
             <div class="corner">
               <sc-if value="{{c.chipOn}}" hint-placeholder-val="{{ false }}">
-                <div style="position:relative">
+                <div class="tt" style="position:relative">
                   <button class="chip-rule {{c.chipCls}}" onClick="{{c.goSettings}}"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>{{c.ruleChip}}</button>
+                  <sc-if value="{{c.chipTipOn}}" hint-placeholder-val="{{ true }}">
+                    <span class="tt-body tt-body-up">{{c.chipTip}}</span>
+                  </sc-if>
                   <sc-if value="{{c.spotlightOn}}" hint-placeholder-val="{{ false }}">
                     <div class="spotlight in">
                       <p>{{c.spotlightCopy}}</p>
@@ -3128,7 +3134,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div class="st">
           <div class="st-h"><span class="st-n">A &middot; At rest</span><span class="cap">the chip is standing &mdash; it states the rule from the first load, before any paste has happened</span></div>
           <div class="corner corner-demo">
-            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Plain paste</button>
+            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Rule: Plain text</button>
             <span class="corner-div"></span>
             <span class="ambient"><span class="dot-send"></span><span class="corner-txt">Styling Removes Automatically</span></span>
           </div>
@@ -3141,14 +3147,14 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;color:var(--sh-fg-success)"><path fill-rule="evenodd" clip-rule="evenodd" d="M20.7071 6.30034C21.0976 6.69086 21.0976 7.32403 20.7071 7.71455L10.7071 17.7146C10.3166 18.1051 9.68342 18.1051 9.29289 17.7146L4.29289 12.7146C3.90237 12.324 3.90237 11.6909 4.29289 11.3003C4.68342 10.9098 5.31658 10.9098 5.70711 11.3003L10 15.5932L19.2929 6.30034C19.6834 5.90982 20.3166 5.90982 20.7071 6.30034Z" fill="currentColor"></path></svg>
               <span class="strip-txt">Formatting removed from your paste</span>
               <span class="rtoast-dot">&middot;</span>
-              <span class="strip-delta" style="color:var(--sh-fg-success)">38.4 KB &rarr; 1.1 KB</span>
+              <span class="strip-delta" style="color:var(--sh-fg-success)">97% lighter</span>
               <span class="rtoast-gap"></span>
-              <button class="btn-text">Keep formatting</button>
+              <button class="btn-text">Keep this formatted</button>
               <button class="xbtn"><span style="font-size:var(--sh-text-base);line-height:1">&times;</span></button>
             </div>
           </div>
           <div class="corner corner-demo">
-            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Plain paste</button>
+            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Rule: Plain text</button>
             <span class="corner-div"></span>
             <span class="ambient"><span class="dot-send"></span><span class="corner-txt">Styling Removes Automatically</span></span>
           </div>
@@ -3161,14 +3167,14 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;color:var(--sh-fg-success)"><path fill-rule="evenodd" clip-rule="evenodd" d="M20.7071 6.30034C21.0976 6.69086 21.0976 7.32403 20.7071 7.71455L10.7071 17.7146C10.3166 18.1051 9.68342 18.1051 9.29289 17.7146L4.29289 12.7146C3.90237 12.324 3.90237 11.6909 4.29289 11.3003C4.68342 10.9098 5.31658 10.9098 5.70711 11.3003L10 15.5932L19.2929 6.30034C19.6834 5.90982 20.3166 5.90982 20.7071 6.30034Z" fill="currentColor"></path></svg>
               <span class="strip-txt">Formatting removed</span>
               <span class="rtoast-dot">&middot;</span>
-              <span class="strip-delta" style="color:var(--sh-fg-success)">38.4 KB &rarr; 1.1 KB</span>
+              <span class="strip-delta" style="color:var(--sh-fg-success)">97% lighter</span>
               <span class="rtoast-gap"></span>
-              <button class="btn-text">Keep formatting</button>
+              <button class="btn-text">Keep this formatted</button>
               <button class="xbtn"><span style="font-size:var(--sh-text-base);line-height:1">&times;</span></button>
             </div>
           </div>
           <div class="corner corner-demo">
-            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Plain paste</button>
+            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Rule: Plain text</button>
             <span class="corner-div"></span>
             <span class="ambient"><span class="dot-send"></span><span class="corner-txt">Styling Removes Automatically</span></span>
           </div>
@@ -3181,16 +3187,16 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;color:var(--sh-fg-warning)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3ZM1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12Z" fill="currentColor"></path><path d="M12 10C12.5523 10 13 10.4477 13 11V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V11C11 10.4477 11.4477 10 12 10Z" fill="currentColor"></path><path d="M13.25 7.75C13.25 8.44036 12.6904 9 12 9C11.3096 9 10.75 8.44036 10.75 7.75C10.75 7.05964 11.3096 6.5 12 6.5C12.6904 6.5 13.25 7.05964 13.25 7.75Z" fill="currentColor"></path></svg>
               <span class="strip-txt">Formatting kept</span>
               <span class="rtoast-dot">&middot;</span>
-              <span class="strip-delta" style="color:var(--sh-fg-warning)">1.1 KB &rarr; 38.4 KB</span>
+              <span class="strip-delta" style="color:var(--sh-fg-warning)">97% heavier</span>
               <span class="rtoast-gap"></span>
-              <button class="btn-text">Make it plain</button>
+              <button class="btn-text">Make this plain</button>
               <span class="strip-div"></span>
               <button class="btn-set">Always keep formatting</button>
               <button class="xbtn"><span style="font-size:var(--sh-text-base);line-height:1">&times;</span></button>
             </div>
           </div>
           <div class="corner corner-demo">
-            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Plain paste</button>
+            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Rule: Plain text</button>
             <span class="corner-div"></span>
             <span class="ambient"><span class="dot-send"></span><span class="corner-txt">Styling Removes Automatically</span></span>
           </div>
@@ -3206,7 +3212,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
             </div>
           </div>
           <div class="corner corner-demo">
-            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Plain paste</button>
+            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Rule: Plain text</button>
             <span class="corner-div"></span>
             <span class="ambient"><span class="dot-send"></span><span class="corner-txt">Styling Removes Automatically</span></span>
           </div>
@@ -3215,12 +3221,12 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         <div class="st">
           <div class="st-h"><span class="st-n">G &middot; The paste after that</span><span class="cap">a default has been accepted, so the receipt has nothing left to ask &mdash; the standing chip pulses briefly to mark it (second row shows hover)</span></div>
           <div class="corner corner-demo">
-            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Plain paste</button>
+            <button class="chip-rule"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Rule: Plain text</button>
             <span class="corner-div"></span>
             <span class="ambient"><span class="dot-send"></span><span class="corner-txt">Styling Removes Automatically</span></span>
           </div>
           <div class="corner corner-demo">
-            <button class="chip-rule chip-hover"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Plain paste</button>
+            <button class="chip-rule chip-hover"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 12.8H3.4L2 11.4a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l3.4 3.4a1 1 0 0 1 0 1.4l-4 4M13.6 12.8H7.2M5.2 6.8 9.8 11.4"/></svg>Rule: Plain text</button>
             <span class="corner-div"></span>
             <span class="ambient"><span class="dot-send"></span><span class="corner-txt">Styling Removes Automatically</span></span>
           </div>
@@ -3328,10 +3334,10 @@ class Component extends DCLogic {
       // than confirms – amber info mark, not a tick (same logic as the composer)
       tickDisp: plain ? 'inline-block' : 'none',
       infoDisp: plain ? 'none' : 'inline-block',
-      delta: plain ? '6.1 KB \u2192 0.4 KB' : '0.4 KB \u2192 6.1 KB',
+      delta: plain ? '93% lighter' : '93% heavier',
       deltaColor: plain ? 'var(--sh-fg-success)' : 'var(--sh-fg-warning)',
       // same short link as the composer: the message already says which version is showing
-      flipLabel: plain ? 'Keep formatting' : 'Make it plain',
+      flipLabel: plain ? 'Keep this formatted' : 'Make this plain',
       flip: ()=>put({View: plain?'rich':'plain'}),
       // costs more here than in the composer: variants cannot keep formatting while still
       // following an editor that removes it, so accepting this breaks inheritance too –
@@ -3414,11 +3420,9 @@ class Component extends DCLogic {
           // direction and is confirmed first, same reasoning as tPlain.
           inhCls: s.spinInherit?'cbx-on':'',
           tInherit:()=>{ if (s.spinInherit) this.setState({confirmOpen:'spintaxUntick'}); else this.flash({spinInherit:true, spinPlain:s.plain}); },
-          inhDesc: s.spinInherit
-            ? (s.plain
-                ? 'Variants follow the rule above \u2014 pastes arrive as plain text.'
-                : 'Variants follow the rule above \u2014 pastes keep their formatting.')
-            : 'Variants use their own rule, set below. The editor above is unaffected.',
+          inhLine: 'Spintax variants: Same as email editor \u2013 ' + (s.spinInherit
+            ? (s.plain ? 'pastes arrive as plain text.' : 'pastes keep their formatting.')
+            : 'off, uses its own rule below.'),
           spinOwn: !s.spinInherit,
           spinCls: s.spinPlain?'tgl-on':'',
           tSpin:()=>this.flash({spinPlain:!s.spinPlain}),
@@ -3445,15 +3449,17 @@ class Component extends DCLogic {
            } },
 
       c:{ ruleName: s.plain ? 'Paste as plain text' : 'Keep formatting',
-          ruleChip: s.plain ? 'Plain paste' : 'Keep formatting',
+          ruleChip: s.plain ? 'Rule: Plain text' : 'Rule: Keep formatting',
           chipOn,
           chipCls: chipPulseCls,
           // waits for NO toast to be up – msg=null, not just msg!=='full'. A writer who goes
           // straight from the first toast into flip+enrol never sees msg leave 'full' for
           // anything but another toast ('done'), so this has to wait for silence, not just change.
           spotlightOn: !s.spotlightSeen && s.stage==='pasted' && s.msg === null,
-          spotlightCopy: `This chip is your standing paste rule – ${s.plain ? '"Paste as plain text"' : '"Keep formatting"'} is on for this workspace. Click it anytime to change it in Settings.`,
+          spotlightCopy: `This chip always shows your workspace's paste rule – right now, pasted content ${s.plain ? 'becomes plain text' : 'keeps its original formatting'}. Click it anytime to open Settings and change the rule.`,
           dismissSpotlight: () => this.setState({spotlightSeen:true}),
+          chipTipOn: !(!s.spotlightSeen && s.stage==='pasted' && s.msg === null),
+          chipTip: `Workspace paste rule: ${s.plain ? 'plain text' : 'keep formatting'} – click to change in Settings`,
           empty:s.stage==='empty', pasted:s.stage==='pasted',
           showPlain:plain, showRich:!plain,
           previewText: plain
@@ -3468,11 +3474,11 @@ class Component extends DCLogic {
           // overridden, so the receipt reports rather than confirms – amber info mark, not a tick.
           tickDisp: plain ? 'inline-block' : 'none',
           infoDisp: plain ? 'none' : 'inline-block',
-          delta:plain?'38.4 KB \u2192 1.1 KB':'1.1 KB \u2192 38.4 KB',
+          delta:plain?'97% lighter':'97% heavier',
           deltaColor:plain?'var(--sh-fg-success)':'var(--sh-fg-warning)',
           // one short link does the flip – the message text already states which version is showing,
           // so a segmented control was saying the same thing twice and forcing the label to wrap
-          flipLabel: plain ? 'Keep formatting' : 'Make it plain',
+          flipLabel: plain ? 'Keep this formatted' : 'Make this plain',
           flip: ()=>this.setState({view: plain?'rich':'plain'}),
           // symmetric in both directions: the flip already changed THIS paste, so the prompt is
           // not a second way to do that – it appears only once what's showing (`plain`, the local
