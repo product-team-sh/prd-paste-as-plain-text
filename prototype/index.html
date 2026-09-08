@@ -3176,7 +3176,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;color:var(--sh-fg-warning)"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3ZM1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12Z" fill="currentColor"></path><path d="M12 10C12.5523 10 13 10.4477 13 11V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V11C11 10.4477 11.4477 10 12 10Z" fill="currentColor"></path><path d="M13.25 7.75C13.25 8.44036 12.6904 9 12 9C11.3096 9 10.75 8.44036 10.75 7.75C10.75 7.05964 11.3096 6.5 12 6.5C12.6904 6.5 13.25 7.05964 13.25 7.75Z" fill="currentColor"></path></svg>
               <span class="strip-txt">Formatting kept</span>
               <span class="rtoast-gap"></span>
-              <button class="btn-text">Make this plain</button>
+              <button class="btn-text">Paste as plain text</button>
               <span class="strip-div"></span>
               <button class="btn-set">Always keep formatting</button>
               <button class="xbtn"><span style="font-size:var(--sh-text-base);line-height:1">&times;</span></button>
@@ -3323,7 +3323,7 @@ class Component extends DCLogic {
       infoDisp: plain ? 'none' : 'inline-block',
       deltaColor: plain ? 'var(--sh-fg-success)' : 'var(--sh-fg-warning)',
       // same short link as the composer: the message already says which version is showing
-      flipLabel: plain ? 'Keep this formatted' : 'Make this plain',
+      flipLabel: plain ? 'Keep this formatted' : 'Paste as plain text',
       flip: ()=>put({View: plain?'rich':'plain'}),
       // costs more here than in the composer: variants cannot keep formatting while still
       // following an editor that removes it, so accepting this breaks inheritance too –
@@ -3463,7 +3463,7 @@ class Component extends DCLogic {
           deltaColor:plain?'var(--sh-fg-success)':'var(--sh-fg-warning)',
           // one short link does the flip – the message text already states which version is showing,
           // so a segmented control was saying the same thing twice and forcing the label to wrap
-          flipLabel: plain ? 'Keep this formatted' : 'Make this plain',
+          flipLabel: plain ? 'Keep this formatted' : 'Paste as plain text',
           flip: ()=>this.setState({view: plain?'rich':'plain'}),
           // symmetric in both directions: the flip already changed THIS paste, so the prompt is
           // not a second way to do that – it appears only once what's showing (`plain`, the local
