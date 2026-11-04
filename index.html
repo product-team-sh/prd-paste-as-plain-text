@@ -180,13 +180,10 @@ figure img{width:100%;height:auto}
 <a class="toc-l3" href="#3-1-paste-in-the-email-body-and-the-paste-chip">3.1 Paste in the email body, and the paste chip</a>
 <a class="toc-l3" href="#3-2-the-switch-in-the-editor-s-menu">3.2 The switch in the editor's "•••" menu</a>
 <a class="toc-l3" href="#3-3-subject-line-and-spintax-variants">3.3 Subject line and spintax variants</a>
-<a class="toc-l2" href="#4-out-of-scope"><span class="toc-num">4</span>Out of scope</a>
-<a class="toc-l2" href="#5-cross-cutting"><span class="toc-num">5</span>Cross-cutting</a>
-<a class="toc-l2" href="#6-implementation-notes"><span class="toc-num">6</span>Implementation notes</a>
-<a class="toc-l2" href="#7-measurement"><span class="toc-num">7</span>Measurement</a>
-<a class="toc-l2" href="#8-rollout"><span class="toc-num">8</span>Rollout</a>
-<a class="toc-l2" href="#9-owners"><span class="toc-num">9</span>Owners</a>
-<a class="toc-l2" href="#appendix-reference-index"><span class="toc-num"></span>Appendix – reference index</a>
+<a class="toc-l2" href="#4-cross-cutting"><span class="toc-num">4</span>Cross-cutting</a>
+<a class="toc-l2" href="#5-implementation-notes"><span class="toc-num">5</span>Implementation notes</a>
+<a class="toc-l2" href="#6-measurement"><span class="toc-num">6</span>Measurement</a>
+<a class="toc-l2" href="#7-rollout"><span class="toc-num">7</span>Rollout</a>
   </nav>
   <main class="main">
 <header class="doc-header"><p class="eyebrow">Product Requirements Document</p><h1>PRD – Paste as plain text</h1></header>
@@ -599,18 +596,7 @@ figure img{width:100%;height:auto}
 </table></div>
 <hr />
 </section>
-<section id="4-out-of-scope" class="sec"><div class="sec-head"><span class="sec-num">4</span><h2>Out of scope</h2></div>
-
-<p>These stay exactly as they are today:</p>
-<ul>
-<li>Safety Settings;</li>
-<li>the format badge and its pop-up;</li>
-<li>the toolbar, including the Styling detected bar for styling added from it;</li>
-<li>paste in templates, Unified Inbox replies, task notes and the signature editor.</li>
-</ul>
-<hr />
-</section>
-<section id="5-cross-cutting" class="sec"><div class="sec-head"><span class="sec-num">5</span><h2>Cross-cutting</h2></div>
+<section id="4-cross-cutting" class="sec"><div class="sec-head"><span class="sec-num">4</span><h2>Cross-cutting</h2></div>
 
 <p><strong>Chip integrity, release blocker:</strong></p>
 <div class="tbl-wrap"><table>
@@ -678,7 +664,7 @@ figure img{width:100%;height:auto}
 </table></div>
 <hr />
 </section>
-<section id="6-implementation-notes" class="sec"><div class="sec-head"><span class="sec-num">6</span><h2>Implementation notes</h2></div>
+<section id="5-implementation-notes" class="sec"><div class="sec-head"><span class="sec-num">5</span><h2>Implementation notes</h2></div>
 
 <ul>
 <li><strong>The chip sits on top of an editor in an iframe.</strong> It must be positioned at the paste end and pinned to the body's edges while scrolling (§3.1). <strong>Resolve before estimation:</strong> how the chip tracks the paste end inside the TinyMCE iframe, and that "Ctrl alone" is free in the editor and the browsers we support.</li>
@@ -693,7 +679,7 @@ figure img{width:100%;height:auto}
 </ul>
 <hr />
 </section>
-<section id="7-measurement" class="sec"><div class="sec-head"><span class="sec-num">7</span><h2>Measurement</h2></div>
+<section id="6-measurement" class="sec"><div class="sec-head"><span class="sec-num">6</span><h2>Measurement</h2></div>
 
 <p><strong>Privacy:</strong> never log pasted content, email text or URLs. Log only the kinds of formatting removed and the sizes.</p>
 <div class="tbl-wrap"><table>
@@ -798,7 +784,7 @@ figure img{width:100%;height:auto}
 <p>Instrumentation ships with the feature.</p>
 <hr />
 </section>
-<section id="8-rollout" class="sec"><div class="sec-head"><span class="sec-num">8</span><h2>Rollout</h2></div>
+<section id="7-rollout" class="sec"><div class="sec-head"><span class="sec-num">7</span><h2>Rollout</h2></div>
 
 <p>Every user with the feature gets the same default.</p>
 <div class="tbl-wrap"><table>
@@ -827,24 +813,7 @@ figure img{width:100%;height:auto}
 </tr>
 </tbody>
 </table></div>
-<p>No stage starts before the "resolve before estimation" items in §6 are settled. The help article on pasting is updated before stage 3.</p>
-<hr />
-</section>
-<section id="9-owners" class="sec"><div class="sec-head"><span class="sec-num">9</span><h2>Owners</h2></div>
-
-<ul>
-<li><strong>Priority:</strong> P1 (assumed; Hitesh to confirm). <strong>Target:</strong> after estimation. <strong>Release gate:</strong> §8 stage 1.</li>
-<li>Dev: Sunny (to confirm) · QA lead for the P-F1 sign-off: name to confirm · Tech review: Rajat · PM: Hitesh · Help article: CS, name to confirm.</li>
-</ul>
-<hr />
-</section>
-<section id="appendix-reference-index" class="sec"><div class="sec-head"><h2>Appendix – reference index</h2></div>
-
-<ul>
-<li><strong>Design of record:</strong> <a href="prototype/index.html">the clickable prototype</a>. Section 2 is the live paste simulator; section 3 has the chip states and the placement rules; section 4 shows what lands under each setting; section 5 covers the subject and spintax. Production Saleshandy webui is the visual source.</li>
-<li><strong>Code read:</strong> webui <code>aeda4e3</code> (16 Oct) and <code>c9feb45</code> (12 Oct); email-composer <code>37b1fb6</code> (12 Oct). Links are inline above.</li>
-<li><strong>Data:</strong> Metabase db 2, run 12 Oct 2026.</li>
-</ul></section>
+<p>No stage starts before the "resolve before estimation" items in §5 are settled. The help article on pasting is updated before stage 3.</p></section>
 
   </main>
 </div>

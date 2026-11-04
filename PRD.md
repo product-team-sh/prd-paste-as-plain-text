@@ -160,18 +160,7 @@ Applies to every paste or drop into a sequence step's email body.
 
 ---
 
-## 4. Out of scope
-
-These stay exactly as they are today:
-
-- Safety Settings;
-- the format badge and its pop-up;
-- the toolbar, including the Styling detected bar for styling added from it;
-- paste in templates, Unified Inbox replies, task notes and the signature editor.
-
----
-
-## 5. Cross-cutting
+## 4. Cross-cutting
 
 **Chip integrity, release blocker:**
 
@@ -193,7 +182,7 @@ These stay exactly as they are today:
 
 ---
 
-## 6. Implementation notes
+## 5. Implementation notes
 
 - **The chip sits on top of an editor in an iframe.** It must be positioned at the paste end and pinned to the body's edges while scrolling (§3.1). **Resolve before estimation:** how the chip tracks the paste end inside the TinyMCE iframe, and that "Ctrl alone" is free in the editor and the browsers we support.
 - **"Lands as Remove Styling will send it" must match the send step.** The send step's cleanup is [parse-content.ts](https://github.com/saleshandy/saleshandy-email-composer/blob/37b1fb6b11691d5d8ffdb50045fa9bcc378e7432/src/common/utils/parse-content.ts), applied at [app.service.ts L1397](https://github.com/saleshandy/saleshandy-email-composer/blob/37b1fb6b11691d5d8ffdb50045fa9bcc378e7432/src/app.service.ts#L1397-L1405). Paste needs identical output, held to one shared test set. **Resolve before estimation:** one shared implementation, or two with shared tests.
@@ -206,7 +195,7 @@ These stay exactly as they are today:
 
 ---
 
-## 7. Measurement
+## 6. Measurement
 
 **Privacy:** never log pasted content, email text or URLs. Log only the kinds of formatting removed and the sizes.
 
@@ -248,7 +237,7 @@ Instrumentation ships with the feature.
 
 ---
 
-## 8. Rollout
+## 7. Rollout
 
 Every user with the feature gets the same default.
 
@@ -258,19 +247,4 @@ Every user with the feature gets the same default.
 | 2 | 5% of accounts | No guardrail breached for one week |
 | 3 | 100% | No guardrail breached at 5% |
 
-No stage starts before the "resolve before estimation" items in §6 are settled. The help article on pasting is updated before stage 3.
-
----
-
-## 9. Owners
-
-- **Priority:** P1 (assumed; Hitesh to confirm). **Target:** after estimation. **Release gate:** §8 stage 1.
-- Dev: Sunny (to confirm) · QA lead for the P-F1 sign-off: name to confirm · Tech review: Rajat · PM: Hitesh · Help article: CS, name to confirm.
-
----
-
-## Appendix – reference index
-
-- **Design of record:** [the clickable prototype](prototype/index.html). Section 2 is the live paste simulator; section 3 has the chip states and the placement rules; section 4 shows what lands under each setting; section 5 covers the subject and spintax. Production Saleshandy webui is the visual source.
-- **Code read:** webui `aeda4e3` (16 Oct) and `c9feb45` (12 Oct); email-composer `37b1fb6` (12 Oct). Links are inline above.
-- **Data:** Metabase db 2, run 12 Oct 2026.
+No stage starts before the "resolve before estimation" items in §5 are settled. The help article on pasting is updated before stage 3.
