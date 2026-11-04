@@ -151,12 +151,12 @@ Applies to every paste or drop into a sequence step's email body.
 ### 3.3 Subject line and spintax variants
 
 - **Subject:** a paste is always plain text, on one line, with no chip, whatever the switch.
-- **Spintax variant field:** a paste is always plain text, with no chip. The field shows "Variants are saved as plain text." under the inputs.
+- **Spintax variant field:** a paste is always plain text, with no chip. The field shows "Only text is allowed in spintax." under the inputs.
 
 | ID | Case | Expected | P |
 |---|---|---|---|
 | F-1 | Paste the P-1 draft into the subject, switch off | One line of plain text; no chip | P0 |
-| F-2 | Paste the P-1 draft into a variant, switch off | Plain text; no chip; the note visible | P0 |
+| F-2 | Paste the P-1 draft into a variant, switch off | Plain text; no chip; "Only text is allowed in spintax." visible | P0 |
 
 ---
 

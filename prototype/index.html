@@ -327,7 +327,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 <div class="page">
   <header class="bhead">
     <h1>Paste as plain text</h1>
-    <p class="lede">Prototype for <a href="../">PRD – Paste as plain text (v4)</a>, 4 Nov 2026. Production screens with the new parts drawn in. Safety Settings stay as they are. Nothing is built.</p>
+    <p class="lede">Prototype for <a href="../">PRD – Paste as plain text</a>, 4 Nov 2026. Production screens with the new parts drawn in. Safety Settings stay as they are. Nothing is built.</p>
     <nav class="toc" aria-label="Sections">
       <a href="#s1"><b>1</b> Summary</a><a href="#s2"><b>2</b> Paste simulator</a><a href="#s3"><b>3</b> Paste chip</a><a href="#s4"><b>4</b> What lands</a>
       <a href="#s5"><b>5</b> Edge cases</a><a href="#s6"><b>6</b> Decisions</a>
@@ -1126,13 +1126,13 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
 
 /* ═════ section 5: edge surfaces ═════ */
 (function(){
-  var subj = '<div><h3>Subject line</h3><div class="e-surf e-subj"><div class="s-steph" style="padding:0;height:auto;border:0;margin-bottom:16px"><span class="s-chip">Step 1 <span>A</span></span><span class="s-type">' + pi('Mail', 18) + 'Email</span></div><div class="s-subj" style="margin:0"><span class="s-k">Subject</span><span class="s-v">Saw Northwind just opened a second warehouse in Pune</span><span class="s-g">' + ic('smile') + '{{}} {|}</span></div><div class="s-preh" style="margin:6px 0 0">Set Pre-Header</div>' + frameHTML(1, STATE_BODY, null) + '</div><p class="mini-cap">Always plain text. No notice.</p></div>';
+  var subj = '<div><h3>Subject line</h3><div class="e-surf e-subj"><div class="s-steph" style="padding:0;height:auto;border:0;margin-bottom:16px"><span class="s-chip">Step 1 <span>A</span></span><span class="s-type">' + pi('Mail', 18) + 'Email</span></div><div class="s-subj" style="margin:0"><span class="s-k">Subject</span><span class="s-v">Saw Northwind just opened a second warehouse in Pune</span><span class="s-g">' + ic('smile') + '{{}} {|}</span></div><div class="s-preh" style="margin:6px 0 0">Set Pre-Header</div>' + frameHTML(1, STATE_BODY, null) + '</div><p class="mini-cap">Always plain text, on one line. No paste chip.</p></div>';
   var spin = '<div><h3>Spintax variant field</h3><div class="e-surf e-modal"><div class="e-mh"><span>Add Spintax</span>' + pi('Cross', 18) + '</div><div class="e-mb">' +
       '<div class="e-var"><span class="e-vin">Worth a 15-minute look?</span>' + pi('Cross') + '</div>' +
       '<div class="e-var"><span class="e-vin">Open to a quick call next week?</span>' + pi('Cross') + '</div>' +
       '<div class="e-var"><span class="e-vin focus">Saw Northwind just opened a second warehouse in Pune</span>' + pi('Cross') + '</div>' +
-      '<p class="e-note">' + pi('InfoCircle', 14) + 'Variants are saved as plain text.</p>' +
-      '<span class="e-add">+ Add Spin</span></div><div class="e-mf"><button class="btn btn-s" type="button">Cancel</button><button class="btn btn-p" type="button">Insert</button></div></div><p class="mini-cap">Always plain text. No Undo; the field\'s note says why.</p></div>';
+      '<p class="e-note">' + pi('InfoCircle', 14) + 'Only text is allowed in spintax.</p>' +
+      '<span class="e-add">+ Add Spin</span></div><div class="e-mf"><button class="btn btn-s" type="button">Cancel</button><button class="btn btn-p" type="button">Insert</button></div></div><p class="mini-cap">Only text: a paste lands as plain text, with no paste chip. The note under the inputs says so.</p></div>';
   $('edges').innerHTML = subj + spin;
 })();
 
