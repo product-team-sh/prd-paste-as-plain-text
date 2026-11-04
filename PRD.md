@@ -262,16 +262,7 @@ No stage starts before the "resolve before estimation" items in §6 are settled.
 
 ---
 
-## 9. Open questions
-
-| # | Question | Recommendation | Blocking |
-|---|---|---|---|
-| 1 | Does Dhruv agree that, with the switch off, pastes follow today's Safety Settings? | Confirm before dev review | Yes |
-| 2 | Is "Ctrl alone" free in TinyMCE and our browsers? | If not, Alt+Ctrl+V opens the menu; Tab still reaches the chip | Yes |
-
----
-
-## 10. Owners
+## 9. Owners
 
 - **Priority:** P1 (assumed; Hitesh to confirm). **Target:** after estimation. **Release gate:** §8 stage 1.
 - Dev: Sunny (to confirm) · QA lead for the P-F1 sign-off: name to confirm · Tech review: Rajat · PM: Hitesh · Help article: CS, name to confirm.
