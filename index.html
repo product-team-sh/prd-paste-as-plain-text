@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Paste as plain text (v4)</title>
+<title>Paste as plain text</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
 :root{
@@ -174,7 +174,6 @@ figure img{width:100%;height:auto}
 <div class="shell">
   <nav class="sidebar">
     <p class="sidebar-title">Contents</p>
-<a class="toc-l2" href="#0-what-changed-since-v2-2-and-v3"><span class="toc-num">0</span>What changed since v2.2 and v3</a>
 <a class="toc-l2" href="#1-problem"><span class="toc-num">1</span>Problem</a>
 <a class="toc-l2" href="#2-why-this-approach"><span class="toc-num">2</span>Why this approach</a>
 <a class="toc-l2" href="#3-what-we-re-building"><span class="toc-num">3</span>What we're building</a>
@@ -194,75 +193,12 @@ figure img{width:100%;height:auto}
 <a class="toc-l2" href="#appendix-reference-index"><span class="toc-num"></span>Appendix – reference index</a>
   </nav>
   <main class="main">
-<header class="doc-header"><p class="eyebrow">Product Requirements Document</p><h1>PRD – Paste as plain text (v4)</h1></header>
+<header class="doc-header"><p class="eyebrow">Product Requirements Document</p><h1>PRD – Paste as plain text</h1></header>
 <p><strong>Design of record:</strong> <a href="prototype/index.html">clickable prototype</a> · <strong>Status:</strong> Ready for review</p>
 <hr />
-<section id="0-what-changed-since-v2-2-and-v3" class="sec"><div class="sec-head"><span class="sec-num">0</span><h2>What changed since v2.2 and v3</h2></div>
-
-<p>v2.2 (<a href="v2.3/">this site, archived at v2.3</a>) is what <a href="https://github.com/saleshandy/saleshandy-webui/pull/8129">webui#8129</a> and <a href="https://github.com/saleshandy/saleshandy-edge/pull/11339">edge#11339</a> were built from. v3 (<a href="https://product-team-sh.github.io/prd-pasting-styled-content/">prd-pasting-styled-content</a>) followed it. v4 replaces both.</p>
-<div class="tbl-wrap"><table>
-<thead>
-<tr>
-<th>#</th>
-<th>v2.2 / v3 said</th>
-<th>v4 says</th>
-<th>Why</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>v2.2: a personal "Email Editor" settings page. v3: no paste setting; paste follows Remove Styling</td>
-<td>One per-user switch, <strong>Always paste as plain text</strong>, in the editor's "•••" menu and in the paste chip</td>
-<td>The switch sits where pasting happens. Pasting is a personal habit, not a sequence choice</td>
-</tr>
-<tr>
-<td>2</td>
-<td>v2.2: a receipt, then a one-step ⌘Z back to the original. v3: the Styling detected bar</td>
-<td>A <strong>paste chip</strong> at the end of the paste switches it between Plain text and Keep formatting, both ways, as often as wanted. Ctrl+Z works as normal</td>
-<td>One control, both directions, no hidden undo levels</td>
-</tr>
-<tr>
-<td>3</td>
-<td>v3: Keep on the Styling detected bar turns Remove Styling off for the sequence</td>
-<td>A paste never shows the bar and never changes a sequence setting. The bar stays, unchanged, for styling added from the toolbar</td>
-<td>The silent sequence write came from pastes</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Spintax: v2.2 had an override; v3 showed the same bar in variants</td>
-<td>Variants are always plain text, with a note and no chip</td>
-<td>Saving keeps only the text anyway</td>
-</tr>
-<tr>
-<td>5</td>
-<td>v3 rewrote the Remove Styling description</td>
-<td>Safety Settings are untouched: names, layout, values, saving</td>
-<td>Scope is paste only</td>
-</tr>
-</tbody>
-</table></div>
-<ul>
-<li><strong>Void from v2.2:</strong><ul>
-<li>D2 to D6.</li>
-<li>S1-1 to S1-18: the Email Editor settings page is gone.</li>
-<li>S2-F0 to S2-F6 and S2-1 to S2-37: the receipt and the one-step ⌘Z model are gone.</li>
-<li>S3-1 to S3-4: there is no spintax override and no receipt in variants.</li>
-<li>D1 is partly carried: the setting is still per user, but its home and name change (row 1).</li>
-</ul>
-</li>
-<li><strong>Void from v3:</strong> A1 to A12 and A17 to A20. They test the bar on paste, Keep writing the setting, and the "answered" state, none of which applies to a paste any more.</li>
-<li><strong>Carried forward unchanged:</strong><ul>
-<li>v2.2 X-1 to X-7 (chip integrity) and S3-5 to S3-7 (merge-tag and spintax chips between the body and variants), kept in §8.</li>
-<li>v3 A13 to A16 become P-6, P-7, P-9 and P-8 below.</li>
-</ul>
-</li>
-</ul>
-<hr />
-</section>
 <section id="1-problem" class="sec"><div class="sec-head"><span class="sec-num">1</span><h2>Problem</h2></div>
 
-<p><strong>Users paste without seeing what comes in.</strong> People paste drafts from Word, Google Docs, web pages and old emails, and invisible markup comes with the text: a one-paragraph Word paste carries 38.4 KB of HTML for 1.1 KB of text (measured, v2.2 test, Sep 2026). The step editor keeps it, because its own paste cleanup is switched off (<a href="https://github.com/saleshandy/saleshandy-webui/blob/aeda4e3654fd76c54725fd676463c3694a35eed3/src/shared/editor/editor.tsx#L1374">editor.tsx L1374</a>, webui <code>aeda4e3</code>, 16 Oct 2026).</p>
+<p><strong>Users paste without seeing what comes in.</strong> People paste drafts from Word, Google Docs, web pages and old emails, and invisible markup comes with the text: a one-paragraph Word paste carries 38.4 KB of HTML for 1.1 KB of text (measured, one-paragraph Word paste, Sep 2026). The step editor keeps it, because its own paste cleanup is switched off (<a href="https://github.com/saleshandy/saleshandy-webui/blob/aeda4e3654fd76c54725fd676463c3694a35eed3/src/shared/editor/editor.tsx#L1374">editor.tsx L1374</a>, webui <code>aeda4e3</code>, 16 Oct 2026).</p>
 <p><strong>A paste can change the whole sequence.</strong> Remove Styling Automatically is on for 81.8% of sequences (measured, Metabase, sequences created 1 Jul to 12 Oct 2026). Under it, a styled paste brings up the "Styling detected" bar, and its Keep button turns Remove Styling off for every email in the sequence (<a href="https://github.com/saleshandy/saleshandy-webui/blob/c9feb458b3d4d35918d4196d2b265061fe3f9ece/src/components/sequence/shared/modals/email-modal/email-modal.tsx#L1116-L1197">email-modal.tsx L1116–1197</a>).</p>
 <p><strong>What the fix itself creates:</strong></p>
 <ul>
@@ -287,11 +223,11 @@ figure img{width:100%;height:auto}
 <td>The editor still shows formatting Remove Styling won't send</td>
 </tr>
 <tr>
-<td>A paste setting per sequence (v3)</td>
+<td>A paste setting per sequence</td>
 <td>A personal habit, answered again in every sequence</td>
 </tr>
 <tr>
-<td>An account setting set by admins (edge#11339)</td>
+<td>An account setting set by admins</td>
 <td>One person's choice applies to everyone</td>
 </tr>
 <tr>
@@ -299,13 +235,13 @@ figure img{width:100%;height:auto}
 <td>Deliberate formatted pastes would need retyping. Full formatting (Remove Styling off) is used by 16.7% of sequences (measured, same query)</td>
 </tr>
 <tr>
-<td>A notice bar with Undo under the paste (board of 3 Nov)</td>
-<td>Four notice states, Undo only one way, and an "Always keep?" prompt. The chip replaces all of it with one control</td>
+<td>A notice bar with Undo under the paste</td>
+<td>Several notice states, Undo only one way, and an "Always keep?" prompt; the chip does it with one control</td>
 </tr>
 </tbody>
 </table></div>
 <p><strong>Not claimed:</strong> that styling, or Remove Styling, changes deliverability. No test, ticket or data behind that claim was found.</p>
-<p><strong>The bar:</strong> Ctrl+Shift+V is the plain paste people already know, and a paste-options chip is what Word, Outlook and Sheets use. v4 makes the first the default and the second the way back.</p>
+<p><strong>The bar:</strong> Ctrl+Shift+V is the plain paste people already know, and a paste-options chip is what Word, Outlook and Sheets use. Here the first is the default and the second is the way back.</p>
 <hr />
 </section>
 <section id="3-what-we-re-building" class="sec"><div class="sec-head"><span class="sec-num">3</span><h2>What we're building</h2></div>
@@ -360,8 +296,8 @@ figure img{width:100%;height:auto}
 </section>
 <section id="5-decisions" class="sec"><div class="sec-head"><span class="sec-num">5</span><h2>Decisions</h2></div>
 
-<p><strong>D1 – Plain paste is exactly Ctrl+Shift+V.</strong> Paragraphs and line breaks stay; links, bold, lists, images and fonts go. <strong>Consequence to accept explicitly:</strong> a pasted CTA link needs Keep formatting. The chip does not say "link removed" (decided 4 Nov), so the user must notice the missing link themselves.</p>
-<p><strong>D2 – The switch is per user, named "Always paste as plain text", and lives in the editor's "•••" menu and in the chip.</strong> Reverses v2.2 D1's home (a User Settings page). <strong>Consequence to accept explicitly:</strong> there is no settings page for it.</p>
+<p><strong>D1 – Plain paste is exactly Ctrl+Shift+V.</strong> Paragraphs and line breaks stay; links, bold, lists, images and fonts go. <strong>Consequence to accept explicitly:</strong> a pasted CTA link needs Keep formatting. The chip does not say "link removed", so the user must notice the missing link themselves.</p>
+<p><strong>D2 – The switch is per user, named "Always paste as plain text", and lives in the editor's "•••" menu and in the chip.</strong> <strong>Consequence to accept explicitly:</strong> there is no settings page for it.</p>
 <p><strong>D3 – With the switch off, a paste follows the sequence's Safety Settings as they are today:</strong></p>
 <ul>
 <li>Remove Styling Automatically: it lands as it will be sent.</li>
@@ -562,7 +498,7 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td>P-9</td>
-<td>Paste literal <code>{{First Name}}</code> and <code>{spin}a\|b{endspin}</code></td>
+<td>Paste literal <code>{{First Name}}</code> and <code>{spin}a&#124;b{endspin}</code></td>
 <td>Both become chips</td>
 <td>P0</td>
 </tr>
@@ -790,7 +726,43 @@ figure img{width:100%;height:auto}
 </section>
 <section id="8-cross-cutting" class="sec"><div class="sec-head"><span class="sec-num">8</span><h2>Cross-cutting</h2></div>
 
-<p><strong>Chip integrity, carried from v2.2, release blocker:</strong> X-1 to X-7 and S3-5 to S3-7 apply unchanged. Merge-tag and spintax chips survive copy and paste within the body, to and from variants and between steps; pasting over chips removes them cleanly; malformed spintax stays literal.</p>
+<p><strong>Chip integrity, release blocker:</strong></p>
+<div class="tbl-wrap"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Case</th>
+<th>Expected</th>
+<th>P</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X-1</td>
+<td>Copy and paste each of the five merge-tag and spintax chip types within the body, body to variant, variant to body, and between steps</td>
+<td>Every chip survives as a chip</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>X-2</td>
+<td>Paste over a selection that contains chips</td>
+<td>The chips are removed cleanly; no broken fragments</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>X-3</td>
+<td>Save and reload after X-1</td>
+<td>Every chip is still a chip</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>X-4</td>
+<td>Paste malformed spintax (<code>{spin}a&#124;b</code> with no end)</td>
+<td>Stays literal text; no partial chip</td>
+<td>P0</td>
+</tr>
+</tbody>
+</table></div>
 <p><strong>Keyboard:</strong></p>
 <div class="tbl-wrap"><table>
 <thead>
@@ -825,15 +797,17 @@ figure img{width:100%;height:auto}
 <ul>
 <li><strong>The chip sits on top of an editor in an iframe.</strong> It must be positioned at the paste end and pinned to the body's edges while scrolling (§6.1). <strong>Resolve before estimation:</strong> how the chip tracks the paste end inside the TinyMCE iframe, and that "Ctrl alone" is free in the editor and the browsers we support.</li>
 <li><strong>"Lands as Remove Styling will send it" must match the send step.</strong> The send step's cleanup is <a href="https://github.com/saleshandy/saleshandy-email-composer/blob/37b1fb6b11691d5d8ffdb50045fa9bcc378e7432/src/common/utils/parse-content.ts">parse-content.ts</a>, applied at <a href="https://github.com/saleshandy/saleshandy-email-composer/blob/37b1fb6b11691d5d8ffdb50045fa9bcc378e7432/src/app.service.ts#L1397-L1405">app.service.ts L1397</a>. Paste needs identical output, held to one shared test set. <strong>Resolve before estimation:</strong> one shared implementation, or two with shared tests.</li>
-<li><strong>The step editor shares one component</strong> with the signature, template, inbox-reply and task-note editors (code search, 3 Nov). The new paste rules must be switched on for the sequence step editor only.</li>
-<li><strong>The per-user switch:</strong> edge#11339 already returns <code>pasteAsPlainText</code> (default on) from <code>/user/meta</code>, but per account and admin-only. It must become per user and changeable by the user. edge#11339 must not merge as is.</li>
+<li><strong>The step editor shares one component</strong> with the signature, template, inbox-reply and task-note editors (code search). The new paste rules must be switched on for the sequence step editor only.</li>
+<li><strong>The per-user switch:</strong> <code>/user/meta</code> returns <code>pasteAsPlainText</code> (default on) per account and admin-only in <a href="https://github.com/saleshandy/saleshandy-edge/pull/11339">edge#11339</a>. It must be stored per user and changeable by the user.</li>
 <li>
-<p><strong>Resolve before estimation:</strong>
-  1. With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for Keep formatting and switch-off. Assumed, not tested.
-  2. The "would look different" check behind the chip is reliable on the same samples. Assumed, not tested.</p>
+<p><strong>Resolve before estimation:</strong></p>
+<ol>
+<li>With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for Keep formatting and switch-off. Assumed, not tested.</li>
+<li>The "would look different" check behind the chip is reliable on the same samples. Assumed, not tested.</li>
+</ol>
 </li>
 <li>
-<p><strong>Not adopted:</strong> links kept in plain paste (D1); a "link removed" label (4 Nov); an icon-only chip, which doesn't say the paste changed; a per-sequence or per-account setting (§2).</p>
+<p><strong>Not adopted:</strong> links kept in plain paste (D1); a "link removed" label; an icon-only chip, which doesn't say the paste changed; a per-sequence or per-account setting (§2).</p>
 </li>
 </ul>
 <hr />
@@ -921,7 +895,7 @@ figure img{width:100%;height:auto}
 <tbody>
 <tr>
 <td>Chip integrity</td>
-<td>Any X-1 to X-7 failure in production</td>
+<td>Any X-1 to X-4 failure in production</td>
 <td>Halt rollout</td>
 </tr>
 <tr>
@@ -1020,7 +994,7 @@ figure img{width:100%;height:auto}
 <li><strong>Target:</strong> TBD after estimation.</li>
 <li><strong>Release gate:</strong> §11 stage 1.</li>
 <li><strong>Named owners still required:</strong><ul>
-<li>Dev: Sunny, who built #8129 (to confirm).</li>
+<li>Dev: Sunny (to confirm).</li>
 <li>QA lead for the P-F1 sign-off: name to confirm.</li>
 <li>Tech review: Rajat.</li>
 <li>PM: Hitesh.</li>
@@ -1036,16 +1010,6 @@ figure img{width:100%;height:auto}
 <li><strong>Design of record:</strong> <a href="prototype/index.html">the clickable prototype</a>. Section 2 is the live paste simulator; section 3 has the chip states and the placement rules; section 4 shows what lands under each setting; section 5 covers the subject and spintax. Production Saleshandy webui is the visual source.</li>
 <li><strong>Code read:</strong> webui <code>aeda4e3</code> (16 Oct) and <code>c9feb45</code> (12 Oct); email-composer <code>37b1fb6</code> (12 Oct). Links are inline above.</li>
 <li><strong>Data:</strong> Metabase db 2, run 12 Oct 2026.</li>
-<li><strong>Superseded:</strong><ul>
-<li><a href="v2.3/">PRD v2.2 / prototype v2.3</a>, archived on this site;</li>
-<li><a href="https://product-team-sh.github.io/prd-pasting-styled-content/">PRD v3</a>.</li>
-</ul>
-</li>
-<li><strong>In-flight PRs built from earlier versions:</strong><ul>
-<li><a href="https://github.com/saleshandy/saleshandy-webui/pull/8129">webui#8129</a> (open);</li>
-<li><a href="https://github.com/saleshandy/saleshandy-edge/pull/11339">edge#11339</a> (approved, not merged; must not merge as is).</li>
-</ul>
-</li>
 </ul></section>
 
   </main>
