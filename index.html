@@ -175,21 +175,18 @@ figure img{width:100%;height:auto}
   <nav class="sidebar">
     <p class="sidebar-title">Contents</p>
 <a class="toc-l2" href="#1-problem"><span class="toc-num">1</span>Problem</a>
-<a class="toc-l2" href="#2-why-this-approach"><span class="toc-num">2</span>Why this approach</a>
-<a class="toc-l2" href="#3-what-we-re-building"><span class="toc-num">3</span>What we're building</a>
-<a class="toc-l2" href="#4-user-stories"><span class="toc-num">4</span>User stories</a>
-<a class="toc-l2" href="#5-decisions"><span class="toc-num">5</span>Decisions</a>
-<a class="toc-l2" href="#6-surfaces"><span class="toc-num">6</span>Surfaces</a>
-<a class="toc-l3" href="#6-1-paste-in-the-email-body-and-the-paste-chip">6.1 Paste in the email body, and the paste chip</a>
-<a class="toc-l3" href="#6-2-the-switch-in-the-editor-s-menu">6.2 The switch in the editor's "•••" menu</a>
-<a class="toc-l3" href="#6-3-subject-line-and-spintax-variants">6.3 Subject line and spintax variants</a>
-<a class="toc-l2" href="#7-reconciliation-with-existing-behaviour"><span class="toc-num">7</span>Reconciliation with existing behaviour</a>
-<a class="toc-l2" href="#8-cross-cutting"><span class="toc-num">8</span>Cross-cutting</a>
-<a class="toc-l2" href="#9-implementation-notes"><span class="toc-num">9</span>Implementation notes</a>
-<a class="toc-l2" href="#10-measurement"><span class="toc-num">10</span>Measurement</a>
-<a class="toc-l2" href="#11-rollout"><span class="toc-num">11</span>Rollout</a>
-<a class="toc-l2" href="#12-open-questions"><span class="toc-num">12</span>Open questions</a>
-<a class="toc-l2" href="#13-priority-timeline"><span class="toc-num">13</span>Priority &amp; timeline</a>
+<a class="toc-l2" href="#2-what-we-re-building"><span class="toc-num">2</span>What we're building</a>
+<a class="toc-l2" href="#3-surfaces"><span class="toc-num">3</span>Surfaces</a>
+<a class="toc-l3" href="#3-1-paste-in-the-email-body-and-the-paste-chip">3.1 Paste in the email body, and the paste chip</a>
+<a class="toc-l3" href="#3-2-the-switch-in-the-editor-s-menu">3.2 The switch in the editor's "•••" menu</a>
+<a class="toc-l3" href="#3-3-subject-line-and-spintax-variants">3.3 Subject line and spintax variants</a>
+<a class="toc-l2" href="#4-out-of-scope"><span class="toc-num">4</span>Out of scope</a>
+<a class="toc-l2" href="#5-cross-cutting"><span class="toc-num">5</span>Cross-cutting</a>
+<a class="toc-l2" href="#6-implementation-notes"><span class="toc-num">6</span>Implementation notes</a>
+<a class="toc-l2" href="#7-measurement"><span class="toc-num">7</span>Measurement</a>
+<a class="toc-l2" href="#8-rollout"><span class="toc-num">8</span>Rollout</a>
+<a class="toc-l2" href="#9-open-questions"><span class="toc-num">9</span>Open questions</a>
+<a class="toc-l2" href="#10-owners"><span class="toc-num">10</span>Owners</a>
 <a class="toc-l2" href="#appendix-reference-index"><span class="toc-num"></span>Appendix – reference index</a>
   </nav>
   <main class="main">
@@ -198,123 +195,40 @@ figure img{width:100%;height:auto}
 <hr />
 <section id="1-problem" class="sec"><div class="sec-head"><span class="sec-num">1</span><h2>Problem</h2></div>
 
-<p><strong>Users paste without seeing what comes in.</strong> People paste drafts from Word, Google Docs, web pages and old emails, and invisible markup comes with the text: a one-paragraph Word paste carries 38.4 KB of HTML for 1.1 KB of text (measured, one-paragraph Word paste, Sep 2026). The step editor keeps it, because its own paste cleanup is switched off (<a href="https://github.com/saleshandy/saleshandy-webui/blob/aeda4e3654fd76c54725fd676463c3694a35eed3/src/shared/editor/editor.tsx#L1374">editor.tsx L1374</a>, webui <code>aeda4e3</code>, 16 Oct 2026).</p>
-<p><strong>A paste can change the whole sequence.</strong> Remove Styling Automatically is on for 81.8% of sequences (measured, Metabase, sequences created 1 Jul to 12 Oct 2026). Under it, a styled paste brings up the "Styling detected" bar, and its Keep button turns Remove Styling off for every email in the sequence (<a href="https://github.com/saleshandy/saleshandy-webui/blob/c9feb458b3d4d35918d4196d2b265061fe3f9ece/src/components/sequence/shared/modals/email-modal/email-modal.tsx#L1116-L1197">email-modal.tsx L1116–1197</a>).</p>
-<p><strong>What the fix itself creates:</strong></p>
 <ul>
-<li>Plain paste drops links and bold the user may have wanted. The chip (§6.1) is the way back.</li>
-<li>A chip that goes unnoticed is no way back. §6.1 fixes where it sits and how it is noticed.</li>
-<li>A chip only a mouse can reach locks keyboard users out. §6.1 gives it a keyboard route.</li>
+<li>Pastes from Word, Google Docs and web pages bring invisible markup into the step editor: 38.4 KB of HTML for 1.1 KB of text in a one-paragraph Word paste (measured, Sep 2026). The editor's own paste cleanup is off (<a href="https://github.com/saleshandy/saleshandy-webui/blob/aeda4e3654fd76c54725fd676463c3694a35eed3/src/shared/editor/editor.tsx#L1374">editor.tsx L1374</a>).</li>
+<li>Under Remove Styling Automatically, a styled paste shows the "Styling detected" bar, and its Keep button turns Remove Styling off for the whole sequence (<a href="https://github.com/saleshandy/saleshandy-webui/blob/c9feb458b3d4d35918d4196d2b265061fe3f9ece/src/components/sequence/shared/modals/email-modal/email-modal.tsx#L1116-L1197">email-modal.tsx L1116–1197</a>).</li>
 </ul>
 <hr />
 </section>
-<section id="2-why-this-approach" class="sec"><div class="sec-head"><span class="sec-num">2</span><h2>Why this approach</h2></div>
-
-<div class="tbl-wrap"><table>
-<thead>
-<tr>
-<th>Approach</th>
-<th>Rejected because</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Clean the HTML and keep the formatting</td>
-<td>The editor still shows formatting Remove Styling won't send</td>
-</tr>
-<tr>
-<td>A paste setting per sequence</td>
-<td>A personal habit, answered again in every sequence</td>
-</tr>
-<tr>
-<td>An account setting set by admins</td>
-<td>One person's choice applies to everyone</td>
-</tr>
-<tr>
-<td>Plain paste with no way back</td>
-<td>Deliberate formatted pastes would need retyping. Full formatting (Remove Styling off) is used by 16.7% of sequences (measured, same query)</td>
-</tr>
-<tr>
-<td>A notice bar with Undo under the paste</td>
-<td>Several notice states, Undo only one way, and an "Always keep?" prompt; the chip does it with one control</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Not claimed:</strong> that styling, or Remove Styling, changes deliverability. No test, ticket or data behind that claim was found.</p>
-<p><strong>The bar:</strong> Ctrl+Shift+V is the plain paste people already know, and a paste-options chip is what Word, Outlook and Sheets use. Here the first is the default and the second is the way back.</p>
-<hr />
-</section>
-<section id="3-what-we-re-building" class="sec"><div class="sec-head"><span class="sec-num">3</span><h2>What we're building</h2></div>
+<section id="2-what-we-re-building" class="sec"><div class="sec-head"><span class="sec-num">2</span><h2>What we're building</h2></div>
 
 <ol>
-<li><strong>A paste into the sequence email editor lands as plain text by default</strong>, exactly like Ctrl+Shift+V, and hidden markup never gets in.</li>
-<li><strong>A paste chip at the end of every paste that could have landed differently</strong> switches it between Plain text and Keep formatting, and carries the per-user switch.</li>
-<li><strong>With the switch off, a paste follows the sequence's Safety Settings as they are today.</strong></li>
+<li><strong>Pastes land as plain text by default</strong>, exactly like Ctrl+Shift+V: paragraphs and line breaks stay; links, bold, lists, images and fonts go. Hidden markup never gets in.</li>
+<li><strong>A paste chip</strong> at the end of every paste that could have landed differently switches it between Plain text and Keep formatting.</li>
+<li><strong>A per-user switch, "Always paste as plain text"</strong>, default On, in the editor's "•••" menu and in the chip.</li>
+<li><strong>With the switch off, a paste follows the sequence's Safety Settings as they are today:</strong><ul>
+<li>Remove Styling Automatically: it lands as it will be sent;</li>
+<li>Text only email: plain text;</li>
+<li>Neither: as copied, minus hidden markup.</li>
+</ul>
+</li>
+<li><strong>On a paste, the chip replaces the Styling detected bar.</strong> Styling added from the toolbar still shows today's bar.</li>
+<li><strong>Scope:</strong> the email draft in the sequence step editor: its body, subject line and spintax variants.</li>
 </ol>
-<p><strong>Invariants:</strong></p>
+<p><strong>Always true:</strong></p>
 <ul>
 <li>The chip never takes the cursor.</li>
 <li>No paste changes a sequence setting.</li>
-<li>Text outside the paste is never touched by the chip.</li>
-<li>No stored value changes, so there is no migration.</li>
+<li>The chip never touches text outside the paste.</li>
+<li>No stored value changes; there is no migration.</li>
 </ul>
 <hr />
 </section>
-<section id="4-user-stories" class="sec"><div class="sec-head"><span class="sec-num">4</span><h2>User stories</h2></div>
+<section id="3-surfaces" class="sec"><div class="sec-head"><span class="sec-num">3</span><h2>Surfaces</h2></div>
 
-<div class="tbl-wrap"><table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Story</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>US-1</td>
-<td>As a writer, I paste a draft from Word or Docs and get clean text without thinking about it</td>
-</tr>
-<tr>
-<td>US-2</td>
-<td>As a writer who pasted something formatted on purpose, I get the formatting back from the chip, and can switch back again</td>
-</tr>
-<tr>
-<td>US-3</td>
-<td>As a writer who always pastes formatted content, I turn plain paste off once and am not asked again</td>
-</tr>
-<tr>
-<td>US-4</td>
-<td>As a sequence owner, a paste never changes my sequence's settings</td>
-</tr>
-<tr>
-<td>US-5 <strong>(new)</strong></td>
-<td>As a keyboard or screen-reader user, I hear that the paste was converted and can switch it without a mouse</td>
-</tr>
-</tbody>
-</table></div>
-<hr />
-</section>
-<section id="5-decisions" class="sec"><div class="sec-head"><span class="sec-num">5</span><h2>Decisions</h2></div>
-
-<p><strong>D1 – Plain paste is exactly Ctrl+Shift+V.</strong> Paragraphs and line breaks stay; links, bold, lists, images and fonts go. <strong>Consequence to accept explicitly:</strong> a pasted CTA link needs Keep formatting. The chip does not say "link removed", so the user must notice the missing link themselves.</p>
-<p><strong>D2 – The switch is per user, named "Always paste as plain text", and lives in the editor's "•••" menu and in the chip.</strong> <strong>Consequence to accept explicitly:</strong> there is no settings page for it.</p>
-<p><strong>D3 – With the switch off, a paste follows the sequence's Safety Settings as they are today:</strong></p>
-<ul>
-<li>Remove Styling Automatically: it lands as it will be sent.</li>
-<li>Text only email: plain text.</li>
-<li>Neither: as copied, minus hidden markup.</li>
-</ul>
-<p><strong>Consequence to accept explicitly:</strong> keeping formatting never overrides what the sequence sends; fonts and colours are still removed under Remove Styling.</p>
-<p><strong>D4 – The chip replaces the Styling detected bar for pastes only.</strong> Styling added from the toolbar still shows today's bar, and its Keep still turns Remove Styling off. <strong>Consequence to accept explicitly:</strong> that toolbar behaviour is a known issue left as it is; it is out of scope.</p>
-<p><strong>D5 – Scope is the email draft in the sequence step editor:</strong> its body, subject line and spintax variants. <strong>Consequence to accept explicitly:</strong> templates, Unified Inbox replies, task notes and the signature editor keep today's paste, so the same Word text behaves differently there.</p>
-<p><strong>D6 – Only an edit closes the chip.</strong> That means a key that changes the text, Esc, the next paste, Ctrl+Z, or a click in the text outside the paste. Arrow keys, Tab and scrolling leave it open. <strong>Consequence to accept explicitly:</strong> the chip can stay on screen, pinned, while the user scrolls and reads.</p>
-<p><strong>D7 – "Plain text" is the word everywhere:</strong> the chip, the menu and the switch. Safety Settings and Admin keep "text only".</p>
-<hr />
-</section>
-<section id="6-surfaces" class="sec"><div class="sec-head"><span class="sec-num">6</span><h2>Surfaces</h2></div>
-
-<h3 id="6-1-paste-in-the-email-body-and-the-paste-chip">6.1 Paste in the email body, and the paste chip</h3>
-<p><strong>What it's for:</strong> every paste or drop into a sequence step's email body.</p>
+<h3 id="3-1-paste-in-the-email-body-and-the-paste-chip">3.1 Paste in the email body, and the paste chip</h3>
+<p>Applies to every paste or drop into a sequence step's email body.</p>
 <p><strong>What lands:</strong></p>
 <div class="tbl-wrap"><table>
 <thead>
@@ -381,7 +295,7 @@ figure img{width:100%;height:auto}
 <li>The switch changes every future paste, not this one.</li>
 </ul>
 <figure><figcaption>The menu: this paste either way, and the switch for every paste</figcaption><img src="screens/02-chip-menu.png" style="max-width:885px" alt="The menu: this paste either way, and the switch for every paste" loading="lazy"></figure>
-<figure><figcaption>Switch off: the chip still shows, so plain text stays one click away</figcaption><img src="screens/03-chip-switch-off.png" style="max-width:885px" alt="Switch off: the chip still shows, so plain text stays one click away" loading="lazy"></figure>
+<figure><figcaption>Switch off: the chip reads Formatting kept</figcaption><img src="screens/03-chip-switch-off.png" style="max-width:885px" alt="Switch off: the chip reads Formatting kept" loading="lazy"></figure>
 <p><strong>Where it sits:</strong></p>
 <div class="tbl-wrap"><table>
 <thead>
@@ -431,7 +345,7 @@ figure img{width:100%;height:auto}
 </ul>
 <p><strong>Keyboard and screen readers:</strong></p>
 <ul>
-<li>Ctrl pressed and released on its own opens the menu with the ticked option focused, as in Word. Tab from the text also reaches the chip.</li>
+<li>Ctrl pressed and released on its own opens the menu with the ticked option focused. Tab from the text also reaches the chip.</li>
 <li>In the menu: arrow keys move, Home and End jump, Enter picks, Esc closes and returns the cursor to the text, and Tab closes.</li>
 <li>A polite live announcement, once per paste: "Pasted as plain text. Press Ctrl for paste options." For a formatted paste the first sentence is "Pasted with formatting." Each switch is announced: "Switched to plain text." or "Switched to keep formatting."</li>
 </ul>
@@ -612,9 +526,7 @@ figure img{width:100%;height:auto}
 </tr>
 </tbody>
 </table></div>
-<h3 id="6-2-the-switch-in-the-editor-s-menu">6.2 The switch in the editor's "•••" menu</h3>
-<p><strong>What it's for:</strong> each user's choice to paste as plain text or keep formatting, in every sequence. Reached from the toolbar's "•••" menu, or from the chip.</p>
-<p><strong>What it must do:</strong></p>
+<h3 id="3-2-the-switch-in-the-editor-s-menu">3.2 The switch in the editor's "•••" menu</h3>
 <ul>
 <li>A toggle button at the end of the "•••" menu, in its own group, labelled with a clipboard icon. Pressed means On. Tooltip: "Always paste as plain text: On" or "…: Off".</li>
 <li>The default is On for every user, new and existing.</li>
@@ -657,10 +569,10 @@ figure img{width:100%;height:auto}
 </tr>
 </tbody>
 </table></div>
-<h3 id="6-3-subject-line-and-spintax-variants">6.3 Subject line and spintax variants</h3>
+<h3 id="3-3-subject-line-and-spintax-variants">3.3 Subject line and spintax variants</h3>
 <ul>
 <li><strong>Subject:</strong> a paste is always plain text, on one line, with no chip, whatever the switch.</li>
-<li><strong>Spintax variant field:</strong> a paste is always plain text, with no chip. The field shows "Variants are saved as plain text." under the inputs. Saving already keeps only text (<a href="https://github.com/saleshandy/saleshandy-webui/blob/main/src/shared/editor/helpers.ts#L1226">helpers.ts L1226</a>).</li>
+<li><strong>Spintax variant field:</strong> a paste is always plain text, with no chip. The field shows "Variants are saved as plain text." under the inputs.</li>
 </ul>
 <div class="tbl-wrap"><table>
 <thead>
@@ -688,43 +600,18 @@ figure img{width:100%;height:auto}
 </table></div>
 <hr />
 </section>
-<section id="7-reconciliation-with-existing-behaviour" class="sec"><div class="sec-head"><span class="sec-num">7</span><h2>Reconciliation with existing behaviour</h2></div>
+<section id="4-out-of-scope" class="sec"><div class="sec-head"><span class="sec-num">4</span><h2>Out of scope</h2></div>
 
-<p><strong>Scope map: every way styling reaches the editor, and what covers it.</strong></p>
-<div class="tbl-wrap"><table>
-<thead>
-<tr>
-<th>Path</th>
-<th>Covered by</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Paste or drop into a step body</td>
-<td>§6.1</td>
-</tr>
-<tr>
-<td>Paste into the subject or a variant</td>
-<td>§6.3</td>
-</tr>
-<tr>
-<td>Toolbar styling under Remove Styling</td>
-<td>Today's Styling detected bar, unchanged (D4)</td>
-</tr>
-<tr>
-<td>Templates and Unified Inbox replies</td>
-<td>Today's paste, unchanged (D5)</td>
-</tr>
-<tr>
-<td>Signature styling</td>
-<td>Today's behaviour, unchanged</td>
-</tr>
-</tbody>
-</table></div>
-<p><strong>Unchanged and out of scope:</strong> Safety Settings, the format badge and its pop-up, the toolbar, and drafts lost when leaving the editor through the badge's "Safety Settings" link or "Connect now" (<a href="https://github.com/saleshandy/saleshandy-webui/blob/aeda4e3654fd76c54725fd676463c3694a35eed3/src/components/sequence/shared/modals/email-modal/email-modal.tsx#L1286-L1302">handleConnectNowClick L1286</a>; a separate bug ticket).</p>
+<p>These stay exactly as they are today:</p>
+<ul>
+<li>Safety Settings;</li>
+<li>the format badge and its pop-up;</li>
+<li>the toolbar, including the Styling detected bar for styling added from it;</li>
+<li>paste in templates, Unified Inbox replies, task notes and the signature editor.</li>
+</ul>
 <hr />
 </section>
-<section id="8-cross-cutting" class="sec"><div class="sec-head"><span class="sec-num">8</span><h2>Cross-cutting</h2></div>
+<section id="5-cross-cutting" class="sec"><div class="sec-head"><span class="sec-num">5</span><h2>Cross-cutting</h2></div>
 
 <p><strong>Chip integrity, release blocker:</strong></p>
 <div class="tbl-wrap"><table>
@@ -792,27 +679,22 @@ figure img{width:100%;height:auto}
 </table></div>
 <hr />
 </section>
-<section id="9-implementation-notes" class="sec"><div class="sec-head"><span class="sec-num">9</span><h2>Implementation notes</h2></div>
+<section id="6-implementation-notes" class="sec"><div class="sec-head"><span class="sec-num">6</span><h2>Implementation notes</h2></div>
 
 <ul>
-<li><strong>The chip sits on top of an editor in an iframe.</strong> It must be positioned at the paste end and pinned to the body's edges while scrolling (§6.1). <strong>Resolve before estimation:</strong> how the chip tracks the paste end inside the TinyMCE iframe, and that "Ctrl alone" is free in the editor and the browsers we support.</li>
+<li><strong>The chip sits on top of an editor in an iframe.</strong> It must be positioned at the paste end and pinned to the body's edges while scrolling (§3.1). <strong>Resolve before estimation:</strong> how the chip tracks the paste end inside the TinyMCE iframe, and that "Ctrl alone" is free in the editor and the browsers we support.</li>
 <li><strong>"Lands as Remove Styling will send it" must match the send step.</strong> The send step's cleanup is <a href="https://github.com/saleshandy/saleshandy-email-composer/blob/37b1fb6b11691d5d8ffdb50045fa9bcc378e7432/src/common/utils/parse-content.ts">parse-content.ts</a>, applied at <a href="https://github.com/saleshandy/saleshandy-email-composer/blob/37b1fb6b11691d5d8ffdb50045fa9bcc378e7432/src/app.service.ts#L1397-L1405">app.service.ts L1397</a>. Paste needs identical output, held to one shared test set. <strong>Resolve before estimation:</strong> one shared implementation, or two with shared tests.</li>
 <li><strong>The step editor shares one component</strong> with the signature, template, inbox-reply and task-note editors (code search). The new paste rules must be switched on for the sequence step editor only.</li>
 <li><strong>The per-user switch:</strong> <code>/user/meta</code> returns <code>pasteAsPlainText</code> (default on) per account and admin-only in <a href="https://github.com/saleshandy/saleshandy-edge/pull/11339">edge#11339</a>. It must be stored per user and changeable by the user.</li>
-<li>
-<p><strong>Resolve before estimation:</strong></p>
-<ol>
+<li><strong>Resolve before estimation:</strong><ol>
 <li>With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for Keep formatting and switch-off. Assumed, not tested.</li>
 <li>The "would look different" check behind the chip is reliable on the same samples. Assumed, not tested.</li>
 </ol>
 </li>
-<li>
-<p><strong>Not adopted:</strong> links kept in plain paste (D1); a "link removed" label; an icon-only chip, which doesn't say the paste changed; a per-sequence or per-account setting (§2).</p>
-</li>
 </ul>
 <hr />
 </section>
-<section id="10-measurement" class="sec"><div class="sec-head"><span class="sec-num">10</span><h2>Measurement</h2></div>
+<section id="7-measurement" class="sec"><div class="sec-head"><span class="sec-num">7</span><h2>Measurement</h2></div>
 
 <p><strong>Privacy:</strong> never log pasted content, email text or URLs. Log only the kinds of formatting removed and the sizes.</p>
 <div class="tbl-wrap"><table>
@@ -879,9 +761,9 @@ figure img{width:100%;height:auto}
 </table></div>
 <p><strong>Lagging indicators</strong>, day 30 and day 90:</p>
 <ul>
-<li>Users with the switch off ÷ users who pasted (US-3).</li>
-<li>Tickets mentioning pasted formatting or lost links (US-1, US-2).</li>
-<li>Sequences whose Remove Styling setting was turned off within a minute of a paste: target 0 (US-4).</li>
+<li>Users with the switch off ÷ users who pasted.</li>
+<li>Tickets mentioning pasted formatting or lost links.</li>
+<li>Sequences whose Remove Styling setting was turned off within a minute of a paste: target 0.</li>
 </ul>
 <p><strong>Guardrails:</strong></p>
 <div class="tbl-wrap"><table>
@@ -914,12 +796,12 @@ figure img{width:100%;height:auto}
 1. <strong>Non-negotiable:</strong> no chip-integrity failures, and no text outside a paste changed.
 2. <strong>Non-negotiable:</strong> no sequence setting changed by a paste.
 3. <strong>Iterate, don't revert:</strong> the keep-formatting rate stays under 30%.</p>
-<p>Instrumentation ships with the feature; the gates below cannot be read otherwise.</p>
+<p>Instrumentation ships with the feature.</p>
 <hr />
 </section>
-<section id="11-rollout" class="sec"><div class="sec-head"><span class="sec-num">11</span><h2>Rollout</h2></div>
+<section id="8-rollout" class="sec"><div class="sec-head"><span class="sec-num">8</span><h2>Rollout</h2></div>
 
-<p>Staged exposure limits the blast radius. It is not an A/B test: every user with the feature gets the same default.</p>
+<p>Every user with the feature gets the same default.</p>
 <div class="tbl-wrap"><table>
 <thead>
 <tr>
@@ -946,17 +828,16 @@ figure img{width:100%;height:auto}
 </tr>
 </tbody>
 </table></div>
-<p>No stage starts before the "resolve before estimation" items in §9 are settled. The help article on pasting is updated before stage 3.</p>
+<p>No stage starts before the "resolve before estimation" items in §6 are settled. The help article on pasting is updated before stage 3.</p>
 <hr />
 </section>
-<section id="12-open-questions" class="sec"><div class="sec-head"><span class="sec-num">12</span><h2>Open questions</h2></div>
+<section id="9-open-questions" class="sec"><div class="sec-head"><span class="sec-num">9</span><h2>Open questions</h2></div>
 
 <div class="tbl-wrap"><table>
 <thead>
 <tr>
 <th>#</th>
 <th>Question</th>
-<th>Why it matters</th>
 <th>Recommendation</th>
 <th>Blocking</th>
 </tr>
@@ -964,43 +845,25 @@ figure img{width:100%;height:auto}
 <tbody>
 <tr>
 <td>1</td>
-<td>Does Dhruv agree that, with the switch off, pastes follow today's Safety Settings (D3)?</td>
-<td>D3 is the model's main rule</td>
+<td>Does Dhruv agree that, with the switch off, pastes follow today's Safety Settings?</td>
 <td>Confirm before dev review</td>
 <td>Yes</td>
 </tr>
 <tr>
 <td>2</td>
 <td>Is "Ctrl alone" free in TinyMCE and our browsers?</td>
-<td>It is the keyboard route to Keep formatting</td>
-<td>If not, use Alt+Ctrl+V for the menu and keep Tab</td>
+<td>If not, Alt+Ctrl+V opens the menu; Tab still reaches the chip</td>
 <td>Yes</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Drafts lost when leaving the editor</td>
-<td>Users lose work today, outside this scope</td>
-<td>A separate bug ticket for Rajat</td>
-<td>No</td>
 </tr>
 </tbody>
 </table></div>
 <hr />
 </section>
-<section id="13-priority-timeline" class="sec"><div class="sec-head"><span class="sec-num">13</span><h2>Priority &amp; timeline</h2></div>
+<section id="10-owners" class="sec"><div class="sec-head"><span class="sec-num">10</span><h2>Owners</h2></div>
 
 <ul>
-<li><strong>Priority:</strong> P1 (assumed; Hitesh to confirm).</li>
-<li><strong>Target:</strong> TBD after estimation.</li>
-<li><strong>Release gate:</strong> §11 stage 1.</li>
-<li><strong>Named owners still required:</strong><ul>
-<li>Dev: Sunny (to confirm).</li>
-<li>QA lead for the P-F1 sign-off: name to confirm.</li>
-<li>Tech review: Rajat.</li>
-<li>PM: Hitesh.</li>
-<li>Help article: CS, name to confirm.</li>
-</ul>
-</li>
+<li><strong>Priority:</strong> P1 (assumed; Hitesh to confirm). <strong>Target:</strong> after estimation. <strong>Release gate:</strong> §8 stage 1.</li>
+<li>Dev: Sunny (to confirm) · QA lead for the P-F1 sign-off: name to confirm · Tech review: Rajat · PM: Hitesh · Help article: CS, name to confirm.</li>
 </ul>
 <hr />
 </section>
