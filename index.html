@@ -289,6 +289,7 @@ figure img{width:100%;height:auto}
 <ul>
 <li>Picking the other option rewrites only this paste. The user can switch back and forth as often as wanted.</li>
 <li>The switch changes every future paste, not this one.</li>
+<li><strong>The first time a user flips the switch in the chip, the editor shows where the switch lives.</strong> The chip menu closes, the switch moves into the toolbar's "•••", and the "•••" menu opens on the toggle with its tooltip ("Always paste as plain text: Off") for about 2 seconds, then closes. Any key or click ends it at once. The cursor stays in the body. With reduced motion on, the "•••" menu opens on the toggle without the movement. It shows once per user, ever, across devices; later flips just flip the switch. The motion is in the prototype.</li>
 </ul>
 <figure><figcaption>The menu: this paste either way, and the switch for every paste</figcaption><img src="screens/02-chip-menu.png" style="max-width:885px" alt="The menu: this paste either way, and the switch for every paste" loading="lazy"></figure>
 <figure><figcaption>Switch off: the chip reads Formatting kept</figcaption><img src="screens/03-chip-switch-off.png" style="max-width:885px" alt="Switch off: the chip reads Formatting kept" loading="lazy"></figure>
@@ -343,7 +344,7 @@ figure img{width:100%;height:auto}
 <ul>
 <li>Ctrl pressed and released on its own opens the menu with the ticked option focused. Tab from the text also reaches the chip.</li>
 <li>In the menu: arrow keys move, Home and End jump, Enter picks, Esc closes and returns the cursor to the text, and Tab closes.</li>
-<li>A polite live announcement, once per paste: "Pasted as plain text. Press Ctrl for paste options." For a formatted paste the first sentence is "Pasted with formatting." Each switch is announced: "Switched to plain text." or "Switched to keep formatting."</li>
+<li>A polite live announcement, once per paste: "Pasted as plain text. Press Ctrl for paste options." For a formatted paste the first sentence is "Pasted with formatting." Each switch is announced: "Switched to plain text." or "Switched to keep formatting." The first-time switch flip is announced: "Always paste as plain text turned off. Change it any time from the More menu in the toolbar."</li>
 </ul>
 <p><strong>Closes on:</strong> a key that changes the text (typing, Delete, Backspace, Enter), Esc, the next paste, Ctrl+Z, or a click in the text outside the paste. A click inside the paste keeps it. Ctrl+Z works as normal and removes the paste.</p>
 <p><strong>Explicitly out of scope:</strong> pasted image files (screenshots) behave as today.</p>
@@ -465,6 +466,24 @@ figure img{width:100%;height:auto}
 <td>Chip → switch "Always paste as plain text" off</td>
 <td>This paste is unchanged; the next paste follows the Off row; after a reload the "•••" menu reads Off (read back: menu state and <code>/user/meta</code>)</td>
 <td>P0</td>
+</tr>
+<tr>
+<td>P-F6</td>
+<td>New user: P-1, then chip → switch "Always paste as plain text" off</td>
+<td>The chip menu closes; the switch moves into "•••"; the "•••" menu opens with the toggle and the tooltip "Always paste as plain text: Off", then closes; the cursor stays in the body</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>P-F7</td>
+<td>After P-F6: flip the chip's switch again, then after a reload, then on another device</td>
+<td>No transition any time; the switch just flips</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>P-F8</td>
+<td>During P-F6, press a key or click</td>
+<td>It ends at once</td>
+<td>P1</td>
 </tr>
 <tr>
 <td>C-1</td>

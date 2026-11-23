@@ -322,6 +322,18 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 @media (prefers-reduced-motion:reduce){
   .psw,.psw::after,.s-sample,#tip{transition:none}
 }
+
+.new-tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;background:var(--blue-50);color:var(--blue-700);font-size:11px;line-height:16px;font-weight:600;vertical-align:1px}
+/* ── NEW 23 Nov: first time the chip's switch is used, show where it lives (••• menu) ── */
+.tx-gw{position:absolute;z-index:9;pointer-events:none;will-change:transform,filter}
+.tx-ghost{position:absolute;inset:0;display:flex;align-items:center;padding:0 12px 0 8px;border-radius:4px;background:#fff;white-space:nowrap;will-change:clip-path}
+.tx-ico{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;flex-shrink:0;border-radius:4px;color:var(--blue-700)}
+.tx-lbl{display:flex;align-items:center;gap:8px;flex:1;min-width:0;padding-left:4px}
+.tx-lbl>span:first-child{font-size:14px;line-height:20px;color:var(--fg)}
+.tx-lbl .psw-row{margin-left:auto}
+.tx-tip{position:absolute;z-index:9;padding:6px 8px;border-radius:4px;background:var(--g-800);color:#fff;font-size:12px;line-height:16px;white-space:nowrap;box-shadow:3px 8px 24px -6px rgba(15,34,67,.16);pointer-events:none}
+@media (prefers-reduced-motion:no-preference){.tx-tip{animation:tx-rise 160ms cubic-bezier(.16,1,.3,1)}}
+@keyframes tx-rise{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 </style>
 </head><body>
 <div class="page">
@@ -383,7 +395,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
           </div>
           <p class="s-hint"><kbd>Ctrl</kbd>+<kbd>V</kbd> pastes your clipboard. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> lands plain text.</p>
         </div>
-        <div class="s-grp"><button class="btn btn-s btn-sm" id="sReset" type="button">Reset</button></div>
+        <div class="s-grp"><button class="btn btn-s btn-sm" id="sReset" type="button">Reset</button><p class="s-hint">Reset also replays the first-time ••• hint.</p></div>
       </aside>
       <div style="min-width:0">
         <div class="s-step">
@@ -418,6 +430,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
         <tr><td>Scrolled away</td><td class="w">If the user scrolls the paste out of view, the chip stays pinned to the top edge of the email body, or to its bottom edge beside the badge (just above the badge when the editor is too narrow for both), so it is always in sight while it is open. It returns to the paste when the paste is back in view. Picking an option from a pinned chip scrolls the editor back to the paste and replays the tint, so the change is seen.</td></tr>
         <tr><td>Layers</td><td class="w">Above the email text. Below the toolbar, the subject line, the badge, open menus and dialogs.</td></tr>
         <tr><td>Getting noticed</td><td class="w">It rises in over 180ms with one soft blue ring. The pasted text gets a light blue tint that fades over 1.2s, so the paste and its chip are seen together. With reduced motion turned on: no rise or ring, and the tint still fades. At rest it keeps a grey-500 border (4.8:1 on white) and a blue clipboard icon, so it never reads as part of the toolbar. After any switch the tint plays again.</td></tr>
+        <tr><td>Where the switch lives <span class="new-tag">New</span></td><td class="w">The first time a user flips "Always paste as plain text" in the chip, ever: the switch flips in place, the menu fades around it, and the row folds into the toggle's clipboard icon and flies into the toolbar's •••. The ••• menu opens with the toggle and its tooltip ("Always paste as plain text: Off") for 2.2s, then closes. Any key or click ends it at once. With reduced motion on: the ••• menu opens on the toggle, no flight. Screen readers hear "Always paste as plain text turned off. Change it any time from the More menu in the toolbar." Never shown again for that user, on any device.</td></tr>
         <tr><td>Menu</td><td class="w">Opens below the chip, or above it when there is no room. It shifts left to stay inside the editor.</td></tr>
         <tr><td>Keyboard</td><td class="w">Ctrl pressed on its own opens the menu with the ticked option focused, as in Word. Tab from the text also reaches the chip. Arrow keys move, Enter picks, Esc closes and returns to the text. The shortcut hint reads ⇧⌘V on a Mac and Ctrl+Shift+V elsewhere, in grey-600 (6.9:1 on the hover colour).</td></tr>
         <tr><td>Screen readers</td><td class="w">Heard once, politely: "Pasted as plain text. Press Ctrl for paste options." A switch is announced too.</td></tr>
@@ -440,7 +453,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
   </section>
 
   <section class="sec" id="s6">
-    <div class="sec-h"><span class="sec-n">6</span><div><h2>Decisions</h2><p class="cap">Every question so far, as decided on 3 and 4 Nov.</p></div></div>
+    <div class="sec-h"><span class="sec-n">6</span><div><h2>Decisions</h2><p class="cap">Every question so far, as decided on 3, 4 and 23 Nov.</p></div></div>
     <div class="bcard tw">
       <table class="btab">
         <tr><th>#</th><th>Question</th><th>Recommendation</th><th>Who</th></tr>
@@ -454,6 +467,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
         <tr><td>8</td><td class="w">The switch's name, now that it sits next to "Plain text" in the chip?</td><td class="w">Decided: "Always paste as plain text", in the chip, the ••• menu and everywhere else (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>9</td><td class="w">What closes the chip?</td><td class="w">Decided: only keys that change the text, plus Esc, the next paste and Ctrl+Z. Arrow keys and Tab keep it (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>10</td><td class="w">Review fixes for the chip?</td><td class="w">Decided: switching from a pinned chip brings the paste back into view; a click outside the paste closes the chip; grey-500 border and blue icon at rest; ⇧⌘V on a Mac (Hitesh, 4 Nov). "Link removed" label: not doing</td><td>–</td></tr>
+        <tr><td>11</td><td class="w">The switch's home in ••• is hard to find. Show it?</td><td class="w">Decided: the first time the chip's switch is flipped, the switch flies into ••• and the ••• menu opens on it. Once per user (23 Nov)</td><td>–</td></tr>
       </table>
     </div>
   </section>
@@ -515,7 +529,7 @@ function hydrate(root){ (root||document).querySelectorAll('i[data-pi]').forEach(
 
 /* ═════ state ═════ */
 var IS_MAC = /Mac/.test(navigator.platform);
-var S = { switches:0, chips:0, setting:true, level:1, links:false, last:null, log:[], shiftArm:0, drag:false };
+var S = { homeShown:false, switches:0, chips:0, setting:true, level:1, links:false, last:null, log:[], shiftArm:0, drag:false };
 var LV = { 1:'Remove Styling', 0:'Neither', 2:'Text only email' };
 
 /* ═════ samples ═════ */
@@ -842,7 +856,7 @@ function showChip(enter){
   });
   chip.querySelectorAll('[data-pick]').forEach(function(b){ b.addEventListener('click', function(){ pickChip(b.dataset.pick); }); });
   chip.addEventListener('keydown', chipKeys);
-  chip.querySelector('.pc-sw').addEventListener('click', function(){ setSetting(!S.setting); say('Always paste as plain text turned ' + (S.setting ? 'On' : 'Off') + ' from the paste chip, applies from the next paste'); });
+  chip.querySelector('.pc-sw').addEventListener('click', function(){ var row = this; setSetting(!S.setting); say('Always paste as plain text turned ' + (S.setting ? 'On' : 'Off') + ' from the paste chip, applies from the next paste'); if (!S.homeShown) { S.homeShown = true; showHome(row); } });
   placeChip();
 }
 function announce(t){ var a = $('sAnnounce'); a.textContent = ''; setTimeout(function(){ a.textContent = t; }, 60); }
@@ -1041,8 +1055,9 @@ flip($('cSetting'), function(){ setSetting(!S.setting); say('Always paste as pla
 document.querySelectorAll('#sim .s-opt[data-level]').forEach(function(o){ flip(o, function(){ setLevel(+o.dataset.level); say('Safety Settings · ' + LV[S.level]); }); });
 $('sReset').addEventListener('click', reset);
 function reset(){
+  txEnd();
   drawer.hidden = true; var mb = moreBtn(); if (mb) mb.classList.remove('on'); $('sPop').hidden = true; S.dirty = false;
-  hideChip(); S.switches = 0; S.chips = 0; S.setting = true; S.level = 1; S.links = false; S.last = null; S.log = [];
+  hideChip(); S.homeShown = false; S.switches = 0; S.chips = 0; S.setting = true; S.level = 1; S.links = false; S.last = null; S.log = [];
   var sl = getSelection(); if (sl.rangeCount && ed.contains(sl.anchorNode)) sl.removeAllRanges(); ed.innerHTML = startHTML(); ed.scrollTop = 0; $('sNow').textContent = 'Nothing pasted yet.'; $('sHist').innerHTML = '';
   paint(); if (window.__ssRender) window.__ssRender();
 }
@@ -1141,6 +1156,116 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
 hydrate();
 ed.innerHTML = startHTML();
 paint();
+/* ═════ NEW 23 Nov: the first time a user flips the switch in the chip, the chip menu closes and the editor shows the
+   switch's home: the row folds into the toggle's icon, flies into •••, and the ••• menu opens on the toggle. Once per user. ═════ */
+var TX = 'fly';
+var txRun = null;
+function closeDrawer(){ drawer.hidden = true; var m = moreBtn(); if (m) m.classList.remove('on'); }
+function fr(el){ var f = frame.getBoundingClientRect(), r = el.getBoundingClientRect(); return { l:r.left - f.left, t:r.top - f.top, w:r.width, h:r.height }; }
+function txWait(run, ms){ return new Promise(function(res){ run.timers.push(setTimeout(res, ms / (window.__txRate || 1))); }); }
+function txDone(a){ return a.finished.then(function(){ return true; }, function(){ return false; }); }
+function txEnd(keepDrawer){
+  if (!txRun) return; var r = txRun; txRun = null;
+  r.timers.forEach(clearTimeout); r.anims.forEach(function(a){ try { a.cancel(); } catch (e) {} }); r.nodes.forEach(function(n){ n.remove(); });
+  document.removeEventListener('mousedown', r.onDown, true); document.removeEventListener('keydown', r.onKey, true);
+  var t = drawer.querySelector('[data-cmd="pastetext"]'); if (t) t.classList.remove('flash');
+  if (chip) { var m = chip.querySelector('.pc-m'); m.style.opacity = ''; closeChipMenu(); }
+  if (!keepDrawer) closeDrawer();
+}
+/* the ••• menu unfolds out of the ••• button: a clip that grows from the button's width to the full menu */
+function txOpenDrawer(run){
+  var mb = moreBtn(); if (!drawer.hidden) closeDrawer();
+  toggleDrawer(mb);
+  var t = drawer.querySelector('[data-cmd="pastetext"]'), dw = drawer.offsetWidth, mx = fr(mb).l + fr(mb).w / 2 - fr(drawer).l;
+  var from = 'inset(0px ' + Math.max(0, dw - mx - 14) + 'px 100% ' + Math.max(0, mx - 14) + 'px round 4px)', to = 'inset(-16px -16px -16px -16px round 4px)';
+  var a = RM ? drawer.animate([{ opacity:0 }, { opacity:1 }], { duration:160 })
+             : drawer.animate([{ clipPath:from, opacity:.4, transform:'translateY(-2px)' }, { clipPath:to, opacity:1, transform:'none' }], { duration:240, easing:'cubic-bezier(.16,1,.3,1)' });
+  run.anims.push(a);
+  return { t:t, a:a };
+}
+/* the toggle pops in with one ring and its production tooltip; after the hold the menu folds back into ••• */
+async function txLand(run, t, hold){
+  t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash');
+  if (!RM) run.anims.push(t.animate([{ transform:'scale(.6)', opacity:0 }, { transform:'scale(1.12)', opacity:1, offset:.6 }, { transform:'scale(1)', opacity:1 }], { duration:300, easing:'cubic-bezier(.2,0,0,1)' }));
+  var g = fr(t), tp = document.createElement('div'); tp.className = 'tx-tip'; tp.textContent = 'Always paste as plain text: ' + (S.setting ? 'On' : 'Off');
+  frame.appendChild(tp); run.nodes.push(tp);
+  tp.style.top = (g.t + g.h + 6) + 'px'; tp.style.left = Math.max(8, Math.min(frame.clientWidth - tp.offsetWidth - 8, g.l + g.w / 2 - tp.offsetWidth / 2)) + 'px';
+  await txWait(run, hold); if (txRun !== run) return;
+  var a1 = tp.animate([{ opacity:1 }, { opacity:0 }], { duration:120, fill:'forwards' }); run.anims.push(a1);
+  var mb = moreBtn(), dw = drawer.offsetWidth, mx = fr(mb).l + fr(mb).w / 2 - fr(drawer).l;
+  var a2 = RM ? drawer.animate([{ opacity:1 }, { opacity:0 }], { duration:140, fill:'forwards' })
+              : drawer.animate([{ clipPath:'inset(-16px -16px -16px -16px round 4px)', opacity:1 }, { clipPath:'inset(0px ' + Math.max(0, dw - mx - 14) + 'px 100% ' + Math.max(0, mx - 14) + 'px round 4px)', opacity:.4 }], { duration:180, easing:'cubic-bezier(.4,0,1,1)', fill:'forwards' });
+  run.anims.push(a2);
+  if (!(await txDone(a2)) || txRun !== run) return;
+  txEnd();
+}
+async function showHome(row){
+  txEnd();
+  var mode = RM ? 'point' : 'fly';
+  var mb = moreBtn(); if (!mb || !chip) return;
+  /* the ••• button may be scrolled out of a narrow toolbar: bring it in first */
+  var tr = tb.getBoundingClientRect(), br = mb.getBoundingClientRect();
+  if (br.right > tr.right - 4 || br.left < tr.left + 4) tb.scrollLeft += br.left - tr.left - tr.width / 2;
+  var run = txRun = { timers:[], nodes:[], anims:[] };
+  run.onDown = function(e){ txEnd(!!e.target.closest('#sDrawer')); };
+  run.onKey = function(){ txEnd(); };
+  focusEd(); caretToMarker();
+  announce('Always paste as plain text turned ' + (S.setting ? 'on' : 'off') + '. Change it any time from the More menu in the toolbar.');
+  say('First time only · shown where the switch lives: ••• menu, clipboard toggle');
+  setTimeout(function(){ if (txRun !== run) return; document.addEventListener('mousedown', run.onDown, true); document.addEventListener('keydown', run.onKey, true); }, 0);
+  var menu = chip.querySelector('.pc-m'), from = fr(row), to = fr(mb), on = S.setting;
+
+  /* 1 · the switch flips where the user clicked it, and is seen to flip */
+  await txWait(run, mode === 'fly' ? 260 : 200); if (txRun !== run) return;
+
+  if (mode === 'fly') {
+    /* 2 · the menu fades away around the row; the row lifts and shows the toggle's icon in its tick column */
+    var gw = document.createElement('div'); gw.className = 'tx-gw';
+    gw.innerHTML = '<div class="tx-ghost"><span class="tx-ico">' + ic('pastetext', 16) + '</span><span class="tx-lbl"><span>Always paste as plain text</span><span class="psw-row" aria-checked="' + on + '"><span class="psw"></span></span></span></div>';
+    gw.style.cssText = 'left:' + from.l + 'px;top:' + from.t + 'px;width:' + from.w + 'px;height:' + from.h + 'px';
+    frame.appendChild(gw); run.nodes.push(gw);
+    var gh = gw.firstChild, ico = gh.querySelector('.tx-ico'), lbl = gh.querySelector('.tx-lbl');
+    var fade = menu.animate([{ opacity:1 }, { opacity:0 }], { duration:160, easing:'cubic-bezier(.4,0,1,1)', fill:'forwards' });
+    var lift = gw.animate([{ transform:'none', filter:'drop-shadow(0 0 0 rgba(15,34,67,0))' }, { transform:'translateY(-2px)', filter:'drop-shadow(0 8px 14px rgba(15,34,67,.18))' }], { duration:200, easing:'cubic-bezier(.16,1,.3,1)', fill:'forwards' });
+    var icIn = ico.animate([{ opacity:0, transform:'scale(.6)' }, { opacity:1, transform:'none' }], { duration:200, easing:'cubic-bezier(.16,1,.3,1)', fill:'forwards' });
+    run.anims.push(fade, lift, icIn);
+    await txDone(lift); if (txRun !== run) return;
+    closeChipMenu(); menu.style.opacity = ''; fade.cancel();
+    await txWait(run, 120); if (txRun !== run) return;
+
+    /* 3 · the row folds into the icon (a clip, so no text is ever cut mid-word: the words fade first) and arcs into ••• */
+    var W = from.w, H = from.h, ix = 8, iy = Math.round((H - 24) / 2);
+    var dx = to.l + (to.w - 24) / 2 - (from.l + ix), dy = to.t + (to.h - 24) / 2 - (from.t + iy);
+    var cx = dx * .15, cy = dy * .85 - 40, pts = [];
+    for (var i = 0; i <= 16; i++) { var u = i / 16, x = 2 * (1 - u) * u * cx + u * u * dx, y = -2 * (1 - u) * u * 0 + 2 * (1 - u) * u * cy + u * u * dy; pts.push({ offset:u, transform:'translate(' + x.toFixed(1) + 'px,' + (y - 2 * (1 - u)).toFixed(1) + 'px)', filter:'drop-shadow(0 ' + (8 - 6 * u).toFixed(1) + 'px ' + (14 - 10 * u).toFixed(1) + 'px rgba(15,34,67,' + (.18 - .1 * u).toFixed(3) + '))' }); }
+    lift.cancel();
+    var DUR = 560, EASE = 'cubic-bezier(.3,0,0,1)';
+    var fly = gw.animate(pts, { duration:DUR, easing:EASE, fill:'forwards' });
+    var fold = gh.animate([
+      { clipPath:'inset(0px 0px 0px 0px round 4px)' },
+      { clipPath:'inset(0px 0px 0px 0px round 4px)', offset:.12 },
+      { clipPath:'inset(' + iy + 'px ' + (W - ix - 24) + 'px ' + (H - iy - 24) + 'px ' + ix + 'px round 4px)', offset:.55 },
+      { clipPath:'inset(' + iy + 'px ' + (W - ix - 24) + 'px ' + (H - iy - 24) + 'px ' + ix + 'px round 4px)' }
+    ], { duration:DUR, easing:EASE, fill:'forwards' });
+    var words = lbl.animate([{ opacity:1, filter:'blur(0)' }, { opacity:0, filter:'blur(2px)', offset:.28 }, { opacity:0, filter:'blur(2px)' }], { duration:DUR, fill:'forwards' });
+    run.anims.push(fly, fold, words);
+    await txWait(run, DUR * .78); if (txRun !== run) return;
+
+    /* 4 · (overlapping the flight's slow tail) it goes into ••• (the button presses), and the ••• menu unfolds out of it with the toggle highlighted */
+    var into = gh.animate([{ opacity:1, transform:'scale(1)' }, { opacity:0, transform:'scale(.7)' }], { duration:160, easing:'cubic-bezier(.4,0,1,1)', fill:'forwards' });
+    var press = mb.animate([{ transform:'scale(1)' }, { transform:'scale(.88)', offset:.4 }, { transform:'scale(1)' }], { duration:260, easing:'cubic-bezier(.2,0,0,1)' });
+    run.anims.push(into, press);
+    await txWait(run, 60); if (txRun !== run) return;
+    var o = txOpenDrawer(run); if (!o.t) return txEnd();
+    await txWait(run, 120); if (txRun !== run) return;
+    txLand(run, o.t, 2200);
+    return;
+  }
+
+  closeChipMenu();
+  if (mode === 'point') { var o2 = txOpenDrawer(run); if (o2.t) txLand(run, o2.t, 2400); return; }
+}
 })();
+
 </script>
 </body></html>
