@@ -360,7 +360,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
       <div class="bcard tw">
         <table class="btab">
           <tr><th>In scope</th><th>What</th><th>On this board</th></tr>
-          <tr><td>Paste</td><td class="w">Hidden markup always removed. The per-user switch, in the editor's ••• menu. The paste chip switches any paste between removing and keeping its formatting. On a paste the chip replaces the Styling detected bar; the bar still shows for styling added from the toolbar.</td><td><div class="items"><a href="#s2"><b>2</b>Setting and samples</a><a href="#s3"><b>3</b>Paste chip</a><a href="#s4"><b>4</b>What lands</a><a href="#s5"><b>5</b>Edge cases</a></div></td></tr>
+          <tr><td>Paste</td><td class="w">Hidden markup always removed. The per-user switch, in the editor's ••• menu. The paste chip switches any paste between without and with formatting. On a paste the chip replaces the Styling detected bar; the bar still shows for styling added from the toolbar.</td><td><div class="items"><a href="#s2"><b>2</b>Setting and samples</a><a href="#s3"><b>3</b>Paste chip</a><a href="#s4"><b>4</b>What lands</a><a href="#s5"><b>5</b>Edge cases</a></div></td></tr>
           <tr><td>Not in scope</td><td class="w">Safety Settings names, layout and saving. The editor toolbar and badge. Drafts lost when leaving the editor.</td><td>–</td></tr>
         </table>
       </div>
@@ -457,14 +457,14 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
     <div class="bcard tw">
       <table class="btab">
         <tr><th>#</th><th>Question</th><th>Recommendation</th><th>Who</th></tr>
-        <tr><td>1</td><td class="w">Does a paste without formatting keep links?</td><td class="w">Decided: no. It is Ctrl+Shift+V, so links go; Keep formatting in the chip brings them back (Hitesh, 3 Nov)</td><td>Hitesh</td></tr>
-        <tr><td>2</td><td class="w">What do the paste words say?</td><td class="w">Decided: "without formatting". Chip "Formatting removed" / "Formatting kept", menu "Remove formatting" / "Keep formatting". "Plain text" reads as a way of sending an email (Hitesh, 24 Nov)</td><td>–</td></tr>
+        <tr><td>1</td><td class="w">Does a paste without formatting keep links?</td><td class="w">Decided: no. It is Ctrl+Shift+V, so links go; With formatting in the chip brings them back (Hitesh, 3 Nov)</td><td>Hitesh</td></tr>
+        <tr><td>2</td><td class="w">What do the paste words say?</td><td class="w">Decided: "Without formatting" / "With formatting". The chip shows the ticked option in the same words as the menu. "Plain text" reads as a way of sending an email (Hitesh, 24 Nov)</td><td>–</td></tr>
         <tr><td>3</td><td class="w">Templates and inbox replies follow the user's paste setting?</td><td class="w">Decided: no. Only the email draft in the sequence editor (Hitesh, 3 Nov)</td><td>–</td></tr>
         <tr><td>4</td><td class="w">Signature editor excluded?</td><td class="w">Decided: yes (Hitesh, 3 Nov)</td><td>–</td></tr>
         <tr><td>5</td><td class="w">After a paste: the notice bar, or a chip at the paste like Sheets?</td><td class="w">Decided: the chip with a label, at the paste (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>6</td><td class="w">Scope: Email format, Safety Settings fixes, drafts lost on leaving?</td><td class="w">Decided: paste only. Safety Settings stay as they are (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>7</td><td class="w">The Styling detected bar, now that the chip exists?</td><td class="w">Decided: a paste shows only the chip; the bar stays for styling added from the toolbar (Hitesh, 4 Nov)</td><td>–</td></tr>
-        <tr><td>8</td><td class="w">The switch's name, now that it sits next to "Remove formatting" in the chip?</td><td class="w">Decided: "Always paste without formatting", in the chip, the ••• menu and everywhere else (Hitesh, 4 Nov)</td><td>–</td></tr>
+        <tr><td>8</td><td class="w">The switch's name, now that it sits next to "Without formatting" in the chip?</td><td class="w">Decided: "Always paste without formatting", in the chip, the ••• menu and everywhere else (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>9</td><td class="w">What closes the chip?</td><td class="w">Decided: only keys that change the text, plus Esc, the next paste and Ctrl+Z. Arrow keys and Tab keep it (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>10</td><td class="w">Review fixes for the chip?</td><td class="w">Decided: switching from a pinned chip brings the paste back into view; a click outside the paste closes the chip; grey-500 border and blue icon at rest; ⇧⌘V on a Mac (Hitesh, 4 Nov). "Link removed" label: not doing</td><td>–</td></tr>
         <tr><td>11</td><td class="w">The switch's home in ••• is hard to find. Show it?</td><td class="w">Decided: the first time the chip's switch is flipped, the switch flies into ••• and the ••• menu opens on it. Once per user (23 Nov)</td><td>–</td></tr>
@@ -830,18 +830,18 @@ function chipPlan(src, o){
   if (o.level === 2) return { why:'no chip (Text only email)' };
   var full = spaceBlocks(cleanHidden(src.html)), kept = o.level === 1 ? toLight(full) : full, plain = toText(full, false);
   if (!lost(kept, plain).length) return { why:'no chip (looks the same either way)' };
-  return { show:true, kept:kept, plain:plain, cur: o.setting ? 'plain' : 'keep', why:'chip shown: ' + (o.setting ? 'Formatting removed' : 'Formatting kept') };
+  return { show:true, kept:kept, plain:plain, cur: o.setting ? 'plain' : 'keep', why:'chip shown: ' + (o.setting ? 'Without formatting' : 'With formatting') };
 }
 var chip = null;
 function chipItem(k, t, on, extra, ti){ return '<button class="pc-i" role="menuitemradio" type="button"' + (ti || '') + ' data-pick="' + k + '" aria-checked="' + on + '"><span class="pc-ck">' + (on ? ic('tick', 16) : '') + '</span><span>' + t + '</span>' + (extra || '') + '</button>'; }
 function chipHTML(style, cur, setting, open, enter, live, v2, mac){
   if (v2 === undefined) v2 = true; if (mac === undefined) mac = IS_MAC && v2;
-  var lbl = cur === 'plain' ? 'Formatting removed' : 'Formatting kept', icon = style === 'icon', t = live ? '' : ' tabindex="-1"';
+  var lbl = cur === 'plain' ? 'Without formatting' : 'With formatting', icon = style === 'icon', t = live ? '' : ' tabindex="-1"';
   return '<div class="pc' + (icon ? ' icon' : '') + (v2 ? ' v2' : '') + (enter ? ' pc-enter' : '') + '">' +
     '<button class="pc-b" type="button" aria-haspopup="menu" aria-expanded="' + !!open + '" aria-label="Paste options: ' + lbl + '"' + (live ? ' data-tip="Paste options (Ctrl)"' : '') + t + '>' + ic('board', 16) + (icon ? '' : '<span>' + lbl + '</span>') + ic('chev', 12) + '</button>' +
     '<div class="pc-m" role="menu" aria-label="Paste options"' + (open ? '' : ' hidden') + '>' +
-      chipItem('plain', 'Remove formatting', cur === 'plain', '<span class="pc-k">' + (mac ? '⇧⌘V' : 'Ctrl+Shift+V') + '</span>', t) +
-      chipItem('keep', 'Keep formatting', cur === 'keep', '', t) +
+      chipItem('plain', 'Without formatting', cur === 'plain', '<span class="pc-k">' + (mac ? '⇧⌘V' : 'Ctrl+Shift+V') + '</span>', t) +
+      chipItem('keep', 'With formatting', cur === 'keep', '', t) +
       '<div class="pc-sep" role="separator"></div>' +
       '<button class="pc-i pc-sw psw-row" role="menuitemcheckbox" type="button" aria-checked="' + setting + '"' + t + '><span class="psw-l">Always paste without formatting</span><span class="psw"></span></button>' +
     '</div></div>';
@@ -910,9 +910,9 @@ function pickChip(k){
   if (L.wrap.tagName === 'SPAN' && kids.length === 1 && kids[0].nodeName === 'P') { L.wrap.innerHTML = kids[0].innerHTML; L.wrap.after(caretMarker()); }
   else { L.wrap.innerHTML = html; var cm = caretMarker(); if (L.wrap.tagName === 'SPAN') L.wrap.after(cm); else endCaret(L.wrap, cm); }
   focusEd(); caretToMarker(); L.cur = k; L.after = ed.innerHTML; S.switches++;
-  { scrollToCaret(); L.wrap.classList.remove('s-flash'); void L.wrap.offsetWidth; L.wrap.classList.add('s-flash'); } announce(k === 'plain' ? 'Formatting removed.' : 'Formatting kept.');
+  { scrollToCaret(); L.wrap.classList.remove('s-flash'); void L.wrap.offsetWidth; L.wrap.classList.add('s-flash'); } announce(k === 'plain' ? 'Switched to without formatting.' : 'Switched to with formatting.');
   showChip(false);
-  say('Chip · ' + (k === 'plain' ? 'switched to Remove formatting' : 'Keep formatting · restored ' + (L.level === 1 ? 'what Remove Styling sends: bold, italic, links, lists, images and tables' : 'the paste as copied, minus hidden markup')) + ' · no question asked, the switch sits in the chip');
+  say('Chip · ' + (k === 'plain' ? 'switched to Without formatting' : 'With formatting · restored ' + (L.level === 1 ? 'what Remove Styling sends: bold, italic, links, lists, images and tables' : 'the paste as copied, minus hidden markup')) + ' · no question asked, the switch sits in the chip');
   paintRead();
 }
 
@@ -1107,7 +1107,7 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
   var CH = [
     ['chip', 'plain', true, false, 'After a paste that looks different. It sits just below where the paste ends, and the pasted text is tinted for a moment. It never takes focus, and typing closes it.'],
     ['chip', 'plain', true, true, 'Click it, or press Ctrl: switch this paste either way, as often as you like. The switch below it sets every paste.'],
-    ['chip', 'keep', false, false, 'Setting Off: the chip still shows, so Remove formatting stays one click away.'],
+    ['chip', 'keep', false, false, 'Setting Off: the chip still shows, so Without formatting stays one click away.'],
     ['pin', 'plain', true, false, 'Scrolled away: the paste is above the view, so the chip stays pinned to the bottom edge, beside the badge, until it is closed.']
   ];
   var TINT = B.replace('<p>Saw Northwind', '<p><span class="tint">Saw Northwind').replace('this week?</p>', 'this week?</span></p>');
@@ -1122,8 +1122,8 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
 /* ═════ section 4: the matrix, built with the same pipeline ═════ */
 (function(){
   var CAP = {
-    'true1':'Keep formatting in the chip brings back what Remove Styling sends: bold, links, the list.', 'true0':'Keep formatting in the chip brings back the paste as copied, minus hidden markup.', 'true2':'Without formatting. No chip.',
-    'false1':'Lands as Remove Styling sends it. The chip offers Remove formatting.', 'false0':'As copied, minus hidden markup. The chip offers Remove formatting.', 'false2':'Without formatting. No chip.'
+    'true1':'With formatting in the chip brings back what Remove Styling sends: bold, links, the list.', 'true0':'With formatting in the chip brings back the paste as copied, minus hidden markup.', 'true2':'Without formatting. No chip.',
+    'false1':'Lands as Remove Styling sends it. The chip offers Without formatting.', 'false0':'As copied, minus hidden markup. The chip offers Without formatting.', 'false2':'Without formatting. No chip.'
   };
   /* board display only: the as-copied frame shows the source's colour at the board's body size */
   function bodySize(html){ var b = parse(html); b.querySelectorAll('[style]').forEach(function(el){ el.style.removeProperty('font-size'); if (!el.getAttribute('style')) el.removeAttribute('style'); }); return b.innerHTML; }

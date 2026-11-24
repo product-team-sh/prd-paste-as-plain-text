@@ -201,7 +201,7 @@ figure img{width:100%;height:auto}
 
 <ol>
 <li><strong>Pastes land without formatting by default</strong>, exactly like Ctrl+Shift+V. <strong>Without formatting</strong> means the words and line breaks only: what is stored is identical to typing the same text by hand, with no styles, attributes, links, bold, lists, images or other tags. Hidden markup never gets in.</li>
-<li><strong>A paste chip</strong> at the end of every paste that could have landed differently switches it between Remove formatting and Keep formatting.</li>
+<li><strong>A paste chip</strong> at the end of every paste that could have landed differently switches it between Without formatting and With formatting.</li>
 <li><strong>A per-user switch, "Always paste without formatting"</strong>, default On, in the editor's "•••" menu and in the chip.</li>
 <li><strong>With the switch off, a paste follows the sequence's Safety Settings as they are today:</strong><ul>
 <li>Remove Styling Automatically: it lands as it will be sent;</li>
@@ -238,21 +238,21 @@ figure img{width:100%;height:auto}
 <tbody>
 <tr>
 <td><strong>On</strong> (default)</td>
-<td>Without formatting. Chip: "Formatting removed"</td>
-<td>Without formatting. Chip: "Formatting removed"</td>
+<td>Without formatting. Chip: "Without formatting"</td>
+<td>Without formatting. Chip: "Without formatting"</td>
 <td>Without formatting, no chip</td>
 </tr>
 <tr>
 <td><strong>Off</strong></td>
-<td>As Remove Styling will send it: bold, italic, links, lists, images and tables kept; fonts, sizes, colours, highlight, underline, strikethrough, alignment and headings removed. Chip: "Formatting kept"</td>
-<td>As copied, minus hidden markup. Chip: "Formatting kept"</td>
+<td>As Remove Styling will send it: bold, italic, links, lists, images and tables kept; fonts, sizes, colours, highlight, underline, strikethrough, alignment and headings removed. Chip: "With formatting"</td>
+<td>As copied, minus hidden markup. Chip: "With formatting"</td>
 <td>Without formatting, no chip</td>
 </tr>
 </tbody>
 </table></div>
 <ul>
 <li><strong>Hidden markup</strong> changes nothing visible: Word and Docs classes, comments, empty spans, and font declarations equal to the editor's own. It is always removed, in every cell.</li>
-<li><strong>The chip shows only when Remove formatting and Keep formatting would look different</strong> for this paste, meaning a link, bold, a list, an image, a colour or a font differs.</li>
+<li><strong>The chip shows only when Without formatting and With formatting would look different</strong> for this paste, meaning a link, bold, a list, an image, a colour or a font differs.</li>
 <li><strong>No chip</strong> for:<ul>
 <li>a source with no formatting (Notepad);</li>
 <li>a paste copied inside Saleshandy;</li>
@@ -276,13 +276,13 @@ figure img{width:100%;height:auto}
 <tbody>
 <tr>
 <td>Landed without formatting</td>
-<td>Clipboard icon · <strong>Formatting removed ▾</strong></td>
-<td>✓ Remove formatting (hint Ctrl+Shift+V, ⇧⌘V on a Mac) · Keep formatting · divider · Always paste without formatting (switch)</td>
+<td>Clipboard icon · <strong>Without formatting ▾</strong></td>
+<td>✓ Without formatting (hint Ctrl+Shift+V, ⇧⌘V on a Mac) · With formatting · divider · Always paste without formatting (switch)</td>
 </tr>
 <tr>
 <td>Landed formatted</td>
-<td>Clipboard icon · <strong>Formatting kept ▾</strong></td>
-<td>Remove formatting · ✓ Keep formatting · divider · Always paste without formatting (switch)</td>
+<td>Clipboard icon · <strong>With formatting ▾</strong></td>
+<td>Without formatting · ✓ With formatting · divider · Always paste without formatting (switch)</td>
 </tr>
 </tbody>
 </table></div>
@@ -292,7 +292,7 @@ figure img{width:100%;height:auto}
 <li><strong>The first time a user flips the switch in the chip, the editor shows where the switch lives.</strong> The chip menu closes, the switch moves into the toolbar's "•••", and the "•••" menu opens on the toggle with its tooltip ("Always paste without formatting: Off") and <strong>stays open</strong>, so the user sees the switch and its state. It closes on a click outside it or Esc. Typing keeps it open and hides the tooltip. A key or click during the movement skips straight to the open menu. The cursor stays in the body. With reduced motion on, the "•••" menu opens on the toggle without the movement. It shows once per user, ever, across devices; later flips just flip the switch. The motion is in the prototype.</li>
 </ul>
 <figure><figcaption>The menu: this paste either way, and the switch for every paste</figcaption><img src="screens/02-chip-menu.png" style="max-width:885px" alt="The menu: this paste either way, and the switch for every paste" loading="lazy"></figure>
-<figure><figcaption>Switch off: the chip reads Formatting kept</figcaption><img src="screens/03-chip-switch-off.png" style="max-width:885px" alt="Switch off: the chip reads Formatting kept" loading="lazy"></figure>
+<figure><figcaption>Switch off: the chip reads With formatting</figcaption><img src="screens/03-chip-switch-off.png" style="max-width:885px" alt="Switch off: the chip reads With formatting" loading="lazy"></figure>
 <p><strong>Where it sits:</strong></p>
 <div class="tbl-wrap"><table>
 <thead>
@@ -344,7 +344,7 @@ figure img{width:100%;height:auto}
 <ul>
 <li>Ctrl pressed and released on its own opens the menu with the ticked option focused. Tab from the text also reaches the chip.</li>
 <li>In the menu: arrow keys move, Home and End jump, Enter picks, Esc closes and returns the cursor to the text, and Tab closes.</li>
-<li>A polite live announcement, once per paste: "Pasted without formatting. Press Ctrl for paste options." For a formatted paste the first sentence is "Pasted with formatting." Each switch is announced: "Formatting removed." or "Formatting kept." The first-time switch flip is announced: "Always paste without formatting turned off. Change it any time from the More menu in the toolbar."</li>
+<li>A polite live announcement, once per paste: "Pasted without formatting. Press Ctrl for paste options." For a formatted paste the first sentence is "Pasted with formatting." Each switch is announced: "Switched to without formatting." or "Switched to with formatting." The first-time switch flip is announced: "Always paste without formatting turned off. Change it any time from the More menu in the toolbar."</li>
 </ul>
 <p><strong>Closes on:</strong> a key that changes the text (typing, Delete, Backspace, Enter), Esc, the next paste, Ctrl+Z, or a click in the text outside the paste. A click inside the paste keeps it. Ctrl+Z works as normal and removes the paste.</p>
 <p><strong>Explicitly out of scope:</strong> pasted image files (screenshots) behave as today.</p>
@@ -362,7 +362,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td>P-1</td>
 <td>Switch on, Remove Styling: paste a Word draft with bold, a link, a list and a coloured font</td>
-<td>Body holds only the words and paragraphs; no <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>, list, <code>style</code> or Word class; chip "Formatting removed"</td>
+<td>Body holds only the words and paragraphs; no <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>, list, <code>style</code> or Word class; chip "Without formatting"</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -374,13 +374,13 @@ figure img{width:100%;height:auto}
 <tr>
 <td>P-3</td>
 <td>Switch off, Remove Styling: paste the P-1 draft</td>
-<td>Bold, link and list kept; no <code>style</code>, font or colour; chip "Formatting kept"</td>
+<td>Bold, link and list kept; no <code>style</code>, font or colour; chip "With formatting"</td>
 <td>P0</td>
 </tr>
 <tr>
 <td>P-4</td>
 <td>Switch off, Neither: paste the P-1 draft</td>
-<td>Visible formatting kept; no Word classes or comments; chip "Formatting kept"</td>
+<td>Visible formatting kept; no Word classes or comments; chip "With formatting"</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -445,19 +445,19 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td><strong>P-F1</strong></td>
-<td>P-1, then chip → <strong>Keep formatting</strong></td>
-<td>Body holds what Remove Styling sends (bold, link and list back; no fonts or colours); text outside the paste byte-identical to before the paste; chip reads "Formatting kept"</td>
+<td>P-1, then chip → <strong>With formatting</strong></td>
+<td>Body holds what Remove Styling sends (bold, link and list back; no fonts or colours); text outside the paste byte-identical to before the paste; chip reads "With formatting"</td>
 <td>P0 · <strong>sign off by name, owner: QA lead (name to confirm)</strong></td>
 </tr>
 <tr>
 <td>P-F2</td>
-<td>P-F1, then chip → Remove formatting</td>
+<td>P-F1, then chip → Without formatting</td>
 <td>Back to the P-1 result exactly</td>
 <td>P0</td>
 </tr>
 <tr>
 <td>P-F3</td>
-<td>Switch on, Neither: P-1, then Keep formatting</td>
+<td>Switch on, Neither: P-1, then With formatting</td>
 <td>The paste as copied, minus hidden markup</td>
 <td>P0</td>
 </tr>
@@ -511,7 +511,7 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td>C-4</td>
-<td>Pinned chip → Keep formatting</td>
+<td>Pinned chip → With formatting</td>
 <td>The editor scrolls to the paste; the tint replays</td>
 <td>P0</td>
 </tr>
@@ -530,7 +530,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td>C-7</td>
 <td>Screen reader on: paste the P-1 draft, then switch</td>
-<td>"Pasted without formatting. Press Ctrl for paste options." once, then "Formatting kept."</td>
+<td>"Pasted without formatting. Press Ctrl for paste options." once, then "Switched to with formatting."</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -697,7 +697,7 @@ figure img{width:100%;height:auto}
 <li><strong>The step editor shares one component</strong> with the signature, template, inbox-reply and task-note editors (code search). The new paste rules must be switched on for the sequence step editor only.</li>
 <li><strong>The per-user switch:</strong> <code>/user/meta</code> returns <code>pasteAsPlainText</code> (default on) per account and admin-only in <a href="https://github.com/saleshandy/saleshandy-edge/pull/11339">edge#11339</a>. It must be stored per user and changeable by the user.</li>
 <li><strong>Resolve before estimation:</strong><ol>
-<li>With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for Keep formatting and switch-off. Assumed, not tested.</li>
+<li>With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for With formatting and switch-off. Assumed, not tested.</li>
 <li>The "would look different" check behind the chip is reliable on the same samples. Assumed, not tested.</li>
 </ol>
 </li>
@@ -719,7 +719,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td><code>paste_landed</code></td>
 <td>Any paste or drop into a step body</td>
-<td>safety_setting, switch, chip_shown, landed (formatting_removed, formatting_kept), removed_kinds (link, bold, list, image, colour, font), html_kb, kept_kb</td>
+<td>safety_setting, switch, chip_shown, landed (without_formatting, with_formatting), removed_kinds (link, bold, list, image, colour, font), html_kb, kept_kb</td>
 </tr>
 <tr>
 <td><code>paste_chip_opened</code></td>
@@ -728,7 +728,7 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td><code>paste_chip_switched</code></td>
-<td>Remove formatting or Keep formatting is picked</td>
+<td>Without formatting or With formatting is picked</td>
 <td>to, pinned, seconds_since_paste</td>
 </tr>
 <tr>
@@ -750,8 +750,8 @@ figure img{width:100%;height:auto}
 </thead>
 <tbody>
 <tr>
-<td><strong>Keep-formatting rate (most important)</strong></td>
-<td>switches to Keep formatting ÷ chips shown with the switch on</td>
+<td><strong>With-formatting rate (most important)</strong></td>
+<td>switches to With formatting ÷ chips shown with the switch on</td>
 <td>&lt; 30% (target; assumed, no baseline)</td>
 <td>&gt; 50%: removing formatting is wrong too often</td>
 </tr>
@@ -805,7 +805,7 @@ figure img{width:100%;height:auto}
 <p><strong>Success criteria</strong>, judged at day 30 at 100%:
 1. <strong>Non-negotiable:</strong> no chip-integrity failures, and no text outside a paste changed.
 2. <strong>Non-negotiable:</strong> no sequence setting changed by a paste.
-3. <strong>Iterate, don't revert:</strong> the keep-formatting rate stays under 30%.</p>
+3. <strong>Iterate, don't revert:</strong> the with-formatting rate stays under 30%.</p>
 <p>Instrumentation ships with the feature.</p>
 <hr />
 </section>
