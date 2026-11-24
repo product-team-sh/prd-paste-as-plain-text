@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Paste as plain text – prototype v4</title>
+<title>Paste without formatting – prototype v5</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
 /* Board chrome uses production's own palette (webui _custom-variable.scss) on production's light canvas.
@@ -209,7 +209,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 /* narrow editor: no room beside the badge, so the pinned chip sits just above the badge row */
 @container (max-width:460px){.mini.pinned .pc{bottom:40px}}
 .place{margin-top:16px}
-.pc-m{position:absolute;left:0;top:calc(100% + 4px);width:264px;padding:4px 0;background:#fff;border:1px solid var(--g-200);border-radius:4px;box-shadow:var(--shadow-pop)}
+.pc-m{position:absolute;left:0;top:calc(100% + 4px);width:296px;padding:4px 0;background:#fff;border:1px solid var(--g-200);border-radius:4px;box-shadow:var(--shadow-pop)}
 .pc-m[hidden]{display:none}
 .pc.up .pc-m{top:auto;bottom:calc(100% + 4px)}
 .pc-i{display:flex;align-items:center;gap:8px;width:100%;height:32px;padding:0 12px;font-size:14px;line-height:20px;color:var(--fg);text-align:left;white-space:nowrap}
@@ -338,8 +338,8 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 </head><body>
 <div class="page">
   <header class="bhead">
-    <h1>Paste as plain text</h1>
-    <p class="lede">Prototype for <a href="../">PRD – Paste as plain text</a>, 4 Nov 2026. Production screens with the new parts drawn in. Safety Settings stay as they are. Nothing is built.</p>
+    <h1>Paste without formatting</h1>
+    <p class="lede">Prototype for <a href="../">PRD – Paste without formatting</a>, 24 Nov 2026. Production screens with the new parts drawn in. Safety Settings stay as they are. Nothing is built.</p>
     <nav class="toc" aria-label="Sections">
       <a href="#s1"><b>1</b> Summary</a><a href="#s2"><b>2</b> Paste simulator</a><a href="#s3"><b>3</b> Paste chip</a><a href="#s4"><b>4</b> What lands</a>
       <a href="#s5"><b>5</b> Edge cases</a><a href="#s6"><b>6</b> Decisions</a>
@@ -353,14 +353,14 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
       <div class="bcard tw">
         <table class="btab">
           <tr><th>Question</th><th>Control</th><th>Scope</th><th>Default</th></tr>
-          <tr><td>How does a paste land?</td><td class="w"><b>Always paste as plain text</b> (a switch in the editor's ••• menu and in the paste chip)</td><td class="w">Per user, in every sequence's email editor</td><td>On</td></tr>
+          <tr><td>How does a paste land?</td><td class="w"><b>Always paste without formatting</b> (a switch in the editor's ••• menu and in the paste chip)</td><td class="w">Per user, in every sequence's email editor</td><td>On</td></tr>
         </table>
-        <p class="rule"><b>Switch off:</b> a paste follows the sequence's Safety Settings as they are today. Remove Styling Automatically: it lands as it will be sent. Text only email: plain text. Neither: as copied, minus hidden markup.</p>
+        <p class="rule"><b>Switch off:</b> a paste follows the sequence's Safety Settings as they are today. Remove Styling Automatically: it lands as it will be sent. Text only email: without formatting. Neither: as copied, minus hidden markup.</p>
       </div>
       <div class="bcard tw">
         <table class="btab">
           <tr><th>In scope</th><th>What</th><th>On this board</th></tr>
-          <tr><td>Paste</td><td class="w">Hidden markup always removed. The per-user switch, in the editor's ••• menu. The paste chip switches any paste between plain text and formatting. On a paste the chip replaces the Styling detected bar; the bar still shows for styling added from the toolbar.</td><td><div class="items"><a href="#s2"><b>2</b>Setting and samples</a><a href="#s3"><b>3</b>Paste chip</a><a href="#s4"><b>4</b>What lands</a><a href="#s5"><b>5</b>Edge cases</a></div></td></tr>
+          <tr><td>Paste</td><td class="w">Hidden markup always removed. The per-user switch, in the editor's ••• menu. The paste chip switches any paste between removing and keeping its formatting. On a paste the chip replaces the Styling detected bar; the bar still shows for styling added from the toolbar.</td><td><div class="items"><a href="#s2"><b>2</b>Setting and samples</a><a href="#s3"><b>3</b>Paste chip</a><a href="#s4"><b>4</b>What lands</a><a href="#s5"><b>5</b>Edge cases</a></div></td></tr>
           <tr><td>Not in scope</td><td class="w">Safety Settings names, layout and saving. The editor toolbar and badge. Drafts lost when leaving the editor.</td><td>–</td></tr>
         </table>
       </div>
@@ -374,7 +374,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
       <aside class="s-panel" aria-label="Simulator controls">
         <div class="s-grp">
           <p class="s-gl">User setting <em>Editor menu</em></p>
-          <button class="psw-row" role="switch" aria-checked="true" id="cSetting" type="button"><span class="psw"></span><span class="psw-l">Always paste as plain text</span></button>
+          <button class="psw-row" role="switch" aria-checked="true" id="cSetting" type="button"><span class="psw"></span><span class="psw-l">Always paste without formatting</span></button>
         </div>
         <div class="s-grp">
           <p class="s-gl">Sequence's Safety Settings <em>Unchanged</em></p>
@@ -393,7 +393,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
             <button class="s-sample" type="button" data-sample="plain">Text from Notepad</button>
             <button class="s-sample" type="button" data-sample="sh">Copied from another Saleshandy step</button>
           </div>
-          <p class="s-hint"><kbd>Ctrl</kbd>+<kbd>V</kbd> pastes your clipboard. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> lands plain text.</p>
+          <p class="s-hint"><kbd>Ctrl</kbd>+<kbd>V</kbd> pastes your clipboard. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> lands without formatting.</p>
         </div>
         <div class="s-grp"><button class="btn btn-s btn-sm" id="sReset" type="button">Reset</button><p class="s-hint">Reset also replays the first-time ••• hint.</p></div>
       </aside>
@@ -419,7 +419,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 
   <!-- 3 · Paste chip -->
   <section class="sec" id="s3">
-    <div class="sec-h"><span class="sec-n">3</span><div><h2>Paste chip</h2><p class="cap">Shows where the paste ends, when plain text and the formatted paste would look different.</p></div></div>
+    <div class="sec-h"><span class="sec-n">3</span><div><h2>Paste chip</h2><p class="cap">Shows where the paste ends, when the paste would look different without its formatting.</p></div></div>
     <div class="two" id="states"></div>
     <div class="bcard tw place">
       <table class="btab">
@@ -430,10 +430,10 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
         <tr><td>Scrolled away</td><td class="w">If the user scrolls the paste out of view, the chip stays pinned to the top edge of the email body, or to its bottom edge beside the badge (just above the badge when the editor is too narrow for both), so it is always in sight while it is open. It returns to the paste when the paste is back in view. Picking an option from a pinned chip scrolls the editor back to the paste and replays the tint, so the change is seen.</td></tr>
         <tr><td>Layers</td><td class="w">Above the email text. Below the toolbar, the subject line, the badge, open menus and dialogs.</td></tr>
         <tr><td>Getting noticed</td><td class="w">It rises in over 180ms with one soft blue ring. The pasted text gets a light blue tint that fades over 1.2s, so the paste and its chip are seen together. With reduced motion turned on: no rise or ring, and the tint still fades. At rest it keeps a grey-500 border (4.8:1 on white) and a blue clipboard icon, so it never reads as part of the toolbar. After any switch the tint plays again.</td></tr>
-        <tr><td>Where the switch lives <span class="new-tag">New</span></td><td class="w">The first time a user flips "Always paste as plain text" in the chip, ever: the switch flips in place, the menu fades around it, and the row folds into the toggle's clipboard icon and flies into the toolbar's •••. The ••• menu opens with the toggle and its tooltip ("Always paste as plain text: Off") for 2.2s, then closes. Any key or click ends it at once. With reduced motion on: the ••• menu opens on the toggle, no flight. Screen readers hear "Always paste as plain text turned off. Change it any time from the More menu in the toolbar." Never shown again for that user, on any device.</td></tr>
+        <tr><td>Where the switch lives <span class="new-tag">New</span></td><td class="w">The first time a user flips "Always paste without formatting" in the chip, ever: the switch flips in place, the menu fades around it, and the row folds into the toggle's clipboard icon and flies into the toolbar's •••. The ••• menu opens with the toggle and its tooltip ("Always paste without formatting: Off") for 2.2s, then closes. Any key or click ends it at once. With reduced motion on: the ••• menu opens on the toggle, no flight. Screen readers hear "Always paste without formatting turned off. Change it any time from the More menu in the toolbar." Never shown again for that user, on any device.</td></tr>
         <tr><td>Menu</td><td class="w">Opens below the chip, or above it when there is no room. It shifts left to stay inside the editor.</td></tr>
         <tr><td>Keyboard</td><td class="w">Ctrl pressed on its own opens the menu with the ticked option focused, as in Word. Tab from the text also reaches the chip. Arrow keys move, Enter picks, Esc closes and returns to the text. The shortcut hint reads ⇧⌘V on a Mac and Ctrl+Shift+V elsewhere, in grey-600 (6.9:1 on the hover colour).</td></tr>
-        <tr><td>Screen readers</td><td class="w">Heard once, politely: "Pasted as plain text. Press Ctrl for paste options." A switch is announced too.</td></tr>
+        <tr><td>Screen readers</td><td class="w">Heard once, politely: "Pasted without formatting. Press Ctrl for paste options." A switch is announced too.</td></tr>
         <tr><td>Closes</td><td class="w">On a key that changes the text (typing, Delete, Enter), Esc, the next paste or Ctrl+Z. Arrow keys, Tab and scrolling leave it open, so the paste can be checked first. A click in the text outside the paste closes it; a click inside the paste keeps it. A click outside the editor closes only the menu.</td></tr>
       </table>
     </div>
@@ -457,14 +457,14 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
     <div class="bcard tw">
       <table class="btab">
         <tr><th>#</th><th>Question</th><th>Recommendation</th><th>Who</th></tr>
-        <tr><td>1</td><td class="w">Does a plain paste keep links?</td><td class="w">Decided: no. Plain paste is Ctrl+Shift+V, so links go; Keep formatting in the chip brings them back (Hitesh, 3 Nov)</td><td>Hitesh</td></tr>
-        <tr><td>2</td><td class="w">"Text only" or "Plain text" in the paste copy?</td><td class="w">Decided: Plain text, the same word everywhere (Hitesh, 3 Nov)</td><td>–</td></tr>
+        <tr><td>1</td><td class="w">Does a paste without formatting keep links?</td><td class="w">Decided: no. It is Ctrl+Shift+V, so links go; Keep formatting in the chip brings them back (Hitesh, 3 Nov)</td><td>Hitesh</td></tr>
+        <tr><td>2</td><td class="w">What do the paste words say?</td><td class="w">Decided: "without formatting". Chip "Formatting removed" / "Formatting kept", menu "Remove formatting" / "Keep formatting". "Plain text" reads as a way of sending an email (Hitesh, 24 Nov)</td><td>–</td></tr>
         <tr><td>3</td><td class="w">Templates and inbox replies follow the user's paste setting?</td><td class="w">Decided: no. Only the email draft in the sequence editor (Hitesh, 3 Nov)</td><td>–</td></tr>
         <tr><td>4</td><td class="w">Signature editor excluded?</td><td class="w">Decided: yes (Hitesh, 3 Nov)</td><td>–</td></tr>
         <tr><td>5</td><td class="w">After a paste: the notice bar, or a chip at the paste like Sheets?</td><td class="w">Decided: the chip with a label, at the paste (Hitesh, 4 Nov)</td><td>–</td></tr>
-        <tr><td>6</td><td class="w">Scope: Email format, Safety Settings fixes, drafts lost on leaving?</td><td class="w">Decided: paste as plain text only. Safety Settings stay as they are (Hitesh, 4 Nov)</td><td>–</td></tr>
+        <tr><td>6</td><td class="w">Scope: Email format, Safety Settings fixes, drafts lost on leaving?</td><td class="w">Decided: paste only. Safety Settings stay as they are (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>7</td><td class="w">The Styling detected bar, now that the chip exists?</td><td class="w">Decided: a paste shows only the chip; the bar stays for styling added from the toolbar (Hitesh, 4 Nov)</td><td>–</td></tr>
-        <tr><td>8</td><td class="w">The switch's name, now that it sits next to "Plain text" in the chip?</td><td class="w">Decided: "Always paste as plain text", in the chip, the ••• menu and everywhere else (Hitesh, 4 Nov)</td><td>–</td></tr>
+        <tr><td>8</td><td class="w">The switch's name, now that it sits next to "Remove formatting" in the chip?</td><td class="w">Decided: "Always paste without formatting", in the chip, the ••• menu and everywhere else (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>9</td><td class="w">What closes the chip?</td><td class="w">Decided: only keys that change the text, plus Esc, the next paste and Ctrl+Z. Arrow keys and Tab keep it (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>10</td><td class="w">Review fixes for the chip?</td><td class="w">Decided: switching from a pinned chip brings the paste back into view; a click outside the paste closes the chip; grey-500 border and blue icon at rest; ⇧⌘V on a Mac (Hitesh, 4 Nov). "Link removed" label: not doing</td><td>–</td></tr>
         <tr><td>11</td><td class="w">The switch's home in ••• is hard to find. Show it?</td><td class="w">Decided: the first time the chip's switch is flipped, the switch flies into ••• and the ••• menu opens on it. Once per user (23 Nov)</td><td>–</td></tr>
@@ -704,15 +704,15 @@ function kb(s){ return (new Blob([s]).size / 1024).toFixed(1) + ' KB'; }
 /* §4.1 matrix and §4.4 edge rules, in one place */
 function decide(src, o){
   var hasHtml = !!src.html && /<[a-z!]/i.test(src.html);
-  if (src.shift) return { html: plainToHtml(src.text), how:'plain text' };
+  if (src.shift) return { html: plainToHtml(src.text), how:'without formatting' };
   if (!hasHtml) return { html: plainToHtml(src.text), how:'as is' };
   var full = spaceBlocks(cleanHidden(src.html)), light = toLight(full), size = kb(src.html) + ' of HTML, ' + kb(full) + ' kept';
   if (src.sh) {
     var h = o.level === 2 ? toText(full, false) : o.level === 1 ? light : full;
-    return { html:h, how: o.level === 2 ? 'plain text, chips kept' : 'as copied, chips kept' };
+    return { html:h, how: o.level === 2 ? 'without formatting, chips kept' : 'as copied, chips kept' };
   }
-  if (o.level === 2) return { html: toText(full, false), how:'plain text', size:size };
-  if (o.setting) { var text = toText(full, o.links); return { html:text, how: o.links ? 'plain text, links kept' : 'plain text', gone: lost(full, text), size:size }; }
+  if (o.level === 2) return { html: toText(full, false), how:'without formatting', size:size };
+  if (o.setting) { var text = toText(full, o.links); return { html:text, how: o.links ? 'without formatting, links kept' : 'without formatting', gone: lost(full, text), size:size }; }
   if (o.level === 1) return { html:light, how:'as Remove Styling sends it', gone: lost(full, light), size:size };
   return { html:full, how:'as copied, minus hidden markup', size:size };
 }
@@ -734,7 +734,7 @@ function tbItem(it, level){
   if (k === 'sep') return '<span class="tb-sep"></span>';
   if (k === 'sp') return '<span class="tb-sp"></span>';
   /* TinyMCE's pastetext toggle button: aria-pressed carries the state; never greyed, it is a user setting, not formatting */
-  if (k === 'pt') { var on = it[1] === undefined ? S.setting : it[1]; return '<button class="tb-b" type="button" tabindex="-1" data-cmd="pastetext" aria-pressed="' + on + '" aria-label="Always paste as plain text" data-tip="Always paste as plain text: ' + (on ? 'On' : 'Off') + '">' + ic('pastetext') + '</button>'; }
+  if (k === 'pt') { var on = it[1] === undefined ? S.setting : it[1]; return '<button class="tb-b" type="button" tabindex="-1" data-cmd="pastetext" aria-pressed="' + on + '" aria-label="Always paste without formatting" data-tip="Always paste without formatting: ' + (on ? 'On' : 'Off') + '">' + ic('pastetext') + '</button>'; }
   if (k === 'tpl') return '<button class="tb-b tb-dd" type="button" tabindex="-1">' + ic('tpl', 14) + 'Template</button>';
   if (level === 2 && it[1] === 'image') return '';
   var dis = off(level, it[1]), attrs = ' type="button" tabindex="-1" data-cmd="' + it[1] + '" aria-label="' + it[3] + '"' + '';
@@ -827,23 +827,23 @@ function chipPlan(src, o){
   if (src.shift) return { why:'no chip (Ctrl+Shift+V)' };
   if (!hasHtml) return { why:'no chip (plain source)' };
   if (src.sh) return { why:'no chip (copied inside Saleshandy)' };
-  if (o.level === 2) return { why:'no chip (Plain text)' };
+  if (o.level === 2) return { why:'no chip (Text only email)' };
   var full = spaceBlocks(cleanHidden(src.html)), kept = o.level === 1 ? toLight(full) : full, plain = toText(full, false);
   if (!lost(kept, plain).length) return { why:'no chip (looks the same either way)' };
-  return { show:true, kept:kept, plain:plain, cur: o.setting ? 'plain' : 'keep', why:'chip shown: ' + (o.setting ? 'Plain text' : 'Formatting kept') };
+  return { show:true, kept:kept, plain:plain, cur: o.setting ? 'plain' : 'keep', why:'chip shown: ' + (o.setting ? 'Formatting removed' : 'Formatting kept') };
 }
 var chip = null;
 function chipItem(k, t, on, extra, ti){ return '<button class="pc-i" role="menuitemradio" type="button"' + (ti || '') + ' data-pick="' + k + '" aria-checked="' + on + '"><span class="pc-ck">' + (on ? ic('tick', 16) : '') + '</span><span>' + t + '</span>' + (extra || '') + '</button>'; }
 function chipHTML(style, cur, setting, open, enter, live, v2, mac){
   if (v2 === undefined) v2 = true; if (mac === undefined) mac = IS_MAC && v2;
-  var lbl = cur === 'plain' ? 'Plain text' : 'Formatting kept', icon = style === 'icon', t = live ? '' : ' tabindex="-1"';
+  var lbl = cur === 'plain' ? 'Formatting removed' : 'Formatting kept', icon = style === 'icon', t = live ? '' : ' tabindex="-1"';
   return '<div class="pc' + (icon ? ' icon' : '') + (v2 ? ' v2' : '') + (enter ? ' pc-enter' : '') + '">' +
     '<button class="pc-b" type="button" aria-haspopup="menu" aria-expanded="' + !!open + '" aria-label="Paste options: ' + lbl + '"' + (live ? ' data-tip="Paste options (Ctrl)"' : '') + t + '>' + ic('board', 16) + (icon ? '' : '<span>' + lbl + '</span>') + ic('chev', 12) + '</button>' +
     '<div class="pc-m" role="menu" aria-label="Paste options"' + (open ? '' : ' hidden') + '>' +
-      chipItem('plain', 'Plain text', cur === 'plain', '<span class="pc-k">' + (mac ? '⇧⌘V' : 'Ctrl+Shift+V') + '</span>', t) +
+      chipItem('plain', 'Remove formatting', cur === 'plain', '<span class="pc-k">' + (mac ? '⇧⌘V' : 'Ctrl+Shift+V') + '</span>', t) +
       chipItem('keep', 'Keep formatting', cur === 'keep', '', t) +
       '<div class="pc-sep" role="separator"></div>' +
-      '<button class="pc-i pc-sw psw-row" role="menuitemcheckbox" type="button" aria-checked="' + setting + '"' + t + '><span class="psw-l">Always paste as plain text</span><span class="psw"></span></button>' +
+      '<button class="pc-i pc-sw psw-row" role="menuitemcheckbox" type="button" aria-checked="' + setting + '"' + t + '><span class="psw-l">Always paste without formatting</span><span class="psw"></span></button>' +
     '</div></div>';
 }
 function showChip(enter){
@@ -856,7 +856,7 @@ function showChip(enter){
   });
   chip.querySelectorAll('[data-pick]').forEach(function(b){ b.addEventListener('click', function(){ pickChip(b.dataset.pick); }); });
   chip.addEventListener('keydown', chipKeys);
-  chip.querySelector('.pc-sw').addEventListener('click', function(){ var row = this; setSetting(!S.setting); say('Always paste as plain text turned ' + (S.setting ? 'On' : 'Off') + ' from the paste chip, applies from the next paste'); if (!S.homeShown) { S.homeShown = true; showHome(row); } });
+  chip.querySelector('.pc-sw').addEventListener('click', function(){ var row = this; setSetting(!S.setting); say('Always paste without formatting turned ' + (S.setting ? 'On' : 'Off') + ' from the paste chip, applies from the next paste'); if (!S.homeShown) { S.homeShown = true; showHome(row); } });
   placeChip();
 }
 function announce(t){ var a = $('sAnnounce'); a.textContent = ''; setTimeout(function(){ a.textContent = t; }, 60); }
@@ -910,9 +910,9 @@ function pickChip(k){
   if (L.wrap.tagName === 'SPAN' && kids.length === 1 && kids[0].nodeName === 'P') { L.wrap.innerHTML = kids[0].innerHTML; L.wrap.after(caretMarker()); }
   else { L.wrap.innerHTML = html; var cm = caretMarker(); if (L.wrap.tagName === 'SPAN') L.wrap.after(cm); else endCaret(L.wrap, cm); }
   focusEd(); caretToMarker(); L.cur = k; L.after = ed.innerHTML; S.switches++;
-  { scrollToCaret(); L.wrap.classList.remove('s-flash'); void L.wrap.offsetWidth; L.wrap.classList.add('s-flash'); } announce(k === 'plain' ? 'Switched to plain text.' : 'Switched to keep formatting.');
+  { scrollToCaret(); L.wrap.classList.remove('s-flash'); void L.wrap.offsetWidth; L.wrap.classList.add('s-flash'); } announce(k === 'plain' ? 'Formatting removed.' : 'Formatting kept.');
   showChip(false);
-  say('Chip · ' + (k === 'plain' ? 'switched to Plain text' : 'Keep formatting · restored ' + (L.level === 1 ? 'what Remove Styling sends: bold, italic, links, lists, images and tables' : 'the paste as copied, minus hidden markup')) + ' · no question asked, the switch sits in the chip');
+  say('Chip · ' + (k === 'plain' ? 'switched to Remove formatting' : 'Keep formatting · restored ' + (L.level === 1 ? 'what Remove Styling sends: bold, italic, links, lists, images and tables' : 'the paste as copied, minus hidden markup')) + ' · no question asked, the switch sits in the chip');
   paintRead();
 }
 
@@ -925,7 +925,7 @@ function doPaste(src){
   S.last = { wrap:wrap, before:before, after: ed.innerHTML, level:S.level };
   scrollToCaret();
   var plan = chipPlan(src, S), why = plan.why;
-  if (plan.show) { announce((plan.cur === 'plain' ? 'Pasted as plain text.' : 'Pasted with formatting.') + ' Press Ctrl for paste options.'); S.chips++; S.last.keep = chipify(plan.kept); S.last.plain = chipify(plan.plain); S.last.cur = plan.cur; showChip(true); } else hideChip();
+  if (plan.show) { announce((plan.cur === 'plain' ? 'Pasted without formatting.' : 'Pasted with formatting.') + ' Press Ctrl for paste options.'); S.chips++; S.last.keep = chipify(plan.kept); S.last.plain = chipify(plan.plain); S.last.cur = plan.cur; showChip(true); } else hideChip();
   var line = src.name + ' · setting ' + (S.setting ? 'On' : 'Off') + ' · ' + LV[S.level] + ' → landed ' + d.how + ' · ' + why;
   if (d.gone && d.gone.length) line += ' · removed: ' + d.gone.join(', ');
   if (d.size) line += ' · ' + d.size;
@@ -1010,7 +1010,7 @@ tb.addEventListener('click', function(e){
 drawer.addEventListener('mousedown', function(e){ e.preventDefault(); });
 drawer.addEventListener('click', function(e){
   var b = e.target.closest('.tb-b'); if (!b || b.dataset.cmd !== 'pastetext') return;
-  setSetting(!S.setting); say('Always paste as plain text turned ' + (S.setting ? 'On' : 'Off') + ' from the editor menu');
+  setSetting(!S.setting); say('Always paste without formatting turned ' + (S.setting ? 'On' : 'Off') + ' from the editor menu');
   if (tip.classList.contains('show')) showTip(b);
 });
 function moreBtn(){ return tb.querySelector('[data-cmd="more"]'); }
@@ -1020,7 +1020,7 @@ function flashToggle(){
   t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash'); showTip(t);
   setTimeout(function(){ t.classList.remove('flash'); tip.classList.remove('show'); }, 1600);
 }
-function paintDrawer(){ var t = drawer.querySelector('[data-cmd="pastetext"]'); if (!t) return; t.setAttribute('aria-pressed', S.setting); t.dataset.tip = 'Always paste as plain text: ' + (S.setting ? 'On' : 'Off'); }
+function paintDrawer(){ var t = drawer.querySelector('[data-cmd="pastetext"]'); if (!t) return; t.setAttribute('aria-pressed', S.setting); t.dataset.tip = 'Always paste without formatting: ' + (S.setting ? 'On' : 'Off'); }
 function toggleDrawer(b){
   if (!drawer.hidden) { drawer.hidden = true; b.classList.remove('on'); return; }
   drawer.innerHTML = DRAWER.map(function(it){ return tbItem(it, S.level); }).join('');
@@ -1051,7 +1051,7 @@ window.addEventListener('scroll', function(){ tip.classList.remove('show'); }, {
 function setSetting(v){ S.setting = v; paint(); }
 function setLevel(v){ S.level = v; paint(); if (window.__ssRender) window.__ssRender(); }
 function flip(el, fn){ el.addEventListener('click', fn); }
-flip($('cSetting'), function(){ setSetting(!S.setting); say('Always paste as plain text turned ' + (S.setting ? 'On' : 'Off') + ' from the panel, applies from the next paste'); });
+flip($('cSetting'), function(){ setSetting(!S.setting); say('Always paste without formatting turned ' + (S.setting ? 'On' : 'Off') + ' from the panel, applies from the next paste'); });
 document.querySelectorAll('#sim .s-opt[data-level]').forEach(function(o){ flip(o, function(){ setLevel(+o.dataset.level); say('Safety Settings · ' + LV[S.level]); }); });
 $('sReset').addEventListener('click', reset);
 function reset(){
@@ -1107,7 +1107,7 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
   var CH = [
     ['chip', 'plain', true, false, 'After a paste that looks different. It sits just below where the paste ends, and the pasted text is tinted for a moment. It never takes focus, and typing closes it.'],
     ['chip', 'plain', true, true, 'Click it, or press Ctrl: switch this paste either way, as often as you like. The switch below it sets every paste.'],
-    ['chip', 'keep', false, false, 'Setting Off: the chip still shows, so plain text stays one click away.'],
+    ['chip', 'keep', false, false, 'Setting Off: the chip still shows, so Remove formatting stays one click away.'],
     ['pin', 'plain', true, false, 'Scrolled away: the paste is above the view, so the chip stays pinned to the bottom edge, beside the badge, until it is closed.']
   ];
   var TINT = B.replace('<p>Saw Northwind', '<p><span class="tint">Saw Northwind').replace('this week?</p>', 'this week?</span></p>');
@@ -1122,8 +1122,8 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
 /* ═════ section 4: the matrix, built with the same pipeline ═════ */
 (function(){
   var CAP = {
-    'true1':'Keep formatting in the chip brings back what Remove Styling sends: bold, links, the list.', 'true0':'Keep formatting in the chip brings back the paste as copied, minus hidden markup.', 'true2':'Plain text. No chip.',
-    'false1':'Lands as Remove Styling sends it. The chip offers plain text.', 'false0':'As copied, minus hidden markup. The chip offers plain text.', 'false2':'Plain text. No chip.'
+    'true1':'Keep formatting in the chip brings back what Remove Styling sends: bold, links, the list.', 'true0':'Keep formatting in the chip brings back the paste as copied, minus hidden markup.', 'true2':'Without formatting. No chip.',
+    'false1':'Lands as Remove Styling sends it. The chip offers Remove formatting.', 'false0':'As copied, minus hidden markup. The chip offers Remove formatting.', 'false2':'Without formatting. No chip.'
   };
   /* board display only: the as-copied frame shows the source's colour at the board's body size */
   function bodySize(html){ var b = parse(html); b.querySelectorAll('[style]').forEach(function(el){ el.style.removeProperty('font-size'); if (!el.getAttribute('style')) el.removeAttribute('style'); }); return b.innerHTML; }
@@ -1141,13 +1141,13 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
 
 /* ═════ section 5: edge surfaces ═════ */
 (function(){
-  var subj = '<div><h3>Subject line</h3><div class="e-surf e-subj"><div class="s-steph" style="padding:0;height:auto;border:0;margin-bottom:16px"><span class="s-chip">Step 1 <span>A</span></span><span class="s-type">' + pi('Mail', 18) + 'Email</span></div><div class="s-subj" style="margin:0"><span class="s-k">Subject</span><span class="s-v">Saw Northwind just opened a second warehouse in Pune</span><span class="s-g">' + ic('smile') + '{{}} {|}</span></div><div class="s-preh" style="margin:6px 0 0">Set Pre-Header</div>' + frameHTML(1, STATE_BODY, null) + '</div><p class="mini-cap">Always plain text, on one line. No paste chip.</p></div>';
+  var subj = '<div><h3>Subject line</h3><div class="e-surf e-subj"><div class="s-steph" style="padding:0;height:auto;border:0;margin-bottom:16px"><span class="s-chip">Step 1 <span>A</span></span><span class="s-type">' + pi('Mail', 18) + 'Email</span></div><div class="s-subj" style="margin:0"><span class="s-k">Subject</span><span class="s-v">Saw Northwind just opened a second warehouse in Pune</span><span class="s-g">' + ic('smile') + '{{}} {|}</span></div><div class="s-preh" style="margin:6px 0 0">Set Pre-Header</div>' + frameHTML(1, STATE_BODY, null) + '</div><p class="mini-cap">Always without formatting, on one line. No paste chip.</p></div>';
   var spin = '<div><h3>Spintax variant field</h3><div class="e-surf e-modal"><div class="e-mh"><span>Add Spintax</span>' + pi('Cross', 18) + '</div><div class="e-mb">' +
       '<div class="e-var"><span class="e-vin">Worth a 15-minute look?</span>' + pi('Cross') + '</div>' +
       '<div class="e-var"><span class="e-vin">Open to a quick call next week?</span>' + pi('Cross') + '</div>' +
       '<div class="e-var"><span class="e-vin focus">Saw Northwind just opened a second warehouse in Pune</span>' + pi('Cross') + '</div>' +
       '<p class="e-note">' + pi('InfoCircle', 14) + 'Only text is allowed in spintax.</p>' +
-      '<span class="e-add">+ Add Spin</span></div><div class="e-mf"><button class="btn btn-s" type="button">Cancel</button><button class="btn btn-p" type="button">Insert</button></div></div><p class="mini-cap">Only text: a paste lands as plain text, with no paste chip. The note under the inputs says so.</p></div>';
+      '<span class="e-add">+ Add Spin</span></div><div class="e-mf"><button class="btn btn-s" type="button">Cancel</button><button class="btn btn-p" type="button">Insert</button></div></div><p class="mini-cap">Only text: a paste lands without formatting, with no paste chip. The note under the inputs says so.</p></div>';
   $('edges').innerHTML = subj + spin;
 })();
 
@@ -1187,7 +1187,7 @@ function txOpenDrawer(run){
 async function txLand(run, t, hold){
   t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash');
   if (!RM) run.anims.push(t.animate([{ transform:'scale(.6)', opacity:0 }, { transform:'scale(1.12)', opacity:1, offset:.6 }, { transform:'scale(1)', opacity:1 }], { duration:300, easing:'cubic-bezier(.2,0,0,1)' }));
-  var g = fr(t), tp = document.createElement('div'); tp.className = 'tx-tip'; tp.textContent = 'Always paste as plain text: ' + (S.setting ? 'On' : 'Off');
+  var g = fr(t), tp = document.createElement('div'); tp.className = 'tx-tip'; tp.textContent = 'Always paste without formatting: ' + (S.setting ? 'On' : 'Off');
   frame.appendChild(tp); run.nodes.push(tp);
   tp.style.top = (g.t + g.h + 6) + 'px'; tp.style.left = Math.max(8, Math.min(frame.clientWidth - tp.offsetWidth - 8, g.l + g.w / 2 - tp.offsetWidth / 2)) + 'px';
   await txWait(run, hold); if (txRun !== run) return;
@@ -1210,7 +1210,7 @@ async function showHome(row){
   run.onDown = function(e){ txEnd(!!e.target.closest('#sDrawer')); };
   run.onKey = function(){ txEnd(); };
   focusEd(); caretToMarker();
-  announce('Always paste as plain text turned ' + (S.setting ? 'on' : 'off') + '. Change it any time from the More menu in the toolbar.');
+  announce('Always paste without formatting turned ' + (S.setting ? 'on' : 'off') + '. Change it any time from the More menu in the toolbar.');
   say('First time only · shown where the switch lives: ••• menu, clipboard toggle');
   setTimeout(function(){ if (txRun !== run) return; document.addEventListener('mousedown', run.onDown, true); document.addEventListener('keydown', run.onKey, true); }, 0);
   var menu = chip.querySelector('.pc-m'), from = fr(row), to = fr(mb), on = S.setting;
@@ -1221,7 +1221,7 @@ async function showHome(row){
   if (mode === 'fly') {
     /* 2 · the menu fades away around the row; the row lifts and shows the toggle's icon in its tick column */
     var gw = document.createElement('div'); gw.className = 'tx-gw';
-    gw.innerHTML = '<div class="tx-ghost"><span class="tx-ico">' + ic('pastetext', 16) + '</span><span class="tx-lbl"><span>Always paste as plain text</span><span class="psw-row" aria-checked="' + on + '"><span class="psw"></span></span></span></div>';
+    gw.innerHTML = '<div class="tx-ghost"><span class="tx-ico">' + ic('pastetext', 16) + '</span><span class="tx-lbl"><span>Always paste without formatting</span><span class="psw-row" aria-checked="' + on + '"><span class="psw"></span></span></span></div>';
     gw.style.cssText = 'left:' + from.l + 'px;top:' + from.t + 'px;width:' + from.w + 'px;height:' + from.h + 'px';
     frame.appendChild(gw); run.nodes.push(gw);
     var gh = gw.firstChild, ico = gh.querySelector('.tx-ico'), lbl = gh.querySelector('.tx-lbl');

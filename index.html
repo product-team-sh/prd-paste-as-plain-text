@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Paste as plain text</title>
+<title>Paste without formatting</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
 :root{
@@ -186,7 +186,7 @@ figure img{width:100%;height:auto}
 <a class="toc-l2" href="#7-rollout"><span class="toc-num">7</span>Rollout</a>
   </nav>
   <main class="main">
-<header class="doc-header"><p class="eyebrow">Product Requirements Document</p><h1>PRD – Paste as plain text</h1></header>
+<header class="doc-header"><p class="eyebrow">Product Requirements Document</p><h1>PRD – Paste without formatting</h1></header>
 <p><strong>Design of record:</strong> <a href="prototype/index.html">clickable prototype</a> · <strong>Status:</strong> Ready for review</p>
 <hr />
 <section id="1-problem" class="sec"><div class="sec-head"><span class="sec-num">1</span><h2>Problem</h2></div>
@@ -200,12 +200,12 @@ figure img{width:100%;height:auto}
 <section id="2-what-we-re-building" class="sec"><div class="sec-head"><span class="sec-num">2</span><h2>What we're building</h2></div>
 
 <ol>
-<li><strong>Pastes land as plain text by default</strong>, exactly like Ctrl+Shift+V: paragraphs and line breaks stay; links, bold, lists, images and fonts go. Hidden markup never gets in.</li>
-<li><strong>A paste chip</strong> at the end of every paste that could have landed differently switches it between Plain text and Keep formatting.</li>
-<li><strong>A per-user switch, "Always paste as plain text"</strong>, default On, in the editor's "•••" menu and in the chip.</li>
+<li><strong>Pastes land without formatting by default</strong>, exactly like Ctrl+Shift+V. <strong>Without formatting</strong> means the words and line breaks only: what is stored is identical to typing the same text by hand, with no styles, attributes, links, bold, lists, images or other tags. Hidden markup never gets in.</li>
+<li><strong>A paste chip</strong> at the end of every paste that could have landed differently switches it between Remove formatting and Keep formatting.</li>
+<li><strong>A per-user switch, "Always paste without formatting"</strong>, default On, in the editor's "•••" menu and in the chip.</li>
 <li><strong>With the switch off, a paste follows the sequence's Safety Settings as they are today:</strong><ul>
 <li>Remove Styling Automatically: it lands as it will be sent;</li>
-<li>Text only email: plain text;</li>
+<li>Text only email: without formatting;</li>
 <li>Neither: as copied, minus hidden markup.</li>
 </ul>
 </li>
@@ -238,23 +238,23 @@ figure img{width:100%;height:auto}
 <tbody>
 <tr>
 <td><strong>On</strong> (default)</td>
-<td>Plain text. Chip: "Plain text"</td>
-<td>Plain text. Chip: "Plain text"</td>
-<td>Plain text, no chip</td>
+<td>Without formatting. Chip: "Formatting removed"</td>
+<td>Without formatting. Chip: "Formatting removed"</td>
+<td>Without formatting, no chip</td>
 </tr>
 <tr>
 <td><strong>Off</strong></td>
 <td>As Remove Styling will send it: bold, italic, links, lists, images and tables kept; fonts, sizes, colours, highlight, underline, strikethrough, alignment and headings removed. Chip: "Formatting kept"</td>
 <td>As copied, minus hidden markup. Chip: "Formatting kept"</td>
-<td>Plain text, no chip</td>
+<td>Without formatting, no chip</td>
 </tr>
 </tbody>
 </table></div>
 <ul>
 <li><strong>Hidden markup</strong> changes nothing visible: Word and Docs classes, comments, empty spans, and font declarations equal to the editor's own. It is always removed, in every cell.</li>
-<li><strong>The chip shows only when Plain text and Keep formatting would look different</strong> for this paste, meaning a link, bold, a list, an image, a colour or a font differs.</li>
+<li><strong>The chip shows only when Remove formatting and Keep formatting would look different</strong> for this paste, meaning a link, bold, a list, an image, a colour or a font differs.</li>
 <li><strong>No chip</strong> for:<ul>
-<li>a plain-text source (Notepad);</li>
+<li>a source with no formatting (Notepad);</li>
 <li>a paste copied inside Saleshandy;</li>
 <li>Ctrl+Shift+V or Cmd+Shift+V;</li>
 <li>Text only email;</li>
@@ -275,21 +275,21 @@ figure img{width:100%;height:auto}
 </thead>
 <tbody>
 <tr>
-<td>Landed plain</td>
-<td>Clipboard icon · <strong>Plain text ▾</strong></td>
-<td>✓ Plain text (hint Ctrl+Shift+V, ⇧⌘V on a Mac) · Keep formatting · divider · Always paste as plain text (switch)</td>
+<td>Landed without formatting</td>
+<td>Clipboard icon · <strong>Formatting removed ▾</strong></td>
+<td>✓ Remove formatting (hint Ctrl+Shift+V, ⇧⌘V on a Mac) · Keep formatting · divider · Always paste without formatting (switch)</td>
 </tr>
 <tr>
 <td>Landed formatted</td>
 <td>Clipboard icon · <strong>Formatting kept ▾</strong></td>
-<td>Plain text · ✓ Keep formatting · divider · Always paste as plain text (switch)</td>
+<td>Remove formatting · ✓ Keep formatting · divider · Always paste without formatting (switch)</td>
 </tr>
 </tbody>
 </table></div>
 <ul>
 <li>Picking the other option rewrites only this paste. The user can switch back and forth as often as wanted.</li>
 <li>The switch changes every future paste, not this one.</li>
-<li><strong>The first time a user flips the switch in the chip, the editor shows where the switch lives.</strong> The chip menu closes, the switch moves into the toolbar's "•••", and the "•••" menu opens on the toggle with its tooltip ("Always paste as plain text: Off") for about 2 seconds, then closes. Any key or click ends it at once. The cursor stays in the body. With reduced motion on, the "•••" menu opens on the toggle without the movement. It shows once per user, ever, across devices; later flips just flip the switch. The motion is in the prototype.</li>
+<li><strong>The first time a user flips the switch in the chip, the editor shows where the switch lives.</strong> The chip menu closes, the switch moves into the toolbar's "•••", and the "•••" menu opens on the toggle with its tooltip ("Always paste without formatting: Off") for about 2 seconds, then closes. Any key or click ends it at once. The cursor stays in the body. With reduced motion on, the "•••" menu opens on the toggle without the movement. It shows once per user, ever, across devices; later flips just flip the switch. The motion is in the prototype.</li>
 </ul>
 <figure><figcaption>The menu: this paste either way, and the switch for every paste</figcaption><img src="screens/02-chip-menu.png" style="max-width:885px" alt="The menu: this paste either way, and the switch for every paste" loading="lazy"></figure>
 <figure><figcaption>Switch off: the chip reads Formatting kept</figcaption><img src="screens/03-chip-switch-off.png" style="max-width:885px" alt="Switch off: the chip reads Formatting kept" loading="lazy"></figure>
@@ -344,7 +344,7 @@ figure img{width:100%;height:auto}
 <ul>
 <li>Ctrl pressed and released on its own opens the menu with the ticked option focused. Tab from the text also reaches the chip.</li>
 <li>In the menu: arrow keys move, Home and End jump, Enter picks, Esc closes and returns the cursor to the text, and Tab closes.</li>
-<li>A polite live announcement, once per paste: "Pasted as plain text. Press Ctrl for paste options." For a formatted paste the first sentence is "Pasted with formatting." Each switch is announced: "Switched to plain text." or "Switched to keep formatting." The first-time switch flip is announced: "Always paste as plain text turned off. Change it any time from the More menu in the toolbar."</li>
+<li>A polite live announcement, once per paste: "Pasted without formatting. Press Ctrl for paste options." For a formatted paste the first sentence is "Pasted with formatting." Each switch is announced: "Formatting removed." or "Formatting kept." The first-time switch flip is announced: "Always paste without formatting turned off. Change it any time from the More menu in the toolbar."</li>
 </ul>
 <p><strong>Closes on:</strong> a key that changes the text (typing, Delete, Backspace, Enter), Esc, the next paste, Ctrl+Z, or a click in the text outside the paste. A click inside the paste keeps it. Ctrl+Z works as normal and removes the paste.</p>
 <p><strong>Explicitly out of scope:</strong> pasted image files (screenshots) behave as today.</p>
@@ -362,7 +362,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td>P-1</td>
 <td>Switch on, Remove Styling: paste a Word draft with bold, a link, a list and a coloured font</td>
-<td>Body holds plain text with paragraphs; no <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>, list, <code>style</code> or Word class; chip "Plain text"</td>
+<td>Body holds only the words and paragraphs; no <code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>, list, <code>style</code> or Word class; chip "Formatting removed"</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -386,7 +386,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td>P-5</td>
 <td>Text only email: paste the P-1 draft with the switch on, then off</td>
-<td>Plain text both times; no chip either time</td>
+<td>Without formatting both times; no chip either time</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -404,7 +404,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td>P-8</td>
 <td>Ctrl+Shift+V (Cmd+Shift+V) with the switch off</td>
-<td>Plain text; no chip</td>
+<td>Without formatting; no chip</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -438,6 +438,12 @@ figure img{width:100%;height:auto}
 <td>P1</td>
 </tr>
 <tr>
+<td>P-14</td>
+<td>P-1; then in a new email, type the same lines by hand</td>
+<td>The stored HTML of the two bodies is identical</td>
+<td>P0</td>
+</tr>
+<tr>
 <td><strong>P-F1</strong></td>
 <td>P-1, then chip → <strong>Keep formatting</strong></td>
 <td>Body holds what Remove Styling sends (bold, link and list back; no fonts or colours); text outside the paste byte-identical to before the paste; chip reads "Formatting kept"</td>
@@ -445,7 +451,7 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td>P-F2</td>
-<td>P-F1, then chip → Plain text</td>
+<td>P-F1, then chip → Remove formatting</td>
 <td>Back to the P-1 result exactly</td>
 <td>P0</td>
 </tr>
@@ -463,14 +469,14 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td>P-F5</td>
-<td>Chip → switch "Always paste as plain text" off</td>
+<td>Chip → switch "Always paste without formatting" off</td>
 <td>This paste is unchanged; the next paste follows the Off row; after a reload the "•••" menu reads Off (read back: menu state and <code>/user/meta</code>)</td>
 <td>P0</td>
 </tr>
 <tr>
 <td>P-F6</td>
-<td>New user: P-1, then chip → switch "Always paste as plain text" off</td>
-<td>The chip menu closes; the switch moves into "•••"; the "•••" menu opens with the toggle and the tooltip "Always paste as plain text: Off", then closes; the cursor stays in the body</td>
+<td>New user: P-1, then chip → switch "Always paste without formatting" off</td>
+<td>The chip menu closes; the switch moves into "•••"; the "•••" menu opens with the toggle and the tooltip "Always paste without formatting: Off", then closes; the cursor stays in the body</td>
 <td>P1</td>
 </tr>
 <tr>
@@ -524,7 +530,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td>C-7</td>
 <td>Screen reader on: paste the P-1 draft, then switch</td>
-<td>"Pasted as plain text. Press Ctrl for paste options." once, then "Switched to keep formatting."</td>
+<td>"Pasted without formatting. Press Ctrl for paste options." once, then "Formatting kept."</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -543,7 +549,7 @@ figure img{width:100%;height:auto}
 </table></div>
 <h3 id="3-2-the-switch-in-the-editor-s-menu">3.2 The switch in the editor's "•••" menu</h3>
 <ul>
-<li>A toggle button at the end of the "•••" menu, in its own group, labelled with a clipboard icon. Pressed means On. Tooltip: "Always paste as plain text: On" or "…: Off".</li>
+<li>A toggle button at the end of the "•••" menu, in its own group, labelled with a clipboard icon. Pressed means On. Tooltip: "Always paste without formatting: On" or "…: Off".</li>
 <li>The default is On for every user, new and existing.</li>
 <li>It saves when switched, for that user, across devices. It applies from the next paste.</li>
 <li>It is the same setting as the switch in the chip. It is never greyed out.</li>
@@ -561,7 +567,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td>M-1</td>
 <td>New user opens the "•••" menu</td>
-<td>Toggle pressed; tooltip "Always paste as plain text: On"</td>
+<td>Toggle pressed; tooltip "Always paste without formatting: On"</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -586,8 +592,8 @@ figure img{width:100%;height:auto}
 </table></div>
 <h3 id="3-3-subject-line-and-spintax-variants">3.3 Subject line and spintax variants</h3>
 <ul>
-<li><strong>Subject:</strong> a paste is always plain text, on one line, with no chip, whatever the switch.</li>
-<li><strong>Spintax variant field:</strong> a paste is always plain text, with no chip. The field shows "Only text is allowed in spintax." under the inputs.</li>
+<li><strong>Subject:</strong> a paste is always without formatting, on one line, with no chip, whatever the switch.</li>
+<li><strong>Spintax variant field:</strong> a paste is always without formatting, with no chip. The field shows "Only text is allowed in spintax." under the inputs.</li>
 </ul>
 <div class="tbl-wrap"><table>
 <thead>
@@ -602,13 +608,13 @@ figure img{width:100%;height:auto}
 <tr>
 <td>F-1</td>
 <td>Paste the P-1 draft into the subject, switch off</td>
-<td>One line of plain text; no chip</td>
+<td>One line, without formatting; no chip</td>
 <td>P0</td>
 </tr>
 <tr>
 <td>F-2</td>
 <td>Paste the P-1 draft into a variant, switch off</td>
-<td>Plain text; no chip; "Only text is allowed in spintax." visible</td>
+<td>Without formatting; no chip; "Only text is allowed in spintax." visible</td>
 <td>P0</td>
 </tr>
 </tbody>
@@ -665,7 +671,7 @@ figure img{width:100%;height:auto}
 <tbody>
 <tr>
 <td>Ctrl+Shift+V / Cmd+Shift+V</td>
-<td>Always plain text, never a chip, in every field</td>
+<td>Always without formatting, never a chip, in every field</td>
 </tr>
 <tr>
 <td>Ctrl+Z / Cmd+Z</td>
@@ -713,7 +719,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td><code>paste_landed</code></td>
 <td>Any paste or drop into a step body</td>
-<td>safety_setting, switch, chip_shown, landed (plain, formatted), removed_kinds (link, bold, list, image, colour, font), html_kb, kept_kb</td>
+<td>safety_setting, switch, chip_shown, landed (formatting_removed, formatting_kept), removed_kinds (link, bold, list, image, colour, font), html_kb, kept_kb</td>
 </tr>
 <tr>
 <td><code>paste_chip_opened</code></td>
@@ -722,7 +728,7 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td><code>paste_chip_switched</code></td>
-<td>Plain text or Keep formatting is picked</td>
+<td>Remove formatting or Keep formatting is picked</td>
 <td>to, pinned, seconds_since_paste</td>
 </tr>
 <tr>
@@ -747,7 +753,7 @@ figure img{width:100%;height:auto}
 <td><strong>Keep-formatting rate (most important)</strong></td>
 <td>switches to Keep formatting ÷ chips shown with the switch on</td>
 <td>&lt; 30% (target; assumed, no baseline)</td>
-<td>&gt; 50%: plain is wrong too often</td>
+<td>&gt; 50%: removing formatting is wrong too often</td>
 </tr>
 <tr>
 <td>Chip rate</td>
@@ -864,6 +870,109 @@ figure img{width:100%;height:auto}
     });
   }, {rootMargin: '-10% 0px -75% 0px'});
   targets.forEach(function(t){ io.observe(t); });
+})();
+</script>
+
+<style>
+figure a.zoom{display:block;cursor:zoom-in;border-radius:var(--radius-md)}
+figure a.zoom img{transition:border-color .15s ease-out,box-shadow .15s ease-out}
+figure a.zoom:hover img{border-color:#93C5FD;box-shadow:0 4px 16px rgba(17,24,39,.08)}
+figure a.zoom:focus-visible{outline:2px solid #1D4ED8;outline-offset:3px}
+.lb{position:fixed;inset:0;width:100vw;height:100vh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(17,24,39,.92);color:#F9FAFB;display:none;flex-direction:column;overscroll-behavior:contain}
+.lb[open]{display:flex}
+.lb::backdrop{background:transparent}
+.lb-bar{display:flex;align-items:center;gap:16px;padding:12px 16px 12px 24px;flex-shrink:0}
+.lb-cap{margin:0;flex:1;min-width:0;font-size:14px;line-height:20px;font-weight:500;color:#F9FAFB;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-count{font-size:13px;line-height:20px;color:#9CA3AF;font-variant-numeric:tabular-nums;flex-shrink:0}
+.lb-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.lb-sep{width:1px;height:20px;background:rgba(249,250,251,.16);margin:0 6px}
+.lb-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;border-radius:var(--radius-md);background:transparent;color:#E5E7EB;cursor:pointer;text-decoration:none;font:500 12px/1 inherit}
+.lb-btn:hover{background:rgba(249,250,251,.12);color:#fff;text-decoration:none}
+.lb-btn:focus-visible{outline:2px solid #93C5FD;outline-offset:1px}
+.lb-btn:disabled{opacity:.35;cursor:default;background:transparent}
+.lb-btn svg{width:20px;height:20px}
+.lb-pct{min-width:48px;text-align:center;font-size:13px;color:#D1D5DB;font-variant-numeric:tabular-nums}
+.lb-stage{flex:1;min-height:0;overflow:auto;display:flex;padding:0 24px 24px}
+.lb-img{margin:auto;display:block;border-radius:var(--radius-md);box-shadow:0 12px 40px rgba(0,0,0,.45);background:#fff;cursor:zoom-in;user-select:none;-webkit-user-drag:none}
+.lb.fit .lb-img{max-width:100%;max-height:100%;object-fit:contain}
+.lb.zoomed .lb-img{max-width:none;max-height:none;cursor:grab}
+.lb.dragging .lb-img{cursor:grabbing}
+.lb-hint{font-size:12px;line-height:16px;color:#9CA3AF;text-align:center;padding:0 16px 12px;flex-shrink:0}
+@media (max-width:600px){.lb-bar{padding:8px 8px 8px 16px;gap:8px}.lb-count,.lb-hint,.lb-sep,.lb-pct{display:none}.lb-stage{padding:0 8px 8px}.lb-btn{width:40px;height:40px}}
+@media (prefers-reduced-motion:reduce){figure a.zoom img{transition:none}}
+</style>
+<dialog class="lb fit" aria-label="Screenshot viewer">
+  <div class="lb-bar">
+    <p class="lb-cap"></p>
+    <span class="lb-count"></span>
+    <div class="lb-actions">
+      <button class="lb-btn" data-act="prev" aria-label="Previous screenshot" title="Previous (←)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="lb-btn" data-act="next" aria-label="Next screenshot" title="Next (→)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      <span class="lb-sep" aria-hidden="true"></span>
+      <button class="lb-btn" data-act="out" aria-label="Zoom out" title="Zoom out (−)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M20 20l-4-4"/></svg></button>
+      <span class="lb-pct" aria-live="polite">Fit</span>
+      <button class="lb-btn" data-act="in" aria-label="Zoom in" title="Zoom in (+)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M11 8v6M20 20l-4-4"/></svg></button>
+      <span class="lb-sep" aria-hidden="true"></span>
+      <a class="lb-btn" data-act="open" target="_blank" rel="noopener" aria-label="Open image in a new tab" title="Open in a new tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+      <button class="lb-btn" data-act="close" aria-label="Close" title="Close (Esc)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+  <div class="lb-stage"><img class="lb-img" alt=""></div>
+  <p class="lb-hint">Click the image to zoom, drag to move around, ← → for the next screen, Esc to close</p>
+</dialog>
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('figure a.zoom'));
+  if (!links.length) return;
+  var lb = document.querySelector('.lb'), img = lb.querySelector('.lb-img'), stage = lb.querySelector('.lb-stage');
+  var cap = lb.querySelector('.lb-cap'), count = lb.querySelector('.lb-count'), pct = lb.querySelector('.lb-pct');
+  var open = lb.querySelector('[data-act="open"]'), prev = lb.querySelector('[data-act="prev"]'), next = lb.querySelector('[data-act="next"]');
+  var zOut = lb.querySelector('[data-act="out"]'), zIn = lb.querySelector('[data-act="in"]');
+  var STEPS = [0, 1, 1.5, 2, 3], step = 0, idx = 0, opener = null;
+  function setZoom(s, cx, cy) {
+    var r = stage.getBoundingClientRect(), ir = img.getBoundingClientRect();
+    var fx = cx == null ? 0.5 : (cx - ir.left) / ir.width, fy = cy == null ? 0.5 : (cy - ir.top) / ir.height;
+    step = Math.max(0, Math.min(STEPS.length - 1, s));
+    var z = STEPS[step];
+    lb.classList.toggle('fit', z === 0); lb.classList.toggle('zoomed', z !== 0);
+    img.style.width = z ? (img.naturalWidth * z) + 'px' : '';
+    pct.textContent = z ? Math.round(z * 100) + '%' : 'Fit';
+    zOut.disabled = step === 0; zIn.disabled = step === STEPS.length - 1;
+    if (z) { stage.scrollLeft = img.offsetWidth * fx - r.width / 2 + img.offsetLeft - stage.clientLeft; stage.scrollTop = img.offsetHeight * fy - r.height / 2 + img.offsetTop - stage.clientTop; }
+  }
+  function show(i) {
+    idx = (i + links.length) % links.length;
+    var a = links[idx], t = a.querySelector('img');
+    img.src = a.getAttribute('href'); img.alt = t.alt;
+    cap.textContent = t.alt; count.textContent = (idx + 1) + ' of ' + links.length;
+    open.href = a.getAttribute('href'); setZoom(0);
+  }
+  links.forEach(function (a, i) {
+    a.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault(); opener = a; show(i); lb.showModal(); document.documentElement.style.overflow = 'hidden';
+    });
+  });
+  lb.addEventListener('close', function () { document.documentElement.style.overflow = ''; img.removeAttribute('src'); if (opener) opener.focus(); });
+  lb.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]');
+    if (b) { var act = b.dataset.act;
+      if (act === 'close') lb.close(); else if (act === 'prev') show(idx - 1); else if (act === 'next') show(idx + 1);
+      else if (act === 'in') setZoom(step + 1); else if (act === 'out') setZoom(step - 1);
+      return; }
+    if (e.target === stage) lb.close();
+  });
+  var drag = null, moved = false;
+  img.addEventListener('pointerdown', function (e) { moved = false; if (STEPS[step] === 0) return; drag = { x: e.clientX, y: e.clientY, l: stage.scrollLeft, t: stage.scrollTop }; img.setPointerCapture(e.pointerId); lb.classList.add('dragging'); });
+  img.addEventListener('pointermove', function (e) { if (!drag) return; var dx = e.clientX - drag.x, dy = e.clientY - drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) moved = true; stage.scrollLeft = drag.l - dx; stage.scrollTop = drag.t - dy; });
+  img.addEventListener('pointerup', function (e) { var was = drag; drag = null; lb.classList.remove('dragging'); if (moved) return; setZoom(STEPS[step] === 0 ? 3 : 0, e.clientX, e.clientY); });
+  lb.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+    else if (e.key === '+' || e.key === '=') setZoom(step + 1);
+    else if (e.key === '-') setZoom(step - 1);
+    else if (e.key === '0') setZoom(0);
+  });
 })();
 </script>
 
