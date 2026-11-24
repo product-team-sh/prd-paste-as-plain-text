@@ -430,7 +430,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
         <tr><td>Scrolled away</td><td class="w">If the user scrolls the paste out of view, the chip stays pinned to the top edge of the email body, or to its bottom edge beside the badge (just above the badge when the editor is too narrow for both), so it is always in sight while it is open. It returns to the paste when the paste is back in view. Picking an option from a pinned chip scrolls the editor back to the paste and replays the tint, so the change is seen.</td></tr>
         <tr><td>Layers</td><td class="w">Above the email text. Below the toolbar, the subject line, the badge, open menus and dialogs.</td></tr>
         <tr><td>Getting noticed</td><td class="w">It rises in over 180ms with one soft blue ring. The pasted text gets a light blue tint that fades over 1.2s, so the paste and its chip are seen together. With reduced motion turned on: no rise or ring, and the tint still fades. At rest it keeps a grey-500 border (4.8:1 on white) and a blue clipboard icon, so it never reads as part of the toolbar. After any switch the tint plays again.</td></tr>
-        <tr><td>Where the switch lives <span class="new-tag">New</span></td><td class="w">The first time a user flips "Always paste without formatting" in the chip, ever: the switch flips in place, the menu fades around it, and the row folds into the toggle's clipboard icon and flies into the toolbar's •••. The ••• menu opens with the toggle and its tooltip ("Always paste without formatting: Off") for 2.2s, then closes. Any key or click ends it at once. With reduced motion on: the ••• menu opens on the toggle, no flight. Screen readers hear "Always paste without formatting turned off. Change it any time from the More menu in the toolbar." Never shown again for that user, on any device.</td></tr>
+        <tr><td>Where the switch lives <span class="new-tag">New</span></td><td class="w">The first time a user flips "Always paste without formatting" in the chip, ever: the switch flips in place, the menu fades around it, and the row folds into the toggle's clipboard icon and flies into the toolbar's •••. The ••• menu opens with the toggle and its tooltip ("Always paste without formatting: Off") and stays open, so the switch and its state stay in view. A click outside it or Esc closes it. Typing keeps it open and hides the tooltip, so nothing sits over the text being written. A key or click during the flight skips to the open menu. With reduced motion on: the ••• menu opens on the toggle, no flight. Screen readers hear "Always paste without formatting turned off. Change it any time from the More menu in the toolbar." Never shown again for that user, on any device.</td></tr>
         <tr><td>Menu</td><td class="w">Opens below the chip, or above it when there is no room. It shifts left to stay inside the editor.</td></tr>
         <tr><td>Keyboard</td><td class="w">Ctrl pressed on its own opens the menu with the ticked option focused, as in Word. Tab from the text also reaches the chip. Arrow keys move, Enter picks, Esc closes and returns to the text. The shortcut hint reads ⇧⌘V on a Mac and Ctrl+Shift+V elsewhere, in grey-600 (6.9:1 on the hover colour).</td></tr>
         <tr><td>Screen readers</td><td class="w">Heard once, politely: "Pasted without formatting. Press Ctrl for paste options." A switch is announced too.</td></tr>
@@ -1190,6 +1190,8 @@ async function txLand(run, t, hold){
   var g = fr(t), tp = document.createElement('div'); tp.className = 'tx-tip'; tp.textContent = 'Always paste without formatting: ' + (S.setting ? 'On' : 'Off');
   frame.appendChild(tp); run.nodes.push(tp);
   tp.style.top = (g.t + g.h + 6) + 'px'; tp.style.left = Math.max(8, Math.min(frame.clientWidth - tp.offsetWidth - 8, g.l + g.w / 2 - tp.offsetWidth / 2)) + 'px';
+  run.landed = true;
+  if (hold == null) return; /* 24 Nov: the ••• menu stays open, toggle and state in view, until the user moves on */
   await txWait(run, hold); if (txRun !== run) return;
   var a1 = tp.animate([{ opacity:1 }, { opacity:0 }], { duration:120, fill:'forwards' }); run.anims.push(a1);
   var mb = moreBtn(), dw = drawer.offsetWidth, mx = fr(mb).l + fr(mb).w / 2 - fr(drawer).l;
@@ -1199,6 +1201,14 @@ async function txLand(run, t, hold){
   if (!(await txDone(a2)) || txRun !== run) return;
   txEnd();
 }
+function txSkip(run){
+  run.timers.forEach(clearTimeout); run.timers = [];
+  run.anims.forEach(function(a){ try { a.cancel(); } catch (e) {} }); run.anims = [];
+  run.nodes.forEach(function(n){ n.remove(); }); run.nodes = [];
+  if (chip) { var m = chip.querySelector('.pc-m'); m.style.opacity = ''; closeChipMenu(); }
+  if (drawer.hidden) toggleDrawer(moreBtn());
+  var t = drawer.querySelector('[data-cmd="pastetext"]'); if (t) txLand(run, t, null);
+}
 async function showHome(row){
   txEnd();
   var mode = RM ? 'point' : 'fly';
@@ -1207,8 +1217,14 @@ async function showHome(row){
   var tr = tb.getBoundingClientRect(), br = mb.getBoundingClientRect();
   if (br.right > tr.right - 4 || br.left < tr.left + 4) tb.scrollLeft += br.left - tr.left - tr.width / 2;
   var run = txRun = { timers:[], nodes:[], anims:[] };
-  run.onDown = function(e){ txEnd(!!e.target.closest('#sDrawer')); };
-  run.onKey = function(){ txEnd(); };
+  run.onDown = function(e){ txEnd(!!e.target.closest('#sDrawer, [data-cmd="more"]')); };
+  /* Esc closes it; any other key during the movement skips to the open ••• menu; typing after that keeps it open */
+  run.onKey = function(e){
+    if (e.key === 'Escape') { txEnd(); return; }
+    if (!run.landed) { txSkip(run); return; }
+    /* typing keeps the ••• menu open but lets go of the tooltip, so it never sits over the text being written */
+    if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Enter') { run.nodes.forEach(function(n){ if (n.classList.contains('tx-tip')) { n.animate([{ opacity:1 }, { opacity:0 }], { duration:120 }).onfinish = function(){ n.remove(); }; } }); run.nodes = run.nodes.filter(function(n){ return !n.classList.contains('tx-tip'); }); }
+  };
   focusEd(); caretToMarker();
   announce('Always paste without formatting turned ' + (S.setting ? 'on' : 'off') + '. Change it any time from the More menu in the toolbar.');
   say('First time only · shown where the switch lives: ••• menu, clipboard toggle');
@@ -1258,12 +1274,12 @@ async function showHome(row){
     await txWait(run, 60); if (txRun !== run) return;
     var o = txOpenDrawer(run); if (!o.t) return txEnd();
     await txWait(run, 120); if (txRun !== run) return;
-    txLand(run, o.t, 2200);
+    txLand(run, o.t, null);
     return;
   }
 
   closeChipMenu();
-  if (mode === 'point') { var o2 = txOpenDrawer(run); if (o2.t) txLand(run, o2.t, 2400); return; }
+  if (mode === 'point') { var o2 = txOpenDrawer(run); if (o2.t) txLand(run, o2.t, null); return; }
 }
 })();
 

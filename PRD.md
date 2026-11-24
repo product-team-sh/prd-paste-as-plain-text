@@ -66,7 +66,7 @@ Applies to every paste or drop into a sequence step's email body.
 
 - Picking the other option rewrites only this paste. The user can switch back and forth as often as wanted.
 - The switch changes every future paste, not this one.
-- **The first time a user flips the switch in the chip, the editor shows where the switch lives.** The chip menu closes, the switch moves into the toolbar's "•••", and the "•••" menu opens on the toggle with its tooltip ("Always paste without formatting: Off") for about 2 seconds, then closes. Any key or click ends it at once. The cursor stays in the body. With reduced motion on, the "•••" menu opens on the toggle without the movement. It shows once per user, ever, across devices; later flips just flip the switch. The motion is in the prototype.
+- **The first time a user flips the switch in the chip, the editor shows where the switch lives.** The chip menu closes, the switch moves into the toolbar's "•••", and the "•••" menu opens on the toggle with its tooltip ("Always paste without formatting: Off") and **stays open**, so the user sees the switch and its state. It closes on a click outside it or Esc. Typing keeps it open and hides the tooltip. A key or click during the movement skips straight to the open menu. The cursor stays in the body. With reduced motion on, the "•••" menu opens on the toggle without the movement. It shows once per user, ever, across devices; later flips just flip the switch. The motion is in the prototype.
 
 ![The menu: this paste either way, and the switch for every paste](screens/02-chip-menu.png)
 
@@ -126,9 +126,9 @@ Applies to every paste or drop into a sequence step's email body.
 | P-F3 | Switch on, Neither: P-1, then Keep formatting | The paste as copied, minus hidden markup | P0 |
 | P-F4 | P-1, then Ctrl+Z | The paste is removed; body byte-identical to before the paste; no chip | P0 |
 | P-F5 | Chip → switch "Always paste without formatting" off | This paste is unchanged; the next paste follows the Off row; after a reload the "•••" menu reads Off (read back: menu state and `/user/meta`) | P0 |
-| P-F6 | New user: P-1, then chip → switch "Always paste without formatting" off | The chip menu closes; the switch moves into "•••"; the "•••" menu opens with the toggle and the tooltip "Always paste without formatting: Off", then closes; the cursor stays in the body | P1 |
+| P-F6 | New user: P-1, then chip → switch "Always paste without formatting" off | The chip menu closes; the switch moves into "•••"; the "•••" menu opens with the toggle and the tooltip "Always paste without formatting: Off" and stays open; the cursor stays in the body | P1 |
 | P-F7 | After P-F6: flip the chip's switch again, then after a reload, then on another device | No transition any time; the switch just flips | P1 |
-| P-F8 | During P-F6, press a key or click | It ends at once | P1 |
+| P-F8 | During the P-F6 movement, press a key; then type; then click in the text | The movement ends and the "•••" menu shows open; typing keeps it open and hides the tooltip; the click closes it | P1 |
 | C-1 | Paste near the bottom of the editor | The editor scrolls; the chip sits 4px under the paste end and covers no pasted text | P0 |
 | C-2 | Paste ending near the right edge | The chip stays 12px inside the edge | P1 |
 | C-3 | Paste, then scroll the paste out of view, both ways | The chip pins to the top edge, then to the bottom edge beside the badge; it returns when the paste is back in view | P0 |
