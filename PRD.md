@@ -14,14 +14,15 @@
 ## 2. What we're building
 
 1. **Pastes land without formatting by default**, exactly like Ctrl+Shift+V. **Without formatting** means the words and line breaks only: what is stored is identical to typing the same text by hand, with no styles, attributes, links, bold, lists, images or other tags. Hidden markup never gets in.
-2. **A paste chip** at the end of every paste that could have landed differently switches it between Without formatting and With formatting.
-3. **A per-user switch, "Always paste without formatting"**, default On, in the editor's "•••" menu and in the chip.
-4. **With the switch off, a paste follows the sequence's Safety Settings as they are today:**
-    - Remove Styling Automatically: it lands as it will be sent;
-    - Text only email: without formatting;
-    - Neither: as copied, minus hidden markup.
+2. **A paste chip** at the end of every paste that could have landed differently. It reads "Pasted without formatting" and can switch that one paste to "Pasted with formatting".
+3. **"Pasted with formatting" is marked not recommended:** "Not recommended. It can hurt deliverability." It never blocks the pick.
+4. **"Pasted with formatting" brings back what the sequence's Safety Settings allow today:**
+    - Remove Styling Automatically: what it will send;
+    - Neither: as copied, minus hidden markup;
+    - Text only email: no chip, so nothing to bring back.
 5. **On a paste, the chip replaces the Styling detected bar.** Styling added from the toolbar still shows today's bar.
-6. **Scope:** the email draft in the sequence step editor: its body, subject line and spintax variants.
+6. **There is no setting.** Every paste lands without formatting, for every user. Nothing in the chip, the "•••" menu or anywhere else changes that.
+7. **Scope:** the email draft in the sequence step editor: its body, subject line and spintax variants.
 
 **Always true:**
 
@@ -40,13 +41,14 @@ Applies to every paste or drop into a sequence step's email body.
 
 **What lands:**
 
-| Switch | Remove Styling Automatically (default) | Neither | Text only email |
-|---|---|---|---|
-| **On** (default) | Without formatting. Chip: "Without formatting" | Without formatting. Chip: "Without formatting" | Without formatting, no chip |
-| **Off** | As Remove Styling will send it: bold, italic, links, lists, images and tables kept; fonts, sizes, colours, highlight, underline, strikethrough, alignment and headings removed. Chip: "With formatting" | As copied, minus hidden markup. Chip: "With formatting" | Without formatting, no chip |
+| Safety Settings | Lands | After "Pasted with formatting" |
+|---|---|---|
+| **Remove Styling Automatically** (default) | Without formatting. Chip: "Pasted without formatting" | As Remove Styling will send it: bold, italic, links, lists, images and tables kept; fonts, sizes, colours, highlight, underline, strikethrough, alignment and headings removed |
+| **Neither** | Without formatting. Chip: "Pasted without formatting" | As copied, minus hidden markup |
+| **Text only email** | Without formatting, no chip | – |
 
 - **Hidden markup** changes nothing visible: Word and Docs classes, comments, empty spans, and font declarations equal to the editor's own. It is always removed, in every cell.
-- **The chip shows only when Without formatting and With formatting would look different** for this paste, meaning a link, bold, a list, an image, a colour or a font differs.
+- **The chip shows only when the two options would look different** for this paste, meaning a link, bold, a list, an image, a colour or a font differs.
 - **No chip** for:
     - a source with no formatting (Notepad);
     - a paste copied inside Saleshandy;
@@ -61,16 +63,15 @@ Applies to every paste or drop into a sequence step's email body.
 
 | State | Label | Menu |
 |---|---|---|
-| Landed without formatting | Clipboard icon · **Without formatting ▾** | ✓ Without formatting (hint Ctrl+Shift+V, ⇧⌘V on a Mac) · With formatting · divider · Always paste without formatting (switch) |
-| Landed formatted | Clipboard icon · **With formatting ▾** | Without formatting · ✓ With formatting · divider · Always paste without formatting (switch) |
+| Landed (always) | Clipboard icon · **Pasted without formatting ▾** | ✓ Pasted without formatting · Pasted with formatting, with "Not recommended. It can hurt deliverability." under it in amber · divider · "Closes when you keep typing" |
+| After "Pasted with formatting" | Amber warning icon · **Pasted with formatting ▾** · tooltip "Not recommended. It can hurt deliverability." | Pasted without formatting · ✓ Pasted with formatting (same amber line) · divider · "Closes when you keep typing" |
 
 - Picking the other option rewrites only this paste. The user can switch back and forth as often as wanted.
-- The switch changes every future paste, not this one.
-- **The first time a user flips the switch in the chip, the editor shows where the switch lives.** The chip menu closes, the switch moves into the toolbar's "•••", and the "•••" menu opens on the toggle with its tooltip ("Always paste without formatting: Off") and **stays open**, so the user sees the switch and its state. It closes on a click outside it or Esc. Typing keeps it open and hides the tooltip. A key or click during the movement skips straight to the open menu. The cursor stays in the body. With reduced motion on, the "•••" menu opens on the toggle without the movement. It shows once per user, ever, across devices; later flips just flip the switch. The motion is in the prototype.
+- **There is no close button.** The menu's last line, under a divider, says "Closes when you keep typing", every time it opens.
 
-![The menu: this paste either way, and the switch for every paste](screens/02-chip-menu.png)
+![The menu: this paste either way; the warning sits under Pasted with formatting](screens/02-chip-menu.png)
 
-![Switch off: the chip reads With formatting](screens/03-chip-switch-off.png)
+![After Pasted with formatting: the amber warning icon stays on the chip](screens/03-chip-with-formatting.png)
 
 **Where it sits:**
 
@@ -97,7 +98,7 @@ Applies to every paste or drop into a sequence step's email body.
 
 - Ctrl pressed and released on its own opens the menu with the ticked option focused. Tab from the text also reaches the chip.
 - In the menu: arrow keys move, Home and End jump, Enter picks, Esc closes and returns the cursor to the text, and Tab closes.
-- A polite live announcement, once per paste: "Pasted without formatting. Press Ctrl for paste options." For a formatted paste the first sentence is "Pasted with formatting." Each switch is announced: "Switched to without formatting." or "Switched to with formatting." The first-time switch flip is announced: "Always paste without formatting turned off. Change it any time from the More menu in the toolbar."
+- A polite live announcement, once per paste: "Pasted without formatting. Press Ctrl for paste options." It ends "It closes when you keep typing." Each switch is announced: "Switched to pasted without formatting." or "Switched to pasted with formatting. Not recommended. It can hurt deliverability."
 
 **Closes on:** a key that changes the text (typing, Delete, Backspace, Enter), Esc, the next paste, Ctrl+Z, or a click in the text outside the paste. A click inside the paste keeps it. Ctrl+Z works as normal and removes the paste.
 
@@ -107,61 +108,43 @@ Applies to every paste or drop into a sequence step's email body.
 
 | ID | Case | Expected | P |
 |---|---|---|---|
-| P-1 | Switch on, Remove Styling: paste a Word draft with bold, a link, a list and a coloured font | Body holds only the words and paragraphs; no `<b>`, `<a>`, list, `style` or Word class; chip "Without formatting" | P0 |
-| P-2 | Switch on: paste a name copied from LinkedIn | No chip; no hidden markup in the body | P0 |
-| P-3 | Switch off, Remove Styling: paste the P-1 draft | Bold, link and list kept; no `style`, font or colour; chip "With formatting" | P0 |
-| P-4 | Switch off, Neither: paste the P-1 draft | Visible formatting kept; no Word classes or comments; chip "With formatting" | P0 |
-| P-5 | Text only email: paste the P-1 draft with the switch on, then off | Without formatting both times; no chip either time | P0 |
+| P-1 | Remove Styling: paste a Word draft with bold, a link, a list and a coloured font | Body holds only the words and paragraphs; no `<b>`, `<a>`, list, `style` or Word class; chip "Pasted without formatting" | P0 |
+| P-2 | Paste a name copied from LinkedIn | No chip; no hidden markup in the body | P0 |
+| P-3 | P-1, then open the chip | "Pasted with formatting" shows "Not recommended. It can hurt deliverability." under it, in amber | P0 |
+| P-4 | Look for a paste setting in the chip, the "•••" menu and the user's settings | None exists; every user's paste lands as in P-1 | P0 |
+| P-5 | Text only email: paste the P-1 draft | Without formatting; no chip | P0 |
 | P-6 | Paste from Notepad | Lands as is; no chip | P0 |
 | P-7 | Copy from another step or template inside Saleshandy, then paste | Lands as copied, merge-tag and spintax chips kept; no paste chip | P0 |
-| P-8 | Ctrl+Shift+V (Cmd+Shift+V) with the switch off | Without formatting; no chip | P0 |
+| P-8 | Ctrl+Shift+V (Cmd+Shift+V) | Without formatting; no chip | P0 |
 | P-9 | Paste literal `{{First Name}}` and <code>{spin}a&#124;b{endspin}</code> | Both become chips | P0 |
 | P-10 | Paste, then press an arrow key, then Tab | The chip stays both times | P0 |
 | P-11 | Paste, then type one character | The chip closes; the cursor never left the body | P0 |
 | P-12 | Paste twice | One chip, for the second paste | P1 |
 | P-13 | Drag and drop the P-1 draft | Same as P-1 | P1 |
 | P-14 | P-1; then in a new email, type the same lines by hand | The stored HTML of the two bodies is identical | P0 |
-| **P-F1** | P-1, then chip → **With formatting** | Body holds what Remove Styling sends (bold, link and list back; no fonts or colours); text outside the paste byte-identical to before the paste; chip reads "With formatting" | P0 · **sign off by name, owner: QA lead (name to confirm)** |
-| P-F2 | P-F1, then chip → Without formatting | Back to the P-1 result exactly | P0 |
-| P-F3 | Switch on, Neither: P-1, then With formatting | The paste as copied, minus hidden markup | P0 |
+| **P-F1** | P-1, then chip → **Pasted with formatting** | Body holds what Remove Styling sends (bold, link and list back; no fonts or colours); text outside the paste byte-identical to before the paste; chip reads "Pasted with formatting" with the amber warning icon; its tooltip reads "Not recommended. It can hurt deliverability." | P0 · **sign off by name, owner: QA lead (name to confirm)** |
+| P-F2 | P-F1, then chip → Pasted without formatting | Back to the P-1 result exactly | P0 |
+| P-F3 | Neither: P-1, then Pasted with formatting | The paste as copied, minus hidden markup | P0 |
 | P-F4 | P-1, then Ctrl+Z | The paste is removed; body byte-identical to before the paste; no chip | P0 |
-| P-F5 | Chip → switch "Always paste without formatting" off | This paste is unchanged; the next paste follows the Off row; after a reload the "•••" menu reads Off (read back: menu state and `/user/meta`) | P0 |
-| P-F6 | New user: P-1, then chip → switch "Always paste without formatting" off | The chip menu closes; the switch moves into "•••"; the "•••" menu opens with the toggle and the tooltip "Always paste without formatting: Off" and stays open; the cursor stays in the body | P1 |
-| P-F7 | After P-F6: flip the chip's switch again, then after a reload, then on another device | No transition any time; the switch just flips | P1 |
-| P-F8 | During the P-F6 movement, press a key; then type; then click in the text | The movement ends and the "•••" menu shows open; typing keeps it open and hides the tooltip; the click closes it | P1 |
 | C-1 | Paste near the bottom of the editor | The editor scrolls; the chip sits 4px under the paste end and covers no pasted text | P0 |
 | C-2 | Paste ending near the right edge | The chip stays 12px inside the edge | P1 |
 | C-3 | Paste, then scroll the paste out of view, both ways | The chip pins to the top edge, then to the bottom edge beside the badge; it returns when the paste is back in view | P0 |
-| C-4 | Pinned chip → With formatting | The editor scrolls to the paste; the tint replays | P0 |
+| C-4 | Pinned chip → Pasted with formatting | The editor scrolls to the paste; the tint replays | P0 |
 | C-5 | Click in the text outside the paste, then (after a new paste) inside it | The chip closes the first time and stays the second | P1 |
 | C-6 | Paste, then press and release Ctrl alone | The menu opens with the ticked option focused; arrow keys, Enter and Esc behave as above | P0 |
-| C-7 | Screen reader on: paste the P-1 draft, then switch | "Pasted without formatting. Press Ctrl for paste options." once, then "Switched to with formatting." | P0 |
+| C-7 | Screen reader on: paste the P-1 draft, then switch | "Pasted without formatting. Press Ctrl for paste options." once, then "Switched to pasted with formatting. Not recommended. It can hurt deliverability." | P0 |
 | C-8 | Reduced motion on: paste | No rise or ring; the tint shows | P2 |
-| C-9 | A Mac | The menu hint reads ⇧⌘V | P2 |
+| C-9 | Open the chip's menu | Its last line, under a divider, reads "Closes when you keep typing"; the chip has no close button | P1 |
 
-### 3.2 The switch in the editor's "•••" menu
+### 3.2 Subject line and spintax variants
 
-- A toggle button at the end of the "•••" menu, in its own group, labelled with a clipboard icon. Pressed means On. Tooltip: "Always paste without formatting: On" or "…: Off".
-- The default is On for every user, new and existing.
-- It saves when switched, for that user, across devices. It applies from the next paste.
-- It is the same setting as the switch in the chip. It is never greyed out.
-
-| ID | Case | Expected | P |
-|---|---|---|---|
-| M-1 | New user opens the "•••" menu | Toggle pressed; tooltip "Always paste without formatting: On" | P0 |
-| M-2 | Turn it off, reload, open another sequence's step | Still off (read back: menu state and `/user/meta`) | P0 |
-| M-3 | User A turns it off | User B in the same account is still on | P0 |
-| M-4 | Turn it off in the chip | The "•••" menu shows Off at once | P0 |
-
-### 3.3 Subject line and spintax variants
-
-- **Subject:** a paste is always without formatting, on one line, with no chip, whatever the switch.
+- **Subject:** a paste is always without formatting, on one line, with no chip.
 - **Spintax variant field:** a paste is always without formatting, with no chip. The field shows "Only text is allowed in spintax." under the inputs.
 
 | ID | Case | Expected | P |
 |---|---|---|---|
-| F-1 | Paste the P-1 draft into the subject, switch off | One line, without formatting; no chip | P0 |
-| F-2 | Paste the P-1 draft into a variant, switch off | Without formatting; no chip; "Only text is allowed in spintax." visible | P0 |
+| F-1 | Paste the P-1 draft into the subject | One line, without formatting; no chip | P0 |
+| F-2 | Paste the P-1 draft into a variant | Without formatting; no chip; "Only text is allowed in spintax." visible | P0 |
 
 ---
 
@@ -192,9 +175,9 @@ Applies to every paste or drop into a sequence step's email body.
 - **The chip sits on top of an editor in an iframe.** It must be positioned at the paste end and pinned to the body's edges while scrolling (§3.1). **Resolve before estimation:** how the chip tracks the paste end inside the TinyMCE iframe, and that "Ctrl alone" is free in the editor and the browsers we support.
 - **"Lands as Remove Styling will send it" must match the send step.** The send step's cleanup is [parse-content.ts](https://github.com/saleshandy/saleshandy-email-composer/blob/37b1fb6b11691d5d8ffdb50045fa9bcc378e7432/src/common/utils/parse-content.ts), applied at [app.service.ts L1397](https://github.com/saleshandy/saleshandy-email-composer/blob/37b1fb6b11691d5d8ffdb50045fa9bcc378e7432/src/app.service.ts#L1397-L1405). Paste needs identical output, held to one shared test set. **Resolve before estimation:** one shared implementation, or two with shared tests.
 - **The step editor shares one component** with the signature, template, inbox-reply and task-note editors (code search). The new paste rules must be switched on for the sequence step editor only.
-- **The per-user switch:** `/user/meta` returns `pasteAsPlainText` (default on) per account and admin-only in [edge#11339](https://github.com/saleshandy/saleshandy-edge/pull/11339). It must be stored per user and changeable by the user.
+- **No paste setting is stored.** The `pasteAsPlainText` setting added in [edge#11339](https://github.com/saleshandy/saleshandy-edge/pull/11339) is not used by this feature.
 - **Resolve before estimation:**
-    1. With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for With formatting and switch-off. Assumed, not tested.
+    1. With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for Pasted with formatting. Assumed, not tested.
     2. The "would look different" check behind the chip is reliable on the same samples. Assumed, not tested.
 
 
@@ -206,22 +189,20 @@ Applies to every paste or drop into a sequence step's email body.
 
 | Event | Fires when | Properties |
 |---|---|---|
-| `paste_landed` | Any paste or drop into a step body | safety_setting, switch, chip_shown, landed (without_formatting, with_formatting), removed_kinds (link, bold, list, image, colour, font), html_kb, kept_kb |
+| `paste_landed` | Any paste or drop into a step body | safety_setting, chip_shown, landed (without_formatting, with_formatting), removed_kinds (link, bold, list, image, colour, font), html_kb, kept_kb |
 | `paste_chip_opened` | The chip's menu opens | via (click, ctrl, tab), pinned |
-| `paste_chip_switched` | Without formatting or With formatting is picked | to, pinned, seconds_since_paste |
-| `paste_switch_changed` | The switch changes | to, from (menu, chip) |
+| `paste_chip_switched` | Pasted without formatting or Pasted with formatting is picked | to, pinned, seconds_since_paste |
 
 **Leading indicators**, read from day 1, decide by day 14:
 
 | Metric | Definition | Healthy | Investigate |
 |---|---|---|---|
-| **With-formatting rate (most important)** | switches to With formatting ÷ chips shown with the switch on | < 30% (target; assumed, no baseline) | > 50%: removing formatting is wrong too often |
+| **With-formatting rate (most important)** | switches to Pasted with formatting ÷ chips shown | < 30% (target; assumed, no baseline) | > 50%: removing formatting is wrong too often |
 | Chip rate | chips shown ÷ pastes | < 50% (target; assumed) | > 70%: the "looks different" check is too loose |
 | Keyboard opens | opens via ctrl or tab ÷ all opens | – (read only) | 0 after 2 weeks: check the shortcut works |
 
 **Lagging indicators**, day 30 and day 90:
 
-- Users with the switch off ÷ users who pasted.
 - Tickets mentioning pasted formatting or lost links.
 - Sequences whose Remove Styling setting was turned off within a minute of a paste: target 0.
 

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Paste without formatting – prototype v5</title>
+<title>Paste without formatting – prototype v6</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
 /* Board chrome uses production's own palette (webui _custom-variable.scss) on production's light canvas.
@@ -217,6 +217,14 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 .pc-ck{display:inline-flex;width:16px;flex-shrink:0;color:var(--blue-700)}
 .pc-k{margin-left:auto;font-size:12px;line-height:16px;color:var(--fg-2)}
 .pc-sep{height:1px;margin:4px 0;background:var(--g-200)}
+/* 25 Nov: With formatting is not recommended; amber only for that warning */
+.pc-i.two{height:auto;min-height:32px;padding-top:6px;padding-bottom:6px;align-items:flex-start}
+.pc-i.two .pc-ck{margin-top:2px}
+.pc-t{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+.pc-note{display:flex;align-items:center;gap:4px;margin-top:2px;font-size:12px;line-height:16px;color:var(--amber-700)}
+.pc.warn .pc-b>.ic:first-child{color:var(--amber-700)}
+/* 25 Nov: the menu's last line says how the chip goes away; there is no close button */
+.pc-foot{margin:0;padding:6px 12px 6px 36px;font-size:12px;line-height:16px;color:var(--g-600)}
 .pc-i.pc-sw{gap:8px;min-height:32px;padding-left:36px}
 .pc-sw .psw{margin-left:auto}
 .mini-body .pc{position:relative;display:block;width:max-content;margin-top:4px}
@@ -339,7 +347,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 <div class="page">
   <header class="bhead">
     <h1>Paste without formatting</h1>
-    <p class="lede">Prototype for <a href="../">PRD – Paste without formatting</a>, 24 Nov 2026. Production screens with the new parts drawn in. Safety Settings stay as they are. Nothing is built.</p>
+    <p class="lede">Prototype for <a href="../">PRD – Paste without formatting</a>, 25 Nov 2026. Production screens with the new parts drawn in. Safety Settings stay as they are. Nothing is built.</p>
     <nav class="toc" aria-label="Sections">
       <a href="#s1"><b>1</b> Summary</a><a href="#s2"><b>2</b> Paste simulator</a><a href="#s3"><b>3</b> Paste chip</a><a href="#s4"><b>4</b> What lands</a>
       <a href="#s5"><b>5</b> Edge cases</a><a href="#s6"><b>6</b> Decisions</a>
@@ -348,19 +356,19 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 
   <!-- 1 · Summary -->
   <section class="sec" id="s1">
-    <div class="sec-h"><span class="sec-n">1</span><div><h2>Summary</h2><p class="cap">One per-user switch, and a chip after each paste.</p></div></div>
+    <div class="sec-h"><span class="sec-n">1</span><div><h2>Summary</h2><p class="cap">Every paste lands without formatting. A chip after the paste can bring the formatting back, with a warning. No setting.</p></div></div>
     <div class="stack">
       <div class="bcard tw">
         <table class="btab">
-          <tr><th>Question</th><th>Control</th><th>Scope</th><th>Default</th></tr>
-          <tr><td>How does a paste land?</td><td class="w"><b>Always paste without formatting</b> (a switch in the editor's ••• menu and in the paste chip)</td><td class="w">Per user, in every sequence's email editor</td><td>On</td></tr>
+          <tr><th>Question</th><th>Answer</th><th>Scope</th><th>Default</th></tr>
+          <tr><td>How does a paste land?</td><td class="w"><b>Without formatting</b>, always. The paste chip can switch that one paste to "Pasted with formatting", marked not recommended</td><td class="w">Every sequence's email editor, every user</td><td>Without formatting</td></tr>
         </table>
-        <p class="rule"><b>Switch off:</b> a paste follows the sequence's Safety Settings as they are today. Remove Styling Automatically: it lands as it will be sent. Text only email: without formatting. Neither: as copied, minus hidden markup.</p>
+        <p class="rule"><b>Pasted with formatting</b> brings back what the sequence's Safety Settings allow today. Remove Styling Automatically: what it will send. Neither: as copied, minus hidden markup. Text only email: no chip.</p>
       </div>
       <div class="bcard tw">
         <table class="btab">
           <tr><th>In scope</th><th>What</th><th>On this board</th></tr>
-          <tr><td>Paste</td><td class="w">Hidden markup always removed. The per-user switch, in the editor's ••• menu. The paste chip switches any paste between without and with formatting. On a paste the chip replaces the Styling detected bar; the bar still shows for styling added from the toolbar.</td><td><div class="items"><a href="#s2"><b>2</b>Setting and samples</a><a href="#s3"><b>3</b>Paste chip</a><a href="#s4"><b>4</b>What lands</a><a href="#s5"><b>5</b>Edge cases</a></div></td></tr>
+          <tr><td>Paste</td><td class="w">Hidden markup always removed. Every paste lands without formatting. The paste chip switches one paste to with formatting, with a deliverability warning. No setting anywhere. On a paste the chip replaces the Styling detected bar; the bar still shows for styling added from the toolbar.</td><td><div class="items"><a href="#s2"><b>2</b>Samples</a><a href="#s3"><b>3</b>Paste chip</a><a href="#s4"><b>4</b>What lands</a><a href="#s5"><b>5</b>Edge cases</a></div></td></tr>
           <tr><td>Not in scope</td><td class="w">Safety Settings names, layout and saving. The editor toolbar and badge. Drafts lost when leaving the editor.</td><td>–</td></tr>
         </table>
       </div>
@@ -369,13 +377,9 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 
   <!-- 2 · Simulator -->
   <section class="sec" id="s2">
-    <div class="sec-h"><span class="sec-n">2</span><div><h2>Paste simulator</h2><p class="cap">Pick the switch and the sequence's Safety Settings, then paste a sample, or paste your own clipboard with Ctrl+V.</p></div></div>
+    <div class="sec-h"><span class="sec-n">2</span><div><h2>Paste simulator</h2><p class="cap">Pick the sequence's Safety Settings, then paste a sample, or paste your own clipboard with Ctrl+V.</p></div></div>
     <div class="s-layout" id="sim">
       <aside class="s-panel" aria-label="Simulator controls">
-        <div class="s-grp">
-          <p class="s-gl">User setting <em>Editor menu</em></p>
-          <button class="psw-row" role="switch" aria-checked="true" id="cSetting" type="button"><span class="psw"></span><span class="psw-l">Always paste without formatting</span></button>
-        </div>
         <div class="s-grp">
           <p class="s-gl">Sequence's Safety Settings <em>Unchanged</em></p>
           <div role="radiogroup" aria-label="Sequence's Safety Settings">
@@ -395,7 +399,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
           </div>
           <p class="s-hint"><kbd>Ctrl</kbd>+<kbd>V</kbd> pastes your clipboard. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> lands without formatting.</p>
         </div>
-        <div class="s-grp"><button class="btn btn-s btn-sm" id="sReset" type="button">Reset</button><p class="s-hint">Reset also replays the first-time ••• hint.</p></div>
+        <div class="s-grp"><button class="btn btn-s btn-sm" id="sReset" type="button">Reset</button></div>
       </aside>
       <div style="min-width:0">
         <div class="s-step">
@@ -430,10 +434,10 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
         <tr><td>Scrolled away</td><td class="w">If the user scrolls the paste out of view, the chip stays pinned to the top edge of the email body, or to its bottom edge beside the badge (just above the badge when the editor is too narrow for both), so it is always in sight while it is open. It returns to the paste when the paste is back in view. Picking an option from a pinned chip scrolls the editor back to the paste and replays the tint, so the change is seen.</td></tr>
         <tr><td>Layers</td><td class="w">Above the email text. Below the toolbar, the subject line, the badge, open menus and dialogs.</td></tr>
         <tr><td>Getting noticed</td><td class="w">It rises in over 180ms with one soft blue ring. The pasted text gets a light blue tint that fades over 1.2s, so the paste and its chip are seen together. With reduced motion turned on: no rise or ring, and the tint still fades. At rest it keeps a grey-500 border (4.8:1 on white) and a blue clipboard icon, so it never reads as part of the toolbar. After any switch the tint plays again.</td></tr>
-        <tr><td>Where the switch lives <span class="new-tag">New</span></td><td class="w">The first time a user flips "Always paste without formatting" in the chip, ever: the switch flips in place, the menu fades around it, and the row folds into the toggle's clipboard icon and flies into the toolbar's •••. The ••• menu opens with the toggle and its tooltip ("Always paste without formatting: Off") and stays open, so the switch and its state stay in view. A click outside it or Esc closes it. Typing keeps it open and hides the tooltip, so nothing sits over the text being written. A key or click during the flight skips to the open menu. With reduced motion on: the ••• menu opens on the toggle, no flight. Screen readers hear "Always paste without formatting turned off. Change it any time from the More menu in the toolbar." Never shown again for that user, on any device.</td></tr>
+        <tr><td>No close button <span class="new-tag">New</span></td><td class="w">The chip has no close button. The menu's last line, under a divider, says "Closes when you keep typing", every time it opens.</td></tr>
         <tr><td>Menu</td><td class="w">Opens below the chip, or above it when there is no room. It shifts left to stay inside the editor.</td></tr>
         <tr><td>Keyboard</td><td class="w">Ctrl pressed on its own opens the menu with the ticked option focused, as in Word. Tab from the text also reaches the chip. Arrow keys move, Enter picks, Esc closes and returns to the text. The shortcut hint reads ⇧⌘V on a Mac and Ctrl+Shift+V elsewhere, in grey-600 (6.9:1 on the hover colour).</td></tr>
-        <tr><td>Screen readers</td><td class="w">Heard once, politely: "Pasted without formatting. Press Ctrl for paste options." A switch is announced too.</td></tr>
+        <tr><td>Screen readers</td><td class="w">Heard once, politely: "Pasted without formatting. Press Ctrl for paste options." A switch is announced too; "Pasted with formatting" adds the warning.</td></tr>
         <tr><td>Closes</td><td class="w">On a key that changes the text (typing, Delete, Enter), Esc, the next paste or Ctrl+Z. Arrow keys, Tab and scrolling leave it open, so the paste can be checked first. A click in the text outside the paste closes it; a click inside the paste keeps it. A click outside the editor closes only the menu.</td></tr>
       </table>
     </div>
@@ -441,7 +445,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
 
   <!-- 4 · Matrix -->
   <section class="sec" id="s4">
-    <div class="sec-h"><span class="sec-n">4</span><div><h2>What lands</h2><p class="cap">The same Word draft, pasted under each Safety Settings choice with the switch On and Off.</p></div></div>
+    <div class="sec-h"><span class="sec-n">4</span><div><h2>What lands</h2><p class="cap">The same Word draft, pasted under each Safety Settings choice: as it lands, and after Pasted with formatting is picked.</p></div></div>
     <div class="grid2" id="matrix"></div>
   </section>
 
@@ -468,6 +472,7 @@ button.s-badge:hover span{color:var(--blue-700);text-decoration:underline}
         <tr><td>9</td><td class="w">What closes the chip?</td><td class="w">Decided: only keys that change the text, plus Esc, the next paste and Ctrl+Z. Arrow keys and Tab keep it (Hitesh, 4 Nov)</td><td>–</td></tr>
         <tr><td>10</td><td class="w">Review fixes for the chip?</td><td class="w">Decided: switching from a pinned chip brings the paste back into view; a click outside the paste closes the chip; grey-500 border and blue icon at rest; ⇧⌘V on a Mac (Hitesh, 4 Nov). "Link removed" label: not doing</td><td>–</td></tr>
         <tr><td>11</td><td class="w">The switch's home in ••• is hard to find. Show it?</td><td class="w">Decided: the first time the chip's switch is flipped, the switch flies into ••• and the ••• menu opens on it. Once per user (23 Nov)</td><td>–</td></tr>
+        <tr><td>12</td><td class="w">Keep a setting for how pastes land?</td><td class="w">Decided: no setting anywhere. Every paste lands without formatting; the chip can switch one paste to with formatting, marked "Not recommended. It can hurt deliverability." (meeting, 25 Nov)</td><td>–</td></tr>
       </table>
     </div>
   </section>
@@ -504,6 +509,7 @@ var IC = {
   x:'<path d="M18 6L6 18M6 6l12 12"/>',
   tick:'<path d="M5 12l5 5L20 7"/>',
   board:'<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/>',
+  alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',
   info:'<circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/>',
   smile:'<circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M9.5 15a3.5 3.5 0 0 0 5 0"/>',
   mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
@@ -726,7 +732,7 @@ var TB = [
   ['b','more','dots','More'],['sep'],['g','merge','{{}}','Merge tag'],['g','spin','{|}','Spintax'],['sp'],['tpl']
 ];
 var MINI = ['font','|','size','|','bold','italic','underline','forecolor','|','align','|','link'];
-var DRAWER = [['ddi','backcolor','hilite','Highlight'],['b','unlink','unlink','Remove link'],['sep'],['b','outdent','outdent','Decrease indent'],['b','indent','indent','Increase indent'],['sep'],['pt']];
+var DRAWER = [['ddi','backcolor','hilite','Highlight'],['b','unlink','unlink','Remove link'],['sep'],['b','outdent','outdent','Decrease indent'],['b','indent','indent','Increase indent']];
 /* production toolbar: nothing greyed at any setting; Text only email hides the image button (email-modal.tsx L2300) */
 function off(){ return false; }
 function tbItem(it, level){
@@ -830,20 +836,22 @@ function chipPlan(src, o){
   if (o.level === 2) return { why:'no chip (Text only email)' };
   var full = spaceBlocks(cleanHidden(src.html)), kept = o.level === 1 ? toLight(full) : full, plain = toText(full, false);
   if (!lost(kept, plain).length) return { why:'no chip (looks the same either way)' };
-  return { show:true, kept:kept, plain:plain, cur: o.setting ? 'plain' : 'keep', why:'chip shown: ' + (o.setting ? 'Without formatting' : 'With formatting') };
+  return { show:true, kept:kept, plain:plain, cur: o.setting ? 'plain' : 'keep', why:'chip shown: Pasted without formatting' };
 }
 var chip = null;
 function chipItem(k, t, on, extra, ti){ return '<button class="pc-i" role="menuitemradio" type="button"' + (ti || '') + ' data-pick="' + k + '" aria-checked="' + on + '"><span class="pc-ck">' + (on ? ic('tick', 16) : '') + '</span><span>' + t + '</span>' + (extra || '') + '</button>'; }
+var WARN = 'c'; /* 25 Nov: warning before the pick (menu) and after it (amber icon + tooltip on the chip) */
+var WARN_TXT = 'Not recommended. It can hurt deliverability.';
 function chipHTML(style, cur, setting, open, enter, live, v2, mac){
-  if (v2 === undefined) v2 = true; if (mac === undefined) mac = IS_MAC && v2;
-  var lbl = cur === 'plain' ? 'Without formatting' : 'With formatting', icon = style === 'icon', t = live ? '' : ' tabindex="-1"';
-  return '<div class="pc' + (icon ? ' icon' : '') + (v2 ? ' v2' : '') + (enter ? ' pc-enter' : '') + '">' +
-    '<button class="pc-b" type="button" aria-haspopup="menu" aria-expanded="' + !!open + '" aria-label="Paste options: ' + lbl + '"' + (live ? ' data-tip="Paste options (Ctrl)"' : '') + t + '>' + ic('board', 16) + (icon ? '' : '<span>' + lbl + '</span>') + ic('chev', 12) + '</button>' +
-    '<div class="pc-m" role="menu" aria-label="Paste options"' + (open ? '' : ' hidden') + '>' +
-      chipItem('plain', 'Without formatting', cur === 'plain', '<span class="pc-k">' + (mac ? '⇧⌘V' : 'Ctrl+Shift+V') + '</span>', t) +
-      chipItem('keep', 'With formatting', cur === 'keep', '', t) +
-      '<div class="pc-sep" role="separator"></div>' +
-      '<button class="pc-i pc-sw psw-row" role="menuitemcheckbox" type="button" aria-checked="' + setting + '"' + t + '><span class="psw-l">Always paste without formatting</span><span class="psw"></span></button>' +
+  if (v2 === undefined) v2 = true;
+  var lbl = cur === 'plain' ? 'Pasted without formatting' : 'Pasted with formatting', icon = style === 'icon', t = live ? '' : ' tabindex="-1"';
+  var warnChip = cur === 'keep' && WARN !== 'a', note = '<span class="pc-note">' + WARN_TXT + '</span>';
+  return '<div class="pc' + (icon ? ' icon' : '') + (v2 ? ' v2' : '') + (warnChip ? ' warn' : '') + (enter ? ' pc-enter' : '') + '">' +
+    '<button class="pc-b" type="button" aria-haspopup="menu" aria-expanded="' + !!open + '" aria-label="Paste options: ' + lbl + (cur === 'keep' ? '. ' + WARN_TXT : '') + '"' + (live ? ' data-tip="' + (warnChip ? WARN_TXT : 'Paste options (Ctrl)') + '"' : '') + t + '>' + ic(warnChip ? 'alert' : 'board', 16) + (icon ? '' : '<span>' + lbl + '</span>') + ic('chev', 12) + '</button>' +
+    '<div class="pc-m" role="menu" aria-label="Paste options" aria-description="Closes when you keep typing"' + (open ? '' : ' hidden') + '>' +
+      chipItem('plain', 'Pasted without formatting', cur === 'plain', '', t) +
+      ('<button class="pc-i two" role="menuitemradio" type="button"' + t + ' data-pick="keep" aria-checked="' + (cur === 'keep') + '" aria-description="' + WARN_TXT + '"><span class="pc-ck">' + (cur === 'keep' ? ic('tick', 16) : '') + '</span><span class="pc-t"><span>Pasted with formatting</span>' + note + '</span></button>') +
+      '<div class="pc-sep" role="separator"></div><p class="pc-foot" aria-hidden="true">Closes when you keep typing</p>' +
     '</div></div>';
 }
 function showChip(enter){
@@ -856,7 +864,7 @@ function showChip(enter){
   });
   chip.querySelectorAll('[data-pick]').forEach(function(b){ b.addEventListener('click', function(){ pickChip(b.dataset.pick); }); });
   chip.addEventListener('keydown', chipKeys);
-  chip.querySelector('.pc-sw').addEventListener('click', function(){ var row = this; setSetting(!S.setting); say('Always paste without formatting turned ' + (S.setting ? 'On' : 'Off') + ' from the paste chip, applies from the next paste'); if (!S.homeShown) { S.homeShown = true; showHome(row); } });
+  var sw = chip.querySelector('.pc-sw'); if (sw) sw.addEventListener('click', function(){ var row = this; setSetting(!S.setting); say('Always paste without formatting turned ' + (S.setting ? 'On' : 'Off') + ' from the paste chip, applies from the next paste'); if (!S.homeShown) { S.homeShown = true; showHome(row); } });
   placeChip();
 }
 function announce(t){ var a = $('sAnnounce'); a.textContent = ''; setTimeout(function(){ a.textContent = t; }, 60); }
@@ -910,7 +918,7 @@ function pickChip(k){
   if (L.wrap.tagName === 'SPAN' && kids.length === 1 && kids[0].nodeName === 'P') { L.wrap.innerHTML = kids[0].innerHTML; L.wrap.after(caretMarker()); }
   else { L.wrap.innerHTML = html; var cm = caretMarker(); if (L.wrap.tagName === 'SPAN') L.wrap.after(cm); else endCaret(L.wrap, cm); }
   focusEd(); caretToMarker(); L.cur = k; L.after = ed.innerHTML; S.switches++;
-  { scrollToCaret(); L.wrap.classList.remove('s-flash'); void L.wrap.offsetWidth; L.wrap.classList.add('s-flash'); } announce(k === 'plain' ? 'Switched to without formatting.' : 'Switched to with formatting.');
+  { scrollToCaret(); L.wrap.classList.remove('s-flash'); void L.wrap.offsetWidth; L.wrap.classList.add('s-flash'); } announce(k === 'plain' ? 'Switched to pasted without formatting.' : 'Switched to pasted with formatting. ' + WARN_TXT);
   showChip(false);
   say('Chip · ' + (k === 'plain' ? 'switched to Without formatting' : 'With formatting · restored ' + (L.level === 1 ? 'what Remove Styling sends: bold, italic, links, lists, images and tables' : 'the paste as copied, minus hidden markup')) + ' · no question asked, the switch sits in the chip');
   paintRead();
@@ -925,8 +933,8 @@ function doPaste(src){
   S.last = { wrap:wrap, before:before, after: ed.innerHTML, level:S.level };
   scrollToCaret();
   var plan = chipPlan(src, S), why = plan.why;
-  if (plan.show) { announce((plan.cur === 'plain' ? 'Pasted without formatting.' : 'Pasted with formatting.') + ' Press Ctrl for paste options.'); S.chips++; S.last.keep = chipify(plan.kept); S.last.plain = chipify(plan.plain); S.last.cur = plan.cur; showChip(true); } else hideChip();
-  var line = src.name + ' · setting ' + (S.setting ? 'On' : 'Off') + ' · ' + LV[S.level] + ' → landed ' + d.how + ' · ' + why;
+  if (plan.show) { announce((plan.cur === 'plain' ? 'Pasted without formatting.' : 'Pasted with formatting.') + ' Press Ctrl for paste options.' + ' It closes when you keep typing.'); S.chips++; S.last.keep = chipify(plan.kept); S.last.plain = chipify(plan.plain); S.last.cur = plan.cur; showChip(true); } else hideChip();
+  var line = src.name + ' · ' + LV[S.level] + ' → landed ' + d.how + ' · ' + why;
   if (d.gone && d.gone.length) line += ' · removed: ' + d.gone.join(', ');
   if (d.size) line += ' · ' + d.size;
   say(line);
@@ -1051,7 +1059,7 @@ window.addEventListener('scroll', function(){ tip.classList.remove('show'); }, {
 function setSetting(v){ S.setting = v; paint(); }
 function setLevel(v){ S.level = v; paint(); if (window.__ssRender) window.__ssRender(); }
 function flip(el, fn){ el.addEventListener('click', fn); }
-flip($('cSetting'), function(){ setSetting(!S.setting); say('Always paste without formatting turned ' + (S.setting ? 'On' : 'Off') + ' from the panel, applies from the next paste'); });
+if ($('cSetting')) flip($('cSetting'), function(){ setSetting(!S.setting); say('Always paste without formatting turned ' + (S.setting ? 'On' : 'Off') + ' from the panel, applies from the next paste'); });
 document.querySelectorAll('#sim .s-opt[data-level]').forEach(function(o){ flip(o, function(){ setLevel(+o.dataset.level); say('Safety Settings · ' + LV[S.level]); }); });
 $('sReset').addEventListener('click', reset);
 function reset(){
@@ -1065,7 +1073,7 @@ function paintRead(){
   $('sRead').innerHTML = '<tr><td>Chip shown</td><td>' + S.chips + '</td></tr><tr><td>Switches</td><td>' + S.switches + '</td></tr>';
 }
 function paint(){
-  $('cSetting').setAttribute('aria-checked', S.setting);
+  if ($('cSetting')) $('cSetting').setAttribute('aria-checked', S.setting);
   if (!$('sPop').hidden) { if (badgeText(S.level)) fillPop(); else $('sPop').hidden = true; }
   document.querySelectorAll('#sim .s-opt[data-level]').forEach(function(o){ o.setAttribute('aria-checked', +o.dataset.level === S.level); });
   if (chip) { var csw = chip.querySelector('.pc-sw'); if (csw) csw.setAttribute('aria-checked', S.setting); }
@@ -1106,8 +1114,8 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
   var B = STATE_BODY;
   var CH = [
     ['chip', 'plain', true, false, 'After a paste that looks different. It sits just below where the paste ends, and the pasted text is tinted for a moment. It never takes focus, and typing closes it.'],
-    ['chip', 'plain', true, true, 'Click it, or press Ctrl: switch this paste either way, as often as you like. The switch below it sets every paste.'],
-    ['chip', 'keep', false, false, 'Setting Off: the chip still shows, so Without formatting stays one click away.'],
+    ['chip', 'plain', true, true, 'Click it, or press Ctrl: switch this paste either way, as often as you like. With formatting carries the warning before it is picked. The last line says how the chip goes away.'],
+    ['chip', 'keep', false, false, 'Pasted with formatting: the chip keeps the warning in view (amber icon; its tooltip says why) until the chip closes.'],
     ['pin', 'plain', true, false, 'Scrolled away: the paste is above the view, so the chip stays pinned to the bottom edge, beside the badge, until it is closed.']
   ];
   var TINT = B.replace('<p>Saw Northwind', '<p><span class="tint">Saw Northwind').replace('this week?</p>', 'this week?</span></p>');
@@ -1122,18 +1130,18 @@ var STATE_BODY = '<p>Hi <span class="s-tag">{{First Name}}</span>,</p>' + GAP + 
 /* ═════ section 4: the matrix, built with the same pipeline ═════ */
 (function(){
   var CAP = {
-    'true1':'With formatting in the chip brings back what Remove Styling sends: bold, links, the list.', 'true0':'With formatting in the chip brings back the paste as copied, minus hidden markup.', 'true2':'Without formatting. No chip.',
-    'false1':'Lands as Remove Styling sends it. The chip offers Without formatting.', 'false0':'As copied, minus hidden markup. The chip offers Without formatting.', 'false2':'Without formatting. No chip.'
+    'true1':'Lands without formatting. The chip offers Pasted with formatting.', 'true0':'Lands without formatting. The chip offers Pasted with formatting.', 'true2':'Without formatting. No chip.',
+    'false1':'What Remove Styling will send: bold, links, the list. The chip warns.', 'false0':'As copied, minus hidden markup. The chip warns.', 'false2':'Text only email: no chip, so nothing to pick.'
   };
   /* board display only: the as-copied frame shows the source's colour at the board's body size */
   function bodySize(html){ var b = parse(html); b.querySelectorAll('[style]').forEach(function(el){ el.style.removeProperty('font-size'); if (!el.getAttribute('style')) el.removeAttribute('style'); }); return b.innerHTML; }
-  var out = '<span class="ch">Switch On <span>(default)</span></span><span class="ch">Switch Off</span>';
+  var out = '<span class="ch">Lands <span>(always)</span></span><span class="ch">After Pasted with formatting</span>';
   [1, 0, 2].forEach(function(l){
     out += '<p class="rh">' + (l === 1 ? 'Remove Styling Automatically' : l === 0 ? 'Neither' : 'Text only email') + '</p>';
     [true, false].forEach(function(on){
       var d = decide(SAMPLES.word, { setting:on, level:l, links:false }), cp = chipPlan(SAMPLES.word, { setting:on, level:l });
       var body = chipify(on || l !== 0 ? d.html : bodySize(d.html));
-      out += '<div class="cell"><p class="cl">Switch ' + (on ? 'On <span>(default)</span>' : 'Off') + '</p>' + frameHTML(l, body, cp.show ? chipHTML('chip', cp.cur, on, false, false, false) : '') + '<p class="mini-cap">' + CAP[String(on) + l] + '</p></div>';
+      out += '<div class="cell"><p class="cl">' + (on ? 'Lands <span>(always)</span>' : 'After Pasted with formatting') + '</p>' + frameHTML(l, body, cp.show ? chipHTML('chip', cp.cur, on, false, false, false) : '') + '<p class="mini-cap">' + CAP[String(on) + l] + '</p></div>';
     });
   });
   $('matrix').innerHTML = out;
