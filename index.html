@@ -200,9 +200,9 @@ figure img{width:100%;height:auto}
 
 <ol>
 <li><strong>Pastes land without formatting by default</strong>, exactly like Ctrl+Shift+V. <strong>Without formatting</strong> means the words and line breaks only: what is stored is identical to typing the same text by hand, with no styles, attributes, links, bold, lists, images or other tags. Hidden markup never gets in.</li>
-<li><strong>A paste chip</strong> at the end of every paste that could have landed differently. It reads "Pasted without formatting" and can switch that one paste to "Pasted with formatting".</li>
-<li><strong>"Pasted with formatting" is marked not recommended:</strong> "Not recommended. It can hurt deliverability." It never blocks the pick.</li>
-<li><strong>"Pasted with formatting" brings back what the sequence's Safety Settings allow today:</strong><ul>
+<li><strong>A paste chip</strong> at the end of every paste that could have landed differently. It reads "Pasted without formatting"; its menu's "Paste with formatting" switches that one paste.</li>
+<li><strong>"Paste with formatting" is marked not recommended:</strong> "Not recommended. It can hurt deliverability." It never blocks the pick.</li>
+<li><strong>"Paste with formatting" brings back what the sequence's Safety Settings allow today:</strong><ul>
 <li>Remove Styling Automatically: what it will send;</li>
 <li>Neither: as copied, minus hidden markup;</li>
 <li>Text only email: no chip, so nothing to bring back.</li>
@@ -231,7 +231,7 @@ figure img{width:100%;height:auto}
 <tr>
 <th>Safety Settings</th>
 <th>Lands</th>
-<th>After "Pasted with formatting"</th>
+<th>After "Paste with formatting"</th>
 </tr>
 </thead>
 <tbody>
@@ -279,21 +279,22 @@ figure img{width:100%;height:auto}
 <tr>
 <td>Landed (always)</td>
 <td>Clipboard icon · <strong>Pasted without formatting ▾</strong></td>
-<td>✓ Pasted without formatting · Pasted with formatting, with "Not recommended. It can hurt deliverability." under it in amber · divider · "Closes when you keep typing"</td>
+<td>✓ Paste without formatting · Paste with formatting, with "Not recommended. It can hurt deliverability." under it in amber · divider · "Closes when you keep typing"</td>
 </tr>
 <tr>
-<td>After "Pasted with formatting"</td>
+<td>After "Paste with formatting"</td>
 <td>Amber warning icon · <strong>Pasted with formatting ▾</strong> · tooltip "Not recommended. It can hurt deliverability."</td>
-<td>Pasted without formatting · ✓ Pasted with formatting (same amber line) · divider · "Closes when you keep typing"</td>
+<td>Paste without formatting · ✓ Paste with formatting (same amber line) · divider · "Closes when you keep typing"</td>
 </tr>
 </tbody>
 </table></div>
 <ul>
+<li>The chip says what happened ("Pasted …"); its menu says what to do in the same words ("Paste …").</li>
 <li>Picking the other option rewrites only this paste. The user can switch back and forth as often as wanted.</li>
 <li><strong>There is no close button.</strong> The menu's last line, under a divider, says "Closes when you keep typing", every time it opens.</li>
 </ul>
-<figure><figcaption>The menu: this paste either way; the warning sits under Pasted with formatting</figcaption><img src="screens/02-chip-menu.png" style="max-width:885px" alt="The menu: this paste either way; the warning sits under Pasted with formatting" loading="lazy"></figure>
-<figure><figcaption>After Pasted with formatting: the amber warning icon stays on the chip</figcaption><img src="screens/03-chip-with-formatting.png" style="max-width:885px" alt="After Pasted with formatting: the amber warning icon stays on the chip" loading="lazy"></figure>
+<figure><figcaption>The menu: this paste either way; the warning sits under Paste with formatting</figcaption><img src="screens/02-chip-menu.png" style="max-width:885px" alt="The menu: this paste either way; the warning sits under Paste with formatting" loading="lazy"></figure>
+<figure><figcaption>After Paste with formatting: the amber warning icon stays on the chip</figcaption><img src="screens/03-chip-with-formatting.png" style="max-width:885px" alt="After Paste with formatting: the amber warning icon stays on the chip" loading="lazy"></figure>
 <p><strong>Where it sits:</strong></p>
 <div class="tbl-wrap"><table>
 <thead>
@@ -375,7 +376,7 @@ figure img{width:100%;height:auto}
 <tr>
 <td>P-3</td>
 <td>P-1, then open the chip</td>
-<td>"Pasted with formatting" shows "Not recommended. It can hurt deliverability." under it, in amber</td>
+<td>"Paste with formatting" shows "Not recommended. It can hurt deliverability." under it, in amber</td>
 <td>P0</td>
 </tr>
 <tr>
@@ -446,19 +447,19 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td><strong>P-F1</strong></td>
-<td>P-1, then chip → <strong>Pasted with formatting</strong></td>
+<td>P-1, then chip → <strong>Paste with formatting</strong></td>
 <td>Body holds what Remove Styling sends (bold, link and list back; no fonts or colours); text outside the paste byte-identical to before the paste; chip reads "Pasted with formatting" with the amber warning icon; its tooltip reads "Not recommended. It can hurt deliverability."</td>
 <td>P0 · <strong>sign off by name, owner: QA lead (name to confirm)</strong></td>
 </tr>
 <tr>
 <td>P-F2</td>
-<td>P-F1, then chip → Pasted without formatting</td>
+<td>P-F1, then chip → Paste without formatting</td>
 <td>Back to the P-1 result exactly</td>
 <td>P0</td>
 </tr>
 <tr>
 <td>P-F3</td>
-<td>Neither: P-1, then Pasted with formatting</td>
+<td>Neither: P-1, then Paste with formatting</td>
 <td>The paste as copied, minus hidden markup</td>
 <td>P0</td>
 </tr>
@@ -488,7 +489,7 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td>C-4</td>
-<td>Pinned chip → Pasted with formatting</td>
+<td>Pinned chip → Paste with formatting</td>
 <td>The editor scrolls to the paste; the tint replays</td>
 <td>P0</td>
 </tr>
@@ -631,7 +632,7 @@ figure img{width:100%;height:auto}
 <li><strong>The step editor shares one component</strong> with the signature, template, inbox-reply and task-note editors (code search). The new paste rules must be switched on for the sequence step editor only.</li>
 <li><strong>No paste setting is stored.</strong> The <code>pasteAsPlainText</code> setting added in <a href="https://github.com/saleshandy/saleshandy-edge/pull/11339">edge#11339</a> is not used by this feature.</li>
 <li><strong>Resolve before estimation:</strong><ol>
-<li>With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for Pasted with formatting. Assumed, not tested.</li>
+<li>With the editor's built-in paste cleanup on, real Word, Google Docs and Gmail pastes lose hidden markup but keep visible formatting, for Paste with formatting. Assumed, not tested.</li>
 <li>The "would look different" check behind the chip is reliable on the same samples. Assumed, not tested.</li>
 </ol>
 </li>
@@ -662,7 +663,7 @@ figure img{width:100%;height:auto}
 </tr>
 <tr>
 <td><code>paste_chip_switched</code></td>
-<td>Pasted without formatting or Pasted with formatting is picked</td>
+<td>Paste without formatting or Paste with formatting is picked</td>
 <td>to, pinned, seconds_since_paste</td>
 </tr>
 </tbody>
@@ -680,7 +681,7 @@ figure img{width:100%;height:auto}
 <tbody>
 <tr>
 <td><strong>With-formatting rate (most important)</strong></td>
-<td>switches to Pasted with formatting ÷ chips shown</td>
+<td>switches to Paste with formatting ÷ chips shown</td>
 <td>&lt; 30% (target; assumed, no baseline)</td>
 <td>&gt; 50%: removing formatting is wrong too often</td>
 </tr>
